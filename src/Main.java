@@ -5,7 +5,6 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args){
-        System.out.println("dsdas");
         StatPerk baseStats =new StatPerk.StatPerkBuilder().setSPD(10).setHP(10).setMovement(10).setName("baseStats").build();
         CombatPerk wait = new CombatPerk("Wait",new Ability(new ActionWait()));
         CombatPerk skipTurn = new CombatPerk("skipTurn",new Ability(new ActionWait()));

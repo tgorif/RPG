@@ -1,0 +1,25 @@
+
+<xml>
+<Perks>
+    <Perk name="wait">
+        <type>CombatPerk</type>
+        <Ability>ActionWait</Ability>
+        <Value>1</Value>
+    </Perk>
+    <Perk name="move">
+        <type>CombatPerk</type>
+        <Ability>ActionMove</Ability>
+    </Perk>
+    <Perk category="skipTurn">
+        <type>CombatPerk</type>
+        <Ability>ActionWait</Ability>
+        <Value>10</Value>
+    </Perk>
+    <Perk category="baseStats">
+        <type>StatPerk</type>
+        <SPD>10</SPD>
+        <HP>10</HP>
+        <movement>10</movement>
+    </Perk>
+</Perks>
+</xml>

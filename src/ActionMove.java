@@ -2,6 +2,8 @@ import java.lang.reflect.Method;
 
 public class ActionMove implements IStrategyAction {
     ConcreteCharacter concreteCharacter;
+    int duration;
+    int[] vector;
 
     @Override
     public void setConcreteCharacter(ConcreteCharacter concreteCharacter) {
@@ -15,6 +17,11 @@ public class ActionMove implements IStrategyAction {
 
     @Override
     public void resolveAction(GameState gameState) {
-        System.out.println("move");
+        setVector();
+        gameState.changeCharacterPosition(concreteCharacter,vector);
+    }
+    public void setVector(){
+        vector=new int[3];
+        vector[0]=10;
     }
 }

@@ -1,4 +1,3 @@
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +9,7 @@ public class GameState {
     int round=0;
     final List<Character> characterList;
     boolean EndCondition=false;
+    ConcreteCharacter currentCharacter;
 
     public GameState(List<Character> characterList){
         level=new Level();
@@ -22,6 +22,11 @@ public class GameState {
         concreteCharacter.position.y+=y;
         concreteCharacter.position.z+=z;
     }
+    public void changeCharacterPosition(ConcreteCharacter concreteCharacter,int[] vector){
+        concreteCharacter.position.x+=vector[0];
+        concreteCharacter.position.y+=vector[1];
+        concreteCharacter.position.z+=vector[2];
+    }
     private void createCharacters(){
         for(Character c : characterList){
             concreteCharacterList.add(new ConcreteCharacter(c,new Position(level.x[1]/3,level.y[1]/2,0)));
@@ -30,7 +35,9 @@ public class GameState {
     private void prepareTurn(){
         Map<ConcreteCharacter,List<IStrategyAction>> actions=new HashMap<>();
         for (ConcreteCharacter c : concreteCharacterList){
+            currentCharacter=c;
             actions.put(c,c.getActions(this));
+            currentCharacter=null;
         }
         resolveTurn(actions);
     }

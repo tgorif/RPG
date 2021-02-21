@@ -1,5 +1,6 @@
 public class ActionWait implements IStrategyAction{
     ConcreteCharacter concreteCharacter;
+    int duration;
     @Override
     public void setConcreteCharacter(ConcreteCharacter concreteCharacter) {
         this.concreteCharacter=concreteCharacter;
@@ -12,6 +13,10 @@ public class ActionWait implements IStrategyAction{
 
     @Override
     public void resolveAction(GameState gameState) {
-        System.out.println("Wait");
+        setDuration();
+        System.out.println("Waiting for" + duration);
+    }
+    public void setDuration(){
+        duration=1;
     }
 }
