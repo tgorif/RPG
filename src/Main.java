@@ -1,9 +1,12 @@
+import java.io.Console;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        System.out.println("dsdas");
         StatPerk baseStats =new StatPerk.StatPerkBuilder().setSPD(10).setHP(10).setMovement(10).setName("baseStats").build();
         CombatPerk wait = new CombatPerk("Wait",new AbilityWait(1));
         CombatPerk skipTurn = new CombatPerk("skipTurn",new AbilityWait(10));

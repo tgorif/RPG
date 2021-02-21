@@ -4,7 +4,7 @@ public class Ability {
     public int getDuration(){
         return 0;
     }
-    public void use(GameState gameState,ConcreteCharacter origin){
-
+    public Action getAction(GameState gameState) throws NoSuchMethodException {
+    return null;
     }
 }
