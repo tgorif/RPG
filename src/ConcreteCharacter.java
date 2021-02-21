@@ -25,15 +25,18 @@ public class ConcreteCharacter {
         this.position=position;
         resolvePreCombatPerks();
     }
-    public List<Action> getActions(GameState gameState) throws NoSuchMethodException {
-        List<Action> actions = new ArrayList<>();
+    public List<IStrategyAction> getActions(GameState gameState){
+        List<IStrategyAction> actions = new ArrayList<>();
         for (Ability a: abilityList){
-            Action action=a.getAction(gameState);
+            IStrategyAction action=a.getAction(gameState);
             if(action==null) continue;;
             action.setConcreteCharacter(this);
             actions.add(action);
         }
         return actions;
+    }
+    public void updateStatus(){
+
     }
     private void resolvePreCombatPerks(){
         for(Perk p : preCombatPerks){

@@ -1,16 +1,15 @@
-import java.io.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public static void main(String[] args){
         System.out.println("dsdas");
         StatPerk baseStats =new StatPerk.StatPerkBuilder().setSPD(10).setHP(10).setMovement(10).setName("baseStats").build();
-        CombatPerk wait = new CombatPerk("Wait",new AbilityWait(1));
-        CombatPerk skipTurn = new CombatPerk("skipTurn",new AbilityWait(10));
-        CombatPerk move = new CombatPerk("skipTurn",new AbilityMove());
+        CombatPerk wait = new CombatPerk("Wait",new Ability(new ActionWait()));
+        CombatPerk skipTurn = new CombatPerk("skipTurn",new Ability(new ActionWait()));
+        CombatPerk move = new CombatPerk("move",new Ability(new ActionMove()));
         Map<Perk,List<Perk>> adjacencyMap = new HashMap<>();
         adjacencyMap.put(baseStats,null);
         List<Perk> tmp =new ArrayList<Perk>();

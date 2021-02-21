@@ -1,10 +1,10 @@
 public class Ability {
-    int duration;
-
-    public int getDuration(){
-        return 0;
+    IStrategyAction action;
+    public Ability(IStrategyAction action){
+        this.action=action;
     }
-    public Action getAction(GameState gameState) throws NoSuchMethodException {
-    return null;
+
+    public IStrategyAction getAction(GameState gameState){
+    return action;
     }
 }
