@@ -5,6 +5,7 @@ import java.util.Map;
 public class PerkTree {
     String name;
     List<Node> root=new ArrayList<>();
+    Map<Perk,Node> map = new HashMap<>();
     private static Map<String,PerkTree> treeMap= new HashMap<>();
     public PerkTree(String name,Map<Perk, List<Perk>> adjacencyList){
         this.name=name;
@@ -12,7 +13,6 @@ public class PerkTree {
         setNodes(adjacencyList);
     }
     private void setNodes(Map<Perk,List<Perk>> adjacencyList){
-        Map<Perk,Node> map = new HashMap<>();
         for(Map.Entry<Perk,List<Perk>> e : adjacencyList.entrySet()){
             Node n = new Node(e.getKey());
             map.put(e.getKey(),n);
@@ -42,6 +42,33 @@ public class PerkTree {
     }
     public static PerkTree getPerkTree(String s){
         return treeMap.get(s);
+    }
+    public Perk[] getRoot(){
+        Perk[] result = new Perk[this.root.size()];
+        int i=0;
+        for(Node n : root){
+            result[i]=n.perk;
+            i++;
+        }
+        return result;
+    }
+    public Perk[] getDescendants(Perk p){
+        Perk[] result = new Perk[map.get(p).outgoingNodes.size()];
+        int i=0;
+        for (Node n : map.get(p).outgoingNodes){
+            result[i]=n.perk;
+            i++;
+        }
+        return result;
+    }
+    public Perk[] getAll(){
+        Perk[] result = new Perk[map.size()];
+        int i=0;
+        for (Map.Entry<Perk,Node> e : map.entrySet()){
+            result[i]=e.getKey();
+            i++;
+        }
+        return result;
     }
     private class Node{
         Perk perk;

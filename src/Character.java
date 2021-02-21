@@ -6,4 +6,7 @@ public class Character {
     public Character(){
         classList=new ArrayList<>();
     }
+    public void addClass(Class c){
+        classList.add(c);
+    }
 }

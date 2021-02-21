@@ -3,6 +3,7 @@ public class StatPerk extends Perk{
     private int SPD;
     private int Movement;
     private StatPerk(int h,int s,int m,String name){
+        super(name);
         HP=h;
         SPD=s;
         Movement=m;

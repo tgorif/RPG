@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args){
@@ -17,6 +16,13 @@ public class Main {
         adjacencyMap.put(skipTurn,tmp);
         adjacencyMap.put(move,tmp);
         PerkTree perkTree = new PerkTree("baseclass",adjacencyMap);
+        Class baseclass = new Class("baseclass");
+        baseclass.learnAllPerks();
+        Character character = new Character();
+        character.addClass(baseclass);
+        List<Character> asd = new ArrayList<>();
+        asd.add(character);
+        GameState g = new GameState(asd);
 
 
     }

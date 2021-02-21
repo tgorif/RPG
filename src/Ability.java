@@ -4,7 +4,7 @@ public class Ability {
     public int getDuration(){
         return 0;
     }
-    public void use(){
+    public void use(GameState gameState,ConcreteCharacter origin){
 
     }
 }

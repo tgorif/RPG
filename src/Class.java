@@ -10,4 +10,9 @@ public class Class {
             this.name=name;
             perkTree =PerkTree.getPerkTree(name);
         }
+        public void learnAllPerks(){
+            for(Perk p : perkTree.getAll()){
+                perks.add(p);
+            }
+        }
 }
