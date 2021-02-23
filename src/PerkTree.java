@@ -5,39 +5,31 @@ import java.util.Map;
 public class PerkTree {
     String name;
     List<Node> root=new ArrayList<>();
-    Map<Perk,Node> map = new HashMap<>();
-    private static Map<String,PerkTree> treeMap= new HashMap<>();
-    public PerkTree(String name,Map<Perk, List<Perk>> adjacencyList){
-        this.name=name;
+    Map<Perk,Node> nodes = new HashMap<>();
+    private static final Map<String,PerkTree> treeMap= new HashMap<>();
+
+    public PerkTree(String className, List<String> perks, List<String> ancestors, List<String> descendants,List<String> roots) {
+        this.name=className;
         treeMap.put(this.name,this);
-        setNodes(adjacencyList);
+        setNodes(perks);
+        setRoot(roots);
+        setConnections(ancestors,descendants);
     }
-    private void setNodes(Map<Perk,List<Perk>> adjacencyList){
-        for(Map.Entry<Perk,List<Perk>> e : adjacencyList.entrySet()){
-            Node n = new Node(e.getKey());
-            map.put(e.getKey(),n);
+    private void setNodes(List<String> perks){
+        for(String s : perks){
+            Perk perk = Perk.perkMap.get(s);
+            nodes.put(perk,new Node(perk));
         }
-        for(Map.Entry<Perk,List<Perk>> e : adjacencyList.entrySet()){
-            if(e.getValue()!=null){
-                for(Perk p : e.getValue()){
-                    map.get(p).addOutgoingNode(map.get(e.getKey()));
-                }
-            }
-        }
-        setRoot(map);
     }
-    private void setRoot(Map<Perk,Node> map){
-        Map<Node,Integer> incoming = new HashMap<>();
-        for(Map.Entry<Perk,Node> e : map.entrySet()){
-            incoming.put(e.getValue(),0);
+    private void setRoot(List<String> roots){
+        for (String s : roots){
+            root.add(nodes.get(Perk.perkMap.get(s)));
         }
-        for(Map.Entry<Perk,Node> e : map.entrySet()) {
-            for (Node n : e.getValue().outgoingNodes) {
-                incoming.replace(n, incoming.get(n) + 1);
-            }
-        }
-        for(Map.Entry<Node,Integer> e : incoming.entrySet()){
-            if(e.getValue()==0) this.root.add(e.getKey());
+    }
+    private void setConnections(List<String> ancestors, List<String> descendants){
+        for(int i=0;i<ancestors.size();i++){
+            nodes.get(Perk.perkMap.get(ancestors.get(i))).
+                    addNode(nodes.get(Perk.perkMap.get(descendants.get(i))));
         }
     }
     public static PerkTree getPerkTree(String s){
@@ -53,31 +45,29 @@ public class PerkTree {
         return result;
     }
     public Perk[] getDescendants(Perk p){
-        Perk[] result = new Perk[map.get(p).outgoingNodes.size()];
+        Perk[] result = new Perk[nodes.get(p).next.size()];
         int i=0;
-        for (Node n : map.get(p).outgoingNodes){
+        for (Node n : nodes.get(p).next){
             result[i]=n.perk;
             i++;
         }
         return result;
     }
-    public Perk[] getAll(){
-        Perk[] result = new Perk[map.size()];
-        int i=0;
-        for (Map.Entry<Perk,Node> e : map.entrySet()){
-            result[i]=e.getKey();
-            i++;
+    public List<Perk> getAll(){
+        List<Perk> result =new ArrayList<>();
+        for (Map.Entry<Perk,Node> e : nodes.entrySet()){
+            result.add(e.getKey());
         }
         return result;
     }
     private class Node{
         Perk perk;
-        List<Node> outgoingNodes=new ArrayList<>();
+        List<Node> next=new ArrayList<>();
         private Node(Perk p){
             perk=p;
         }
-        private void addOutgoingNode(Node n){
-            outgoingNodes.add(n);
+        private void addNode(Node n){
+            next.add(n);
         }
     }
 }

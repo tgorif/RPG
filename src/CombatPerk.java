@@ -3,7 +3,6 @@ public class CombatPerk extends Perk {
 
     public CombatPerk(String name,Ability ability){
         super(name);
-        this.name=name;
         this.ability=ability;
     }
     public Ability getAbility(){

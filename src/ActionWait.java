@@ -1,6 +1,9 @@
 public class ActionWait implements IStrategyAction{
     ConcreteCharacter concreteCharacter;
     int duration;
+    public ActionWait(int d){
+        duration=d;
+    }
     @Override
     public void setConcreteCharacter(ConcreteCharacter concreteCharacter) {
         this.concreteCharacter=concreteCharacter;
@@ -13,10 +16,19 @@ public class ActionWait implements IStrategyAction{
 
     @Override
     public void resolveAction(GameState gameState) {
-        setDuration();
         System.out.println("Waiting for" + duration);
     }
-    public void setDuration(){
-        duration=1;
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        }
+        catch (CloneNotSupportedException e){
+            return null;
+        }
+    }
+    public void setDuration(int d){
+        duration=d;
     }
 }

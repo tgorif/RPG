@@ -20,6 +20,15 @@ public class ActionMove implements IStrategyAction {
         setVector();
         gameState.changeCharacterPosition(concreteCharacter,vector);
     }
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        }
+        catch (CloneNotSupportedException e){
+            return null;
+        }
+    }
     public void setVector(){
         vector=new int[3];
         vector[0]=10;

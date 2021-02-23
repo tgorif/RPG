@@ -1,21 +1,25 @@
 
 <xml>
 <Perks>
-    <Perk name="wait">
+    <Perk>
+        <Name>wait</Name>
         <type>CombatPerk</type>
-        <Ability>ActionWait</Ability>
+        <Action>ActionWait</Action>
         <Value>1</Value>
     </Perk>
-    <Perk name="move">
+    <Perk>
+        <Name>move</Name>
         <type>CombatPerk</type>
-        <Ability>ActionMove</Ability>
+        <Action>ActionMove</Action>
     </Perk>
-    <Perk category="skipTurn">
+    <Perk>
+        <Name>skip</Name>
         <type>CombatPerk</type>
-        <Ability>ActionWait</Ability>
+        <Action>ActionWait</Action>
         <Value>10</Value>
     </Perk>
-    <Perk category="baseStats">
+    <Perk>
+        <Name>baseStats</Name>
         <type>StatPerk</type>
         <SPD>10</SPD>
         <HP>10</HP>

@@ -6,10 +6,12 @@ public class ConcreteCharacter {
     int SPD;
     int movement;
     List<Ability> abilityList=new ArrayList<>();
+    List<IStrategyAction> actionList=new ArrayList<>();
     List<Perk> preCombatPerks=new ArrayList<>();
     Position position;
-
+/*
     public ConcreteCharacter(Character character,Position position){
+
         for(Class c : character.classList){
             for(Perk p : c.perks){
                 if(p instanceof StatPerk){
@@ -21,6 +23,9 @@ public class ConcreteCharacter {
                     abilityList.add(cp.getAbility());
                 }
             }
+        }
+        for(Ability ability : abilityList){
+            actionList.add((IStrategyAction)ability.action.clone());
         }
         this.position=position;
         resolvePreCombatPerks();
@@ -46,4 +51,5 @@ public class ConcreteCharacter {
             this.movement=statPerk.getMovementBonus();
         }
     }
+    */
 }
