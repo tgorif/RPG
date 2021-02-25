@@ -1,28 +1,55 @@
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import RPG.PerkSystem.Perk;
+import RPG.PerkSystem.PerkTree;
+import RPG.SkillSystem.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class init {
+    static Map<String, StrategySkill> skillMap = new HashMap<>();
+    static Map<String, Perk> perkMap = new HashMap<>();
+    static Map<String, PerkTree> perkTreeMap = new HashMap<>();
+    static void start(){
+        loadActions();
+        loadPerks();
+        Perk.perkMap=perkMap;
+        loadPerkTree();
 
-    static Map<String,IStrategyAction> loadActions(){
-        Map<String,IStrategyAction> map = new HashMap<>();
-        map.put("Wait",new ActionWait(1));
-        map.put("SkipTurn",new ActionWait(10));
-        map.put("Move",new ActionMove());
-        return map;
     }
-    static Map<String,Perk> loadPerks(Map<String,IStrategyAction> actionMap){
-        Map<String,Perk> perkMap = new HashMap<>();
-        File file = new File("Perks.xml");
+    private static void printActionMap(){
+        System.out.println("ActionMap: " + skillMap.size());
+        for(Map.Entry<String,StrategySkill> e : skillMap.entrySet()){
+            System.out.println(e.getKey() + " " + e.getValue());
+        }
+    }
+    private static void printPerkMap(){
+        System.out.println("PerkMap: " + perkMap.size());
+        for(Map.Entry<String,Perk> e : perkMap.entrySet()){
+            System.out.println(e.getKey() + " " + e.getValue());
+        }
+    }
+    private static void printPerkTreeMap(){
+        System.out.println("PerkTreeMap: " + perkTreeMap.size());
+        for(Map.Entry<String,PerkTree> e : perkTreeMap.entrySet()){
+            System.out.println(e.getKey() + " " + e.getValue());
+        }
+    }
+    private static void loadActions(){
+        skillMap.put("Wait",new SkillWait("Wait"));
+        skillMap.put("SkipTurn",new SkillWait("SkipTurn"));
+        skillMap.put("Move",new SkillMove("Move"));
+        skillMap.put("shotArrow",new SkillShot("shotArrow"));
+        skillMap.put("QuickShot",new SkillShot("QuickShot"));
+        skillMap.put("Preparation",new SkillShot("Preparation"));
+    }
+    private static void loadPerks(){
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
@@ -73,7 +100,7 @@ public class init {
                         type = false;
                     }
                     if (Action) {
-                        perkBuilder.setAbility(new Ability(actionMap.get(new String(ch, start, length))));
+                        perkBuilder.setSkill((skillMap.get(new String(ch, start, length))));
                         Action = false;
                     }
                     if (SPD) {
@@ -92,16 +119,13 @@ public class init {
                 }
 
             };
-            saxParser.parse("C:\\workspace\\idea\\RPG\\src\\Perks.xml", handler);
+            saxParser.parse("C:\\workspace\\idea\\RPG\\Resources\\Perks\\Perks.xml", handler);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return perkMap;
     }
-    static Map<String,PerkTree>  loadPerkTree(){
-        Map<String,PerkTree> perkTreeMap = new HashMap<>();
-        File file = new File("Classes.xml");
+    private static void loadPerkTree(){
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
@@ -122,6 +146,7 @@ public class init {
                         perks=new ArrayList<>();
                         ancestors=new ArrayList<>();
                         descendants=new ArrayList<>();
+                        roots=new ArrayList<>();
                     }
                     else if (qName.equalsIgnoreCase("Name")) {
                         Name = true;
@@ -169,12 +194,10 @@ public class init {
                     }
                 }
             };
-            saxParser.parse("C:\\workspace\\idea\\RPG\\src\\Perks.xml", handler);
+            saxParser.parse("C:\\workspace\\idea\\RPG\\Resources\\Classes\\Class.xml", handler);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return perkTreeMap;
-
     }
 }

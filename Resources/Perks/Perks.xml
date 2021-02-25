@@ -1,0 +1,51 @@
+
+<xml>
+<Perks>
+    <Perk>
+        <Name>wait</Name>
+        <type>CombatPerk</type>
+        <Action>Wait</Action>
+        <Value>1</Value>
+    </Perk>
+    <Perk>
+        <Name>move</Name>
+        <type>CombatPerk</type>
+        <Action>Move</Action>
+    </Perk>
+    <Perk>
+        <Name>skip</Name>
+        <type>CombatPerk</type>
+        <Action>SkipTurn</Action>
+        <Value>10</Value>
+    </Perk>
+    <Perk>
+        <Name>baseStats</Name>
+        <type>RPG.PerkSystem.StatPerk</type>
+        <SPD>10</SPD>
+        <HP>10</HP>
+        <movement>10</movement>
+    </Perk>
+    <Perk>
+        <Name>bonusSPD10</Name>
+        <type>RPG.PerkSystem.StatPerk</type>
+        <SPD>10</SPD>
+        <HP>0</HP>
+        <movement>0</movement>
+    </Perk>
+    <Perk>
+        <Name>shotArrow</Name>
+        <type>CombatPerk</type>
+        <Action>shotArrow</Action>
+    </Perk>
+    <Perk>
+        <Name>QuickShot</Name>
+        <type>CombatPerk</type>
+        <Action>QuickShot</Action>
+    </Perk>
+    <Perk>
+        <Name>Preparation</Name>
+        <type>CombatPerk</type>
+        <Action>Preparation</Action>
+    </Perk>
+</Perks>
+</xml>

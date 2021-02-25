@@ -1,8 +1,12 @@
+package RPG.PerkSystem;
+
+import RPG.SkillSystem.StrategySkill;
+
 import java.util.HashMap;
 import java.util.Map;
 public class Perk {
-    String name;
-    static Map<String,Perk> perkMap=new HashMap<>();
+    public String name;
+    public static Map<String,Perk> perkMap=new HashMap<>();
     public Perk(String name){
         this.name=name;
     }
@@ -11,7 +15,7 @@ public class Perk {
         private int SPD=0;
         private int movement=0;
         private String name="";
-        Ability ability=null;
+        StrategySkill skill=null;
         String type;
         public PerkBuilder(){
 
@@ -32,8 +36,8 @@ public class Perk {
             this.movement=movement;
             return this;
         }
-        public Perk.PerkBuilder setAbility(Ability ability){
-            this.ability=ability;
+        public Perk.PerkBuilder setSkill(StrategySkill skill){
+            this.skill=skill;
             return this;
         }
         public Perk.PerkBuilder setType(String s){
@@ -44,10 +48,10 @@ public class Perk {
             return new StatPerk(hp,SPD,movement,name);
         }
         public CombatPerk buildCombatPerk(){
-            return new CombatPerk(name,ability);
+            return new CombatPerk(name,skill);
         }
         public Perk build(){
-            if(type.equals("StatPerk")) return buildStatPerk();
+            if(type.equals("RPG.PerkSystem.StatPerk")) return buildStatPerk();
             else return buildCombatPerk();
         }
 

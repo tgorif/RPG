@@ -1,41 +1,30 @@
-import javax.swing.*;
-import java.lang.reflect.InvocationTargetException;
+import RPG.Character.Character;
+import RPG.Output.Console;
+import RPG.Main.GameState;
+import RPG.PerkSystem.PerkTree;
+
 import java.util.*;
-import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args){
-        Map<String, IStrategyAction> actionMap = init.loadActions();
-        for (Map.Entry<String,IStrategyAction> e : actionMap.entrySet()){
-            System.out.println(e.getKey() + " " + e.getValue());
+        init.start();
+        Character character1=createCharacter("Test1");
+        character1.isBlueTeam=true;
+        Character character2=createCharacter("TestHostile1");
+        character2.isBlueTeam=false;
+        List<Character> characterList = new ArrayList<>();
+        characterList.add(character1);
+        characterList.add(character2);
+        GameState gameState= new GameState(characterList,new Console());
+    }
+    public static Character createCharacter(String name){
+        Character character= new Character(name);
+        character.learn(PerkTree.getPerkTree("Base"));
+        character.learn(PerkTree.getPerkTree("Archer"));
+        while(character.getLearnablePerks().size()>0){
+            character.learn(character.getLearnablePerks().get(0));
         }
-        Perk.perkMap=init.loadPerks(actionMap);
-        Map<String,PerkTree> perkTreeMap =init.loadPerkTree();
-        for (Map.Entry<String,PerkTree> e : perkTreeMap.entrySet()){
-            System.out.println(e.getKey() + " " + e.getValue());
-        }
-
-
-        /*
-        Map<Perk,List<Perk>> adjacencyMap = new HashMap<>();
-        adjacencyMap.put(baseStats,null);
-        List<Perk> tmp =new ArrayList<Perk>();
-        tmp.add(baseStats);
-        adjacencyMap.put(wait,tmp);
-        adjacencyMap.put(skipTurn,tmp);
-        adjacencyMap.put(move,tmp);
-        PerkTree perkTree = new PerkTree("baseclass",adjacencyMap);
-        Class baseclass = new Class("baseclass");
-
-        baseclass.learnAllPerks();
-        Character character = new Character();
-        character.addClass(baseclass);
-        List<Character> asd = new ArrayList<>();
-        asd.add(character);
-        GameState g = new GameState(asd);
-        */
-
-
+        return character;
     }
 }

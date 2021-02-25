@@ -1,4 +1,8 @@
-public class StatPerk extends Perk{
+package RPG.PerkSystem;
+
+import RPG.PerkSystem.Perk;
+
+public class StatPerk extends Perk {
     private int HP;
     private int SPD;
     private int Movement;
@@ -9,13 +13,13 @@ public class StatPerk extends Perk{
         Movement=m;
         this.name=name;
     }
-    int getHPBonus(){
+    public int getHPBonus(){
         return HP;
     }
-    int getSPDBonus(){
+    public int getSPDBonus(){
         return SPD;
     }
-    int getMovementBonus(){
+    public int getMovementBonus(){
         return Movement;
     }
 }

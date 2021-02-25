@@ -1,9 +1,10 @@
+package RPG.PerkSystem;
 
 import java.util.*;
 import java.util.Map;
 
 public class PerkTree {
-    String name;
+    public String name;
     List<Node> root=new ArrayList<>();
     Map<Perk,Node> nodes = new HashMap<>();
     private static final Map<String,PerkTree> treeMap= new HashMap<>();
@@ -28,8 +29,9 @@ public class PerkTree {
     }
     private void setConnections(List<String> ancestors, List<String> descendants){
         for(int i=0;i<ancestors.size();i++){
-            nodes.get(Perk.perkMap.get(ancestors.get(i))).
-                    addNode(nodes.get(Perk.perkMap.get(descendants.get(i))));
+            Node a =nodes.get(Perk.perkMap.get(ancestors.get(i)));
+            Node b =nodes.get(Perk.perkMap.get(descendants.get(i)));
+            a.next.add(b);
         }
     }
     public static PerkTree getPerkTree(String s){
@@ -45,6 +47,7 @@ public class PerkTree {
         return result;
     }
     public Perk[] getDescendants(Perk p){
+        if(!nodes.containsKey(p))return new Perk[0];
         Perk[] result = new Perk[nodes.get(p).next.size()];
         int i=0;
         for (Node n : nodes.get(p).next){
