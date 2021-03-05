@@ -13,7 +13,7 @@
         <Action>Move</Action>
     </Perk>
     <Perk>
-        <Name>skip</Name>
+        <Name>skipturn</Name>
         <type>CombatPerk</type>
         <Action>SkipTurn</Action>
         <Value>10</Value>

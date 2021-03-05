@@ -21,6 +21,7 @@ public class CombatCharacter {
     public Character character;
     public Position position;
     public boolean isBlueTeam;
+
     public CombatCharacter(Character c, Position position) {
         //general
         character=c;
@@ -105,7 +106,7 @@ public class CombatCharacter {
     }
     class SimulatedCharacter extends CombatCharacter{
         CombatCharacter origin;
-        private SimulatedCharacter(CombatCharacter combatCharacter){
+        public SimulatedCharacter(CombatCharacter combatCharacter){
             super(combatCharacter);
             origin=combatCharacter;
 
