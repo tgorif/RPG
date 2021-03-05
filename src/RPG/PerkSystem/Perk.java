@@ -15,7 +15,7 @@ public class Perk {
         private int SPD=0;
         private int movement=0;
         private String name="";
-        StrategySkill skill=null;
+        String skill=null;
         String type;
         public PerkBuilder(){
 
@@ -36,7 +36,7 @@ public class Perk {
             this.movement=movement;
             return this;
         }
-        public Perk.PerkBuilder setSkill(StrategySkill skill){
+        public Perk.PerkBuilder setSkill(String skill){
             this.skill=skill;
             return this;
         }

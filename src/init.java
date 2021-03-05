@@ -5,29 +5,23 @@ import java.util.Map;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import RPG.PerkSystem.CombatPerk;
 import RPG.PerkSystem.Perk;
 import RPG.PerkSystem.PerkTree;
+import RPG.PerkSystem.StatPerk;
 import RPG.SkillSystem.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class init {
-    static Map<String, StrategySkill> skillMap = new HashMap<>();
     static Map<String, Perk> perkMap = new HashMap<>();
     static Map<String, PerkTree> perkTreeMap = new HashMap<>();
     static void start(){
-        loadActions();
         loadPerks();
         Perk.perkMap=perkMap;
         loadPerkTree();
 
-    }
-    private static void printActionMap(){
-        System.out.println("ActionMap: " + skillMap.size());
-        for(Map.Entry<String,StrategySkill> e : skillMap.entrySet()){
-            System.out.println(e.getKey() + " " + e.getValue());
-        }
     }
     private static void printPerkMap(){
         System.out.println("PerkMap: " + perkMap.size());
@@ -40,14 +34,6 @@ public class init {
         for(Map.Entry<String,PerkTree> e : perkTreeMap.entrySet()){
             System.out.println(e.getKey() + " " + e.getValue());
         }
-    }
-    private static void loadActions(){
-        skillMap.put("Wait",new SkillWait("Wait"));
-        skillMap.put("SkipTurn",new SkillWait("SkipTurn"));
-        skillMap.put("Move",new SkillMove("Move"));
-        skillMap.put("shotArrow",new SkillShot("shotArrow"));
-        skillMap.put("QuickShot",new SkillShot("QuickShot"));
-        skillMap.put("Preparation",new SkillShot("Preparation"));
     }
     private static void loadPerks(){
         try {
@@ -87,6 +73,7 @@ public class init {
                 public void endElement(String uri, String localName, String qName) throws SAXException {
                     if (qName.equalsIgnoreCase("perk")) {
                         Perk p=perkBuilder.build();
+                        if(p instanceof CombatPerk && ((CombatPerk) p).getSkill()==null) return;
                         perkMap.put(p.name,p);
                     }
                 }
@@ -100,7 +87,7 @@ public class init {
                         type = false;
                     }
                     if (Action) {
-                        perkBuilder.setSkill((skillMap.get(new String(ch, start, length))));
+                        perkBuilder.setSkill(new String(ch, start, length));
                         Action = false;
                     }
                     if (SPD) {

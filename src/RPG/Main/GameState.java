@@ -1,7 +1,7 @@
 package RPG.Main;
 
 import RPG.Character.Character;
-import RPG.Character.ConcreteCharacter;
+import RPG.Character.CombatCharacter;
 import RPG.Output.StrategyOutput;
 import RPG.Projectiles.StrategyProjectile;
 import RPG.SkillSystem.StrategySkill;
@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 public class GameState {
-    public List<ConcreteCharacter> concreteCharacterList= new ArrayList<>();
+    public List<CombatCharacter> combatCharacterList = new ArrayList<>();
     Level level;
     int round=0;
     final List<Character> characterList;
     boolean EndCondition=false;
     StrategyOutput output;
+    private static GameState gameState;
 
     public GameState(List<Character> characterList,StrategyOutput strategyOutput){
         output=strategyOutput;
@@ -24,28 +25,32 @@ public class GameState {
         this.characterList=characterList;
         createCharacters();
         prepareTurn();
+        gameState=this;
+    }
+    public static GameState getInstance(){
+        if(gameState!=null) return gameState;
+        return null;
     }
     private void createCharacters(){
         for(Character c : characterList){
-            concreteCharacterList.add(new ConcreteCharacter(c,new Position(level.x[1]/3,level.y[1]/2,0),this));
+            combatCharacterList.add(new CombatCharacter(c,new Position(level.x[1]/3,level.y[1]/2,0)));
         }
     }
     private void prepareTurn(){
-        Map<ConcreteCharacter,List<StrategySkill>> actions=new HashMap<>();
-        for (ConcreteCharacter c : concreteCharacterList){
+        Map<CombatCharacter,List<StrategySkill>> actions=new HashMap<>();
+        for (CombatCharacter c : combatCharacterList){
             actions.put(c,c.getActions());
         }
         resolveTurn(actions,10);
     }
-    private void resolveTurn(Map<ConcreteCharacter,List<StrategySkill>> actions,int turnTimer) {
+    private void resolveTurn(Map<CombatCharacter,List<StrategySkill>> actions, int turnTimer) {
         output.resolveingTurn(turnTimer);
-        for(ConcreteCharacter concreteCharacter : concreteCharacterList){
-            if(concreteCharacter.AP>=turnTimer &&
-                    actions.containsKey(concreteCharacter)
-                    &&actions.get(concreteCharacter).size()>0){
-                output.currentCharacterActions(concreteCharacter,actions.get(concreteCharacter).size());
-                actions.get(concreteCharacter).get(0).useSkill();
-                actions.get(concreteCharacter).remove(0);
+        for(CombatCharacter combatCharacter : combatCharacterList){
+            if(combatCharacter.AP>=turnTimer &&
+                    actions.containsKey(combatCharacter)
+                    &&actions.get(combatCharacter).size()>0){
+                actions.get(combatCharacter).get(0).useSkill();
+                actions.get(combatCharacter).remove(0);
             }
         }
         if(turnTimer>0) resolveTurn(actions,turnTimer-1);
@@ -53,16 +58,14 @@ public class GameState {
     private void setTurnOrder(){
 
     }
-    public void changeCharacterPosition(ConcreteCharacter concreteCharacter,Position target){
-        output.CharacterMoved(concreteCharacter,concreteCharacter.getPosition(),target);
-        concreteCharacter.setPosition(target);
+    public void changeCharacterPosition(CombatCharacter combatCharacter, Position target){
+        output.CharacterMoved(combatCharacter, combatCharacter.getPosition(),target);
+        combatCharacter.setPosition(target);
     }
-    public void reduceAP(ConcreteCharacter concreteCharacter,int AP){
-        concreteCharacter.setAP(concreteCharacter.getAP()-AP);
+    public void reduceAP(CombatCharacter combatCharacter, int AP){
+        combatCharacter.setAP(combatCharacter.getAP()-AP);
     }
-    public void createNewProjectile(ConcreteCharacter caster, ConcreteCharacter target, StrategyProjectile strategyProjectile, StrategySkill skill) {
-        System.out.println(skill.skillName);
-        System.out.println(target);
+    public void createNewProjectile(CombatCharacter caster, CombatCharacter target, StrategyProjectile strategyProjectile, StrategySkill skill) {
         output.CharacterRangedAttack(caster,target,strategyProjectile,skill);
         int d=target.resolveHit(strategyProjectile);
         output.CharacterTookDamage(target,d);

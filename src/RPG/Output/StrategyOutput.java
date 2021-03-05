@@ -1,14 +1,13 @@
 package RPG.Output;
 
-import RPG.Character.ConcreteCharacter;
+import RPG.Character.CombatCharacter;
 import RPG.Main.Position;
 import RPG.Projectiles.StrategyProjectile;
 import RPG.SkillSystem.StrategySkill;
 
 public interface StrategyOutput {
-     void CharacterMoved(ConcreteCharacter concreteCharacter, Position from, Position to);
+     void CharacterMoved(CombatCharacter combatCharacter, Position from, Position to);
      void resolveingTurn(int turnTimer);
-     void currentCharacterActions(ConcreteCharacter character,int listSize);
-     void CharacterRangedAttack(ConcreteCharacter caster, ConcreteCharacter target, StrategyProjectile strategyProjectile, StrategySkill skill);
-     void CharacterTookDamage(ConcreteCharacter target,int damage);
+     void CharacterRangedAttack(CombatCharacter caster, CombatCharacter target, StrategyProjectile strategyProjectile, StrategySkill skill);
+     void CharacterTookDamage(CombatCharacter target, int damage);
 }

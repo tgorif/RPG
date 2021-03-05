@@ -1,6 +1,5 @@
 package RPG.SkillSystem;
-import RPG.Character.ConcreteCharacter;
-import RPG.Main.GameState;
+import RPG.Character.CombatCharacter;
 
 public class SkillWait extends StrategySkill {
 
@@ -14,7 +13,7 @@ public class SkillWait extends StrategySkill {
     }
 
     @Override
-    public void simulate() {
+    public void simulate(CombatCharacter combatCharacter) {
 
     }
 
@@ -24,9 +23,9 @@ public class SkillWait extends StrategySkill {
     }
 
     @Override
-    public void setValues(GameState gameState, ConcreteCharacter concreteCharacter) {
+    public void setValues(CombatCharacter combatCharacter) {
         this.gameState=gameState;
-        caster=concreteCharacter;
+        caster= combatCharacter;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class SkillWait extends StrategySkill {
     }
 
     @Override
-    public void validate() {
-        isValid=true;
+    public boolean isValid() {
+        return false;
     }
 }

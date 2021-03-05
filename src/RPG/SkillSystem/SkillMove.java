@@ -1,7 +1,10 @@
 package RPG.SkillSystem;
 
-import RPG.Character.ConcreteCharacter;
+import RPG.Character.CombatCharacter;
 import RPG.Main.*;
+
+import java.util.Collections;
+import java.util.List;
 
 public class SkillMove extends StrategySkill {
     Position target;
@@ -15,7 +18,7 @@ public class SkillMove extends StrategySkill {
         return new SkillMove(skillName);
     }
     @Override
-    public void simulate() {
+    public void simulate(CombatCharacter combatCharacter) {
 
     }
     @Override
@@ -24,20 +27,26 @@ public class SkillMove extends StrategySkill {
         gameState.reduceAP(caster,AP);
     }
     @Override
-    public void setValues(GameState gameState, ConcreteCharacter concreteCharacter) {
+    public void setValues(CombatCharacter combatCharacter) {
        this.gameState=gameState;
-        caster=concreteCharacter;
-        currentPosition=concreteCharacter.getPosition();
+        caster= combatCharacter;
+        currentPosition= combatCharacter.getPosition();
         AP=1;
-        target=new Position(currentPosition.x+caster.movement,currentPosition.y,currentPosition.z);
+        List<Position> list = Level.getCurrentLevel().getPositionsInRange(currentPosition,caster.movement);
+        if(list.size()>0) {
+           Collections.shuffle(list);
+           target=list.get(0);
+        }
+        else{
+            target=currentPosition;
+        }
     }
     @Override
     public void prepareAction() {
 
     }
-
     @Override
-    public void validate() {
-        isValid=true;
+    public boolean isValid() {
+        return false;
     }
 }

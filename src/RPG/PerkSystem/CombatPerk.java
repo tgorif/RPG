@@ -1,16 +1,16 @@
 package RPG.PerkSystem;
 
 import RPG.PerkSystem.Perk;
+import RPG.SkillSystem.FactorySkill;
 import RPG.SkillSystem.StrategySkill;
 
 public class CombatPerk extends Perk {
-    StrategySkill skill;
-
-    public CombatPerk(String name, StrategySkill skill){
+    String skill;
+    public CombatPerk(String name, String skill){
         super(name);
         this.skill=skill;
     }
     public StrategySkill getSkill(){
-        return skill;
+        return FactorySkill.getSkill(name);
     }
 }

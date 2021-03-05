@@ -1,7 +1,6 @@
 package RPG.SkillSystem;
 
-import RPG.Character.ConcreteCharacter;
-import RPG.Main.GameState;
+import RPG.Character.CombatCharacter;
 
 public class SkillEndTurn extends StrategySkill{
 
@@ -14,7 +13,7 @@ public class SkillEndTurn extends StrategySkill{
     }
 
     @Override
-    public void simulate() {
+    public void simulate(CombatCharacter combatCharacter) {
 
     }
     @Override
@@ -23,9 +22,9 @@ public class SkillEndTurn extends StrategySkill{
     }
 
     @Override
-    public void setValues(GameState gameState, ConcreteCharacter concreteCharacter) {
+    public void setValues(CombatCharacter combatCharacter) {
         this.gameState=gameState;
-        caster=concreteCharacter;
+        caster= combatCharacter;
         AP=10;
     }
     @Override
@@ -34,7 +33,7 @@ public class SkillEndTurn extends StrategySkill{
     }
 
     @Override
-    public void validate() {
-        isValid=true;
+    public boolean isValid() {
+        return false;
     }
 }

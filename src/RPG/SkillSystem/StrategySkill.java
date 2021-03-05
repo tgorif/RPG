@@ -4,17 +4,19 @@ import RPG.Main.*;
 
 public abstract class StrategySkill {
      public String skillName;
-     ConcreteCharacter caster;
+     CombatCharacter caster;
      GameState gameState;
      public int AP;
-     public boolean isValid;
      public StrategySkill(String name){
           this.skillName=name;
      }
      public abstract StrategySkill getNewInstance();
-     public abstract void simulate();
+     public abstract void simulate(CombatCharacter combatCharacter);
      public abstract void useSkill();
-     public abstract void setValues(GameState gameState,ConcreteCharacter concreteCharacter);
+     public abstract void setValues(CombatCharacter combatCharacter);
      public abstract void prepareAction();
-     public abstract void validate();
+     public abstract boolean isValid();
+     public void setCaster(CombatCharacter combatCharacter){
+          this.caster=combatCharacter;
+     }
 }
