@@ -21,6 +21,7 @@ public class SkillMove extends StrategySkill {
     @Override
     public void simulate(CombatCharacter combatCharacter) {
         combatCharacter.position=target;
+        combatCharacter.AP-=AP;
         LOGGER.log(java.util.logging.Level.FINE,"Simulated Move fpr " +  combatCharacter.getClass().toString()
                 + " moved to " + combatCharacter.position.toString());
     }
@@ -28,8 +29,8 @@ public class SkillMove extends StrategySkill {
     public void useSkill() {
         LOGGER.log(java.util.logging.Level.FINE,"Using Move for " +
                 caster.name + " moving from " +  caster.position.toString() + " to " + target.toString());
-        gameState.changeCharacterPosition(caster,target);
-        gameState.reduceAP(caster,AP);
+        GameState.getInstance().changeCharacterPosition(caster,target);
+        GameState.getInstance().reduceAP(caster,AP);
     }
     @Override
     public void setValues(CombatCharacter combatCharacter) {

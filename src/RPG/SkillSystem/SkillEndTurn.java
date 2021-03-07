@@ -14,6 +14,7 @@ public class SkillEndTurn extends StrategySkill{
 
     @Override
     public void simulate(CombatCharacter combatCharacter) {
+        combatCharacter.AP=0;
 
     }
     @Override

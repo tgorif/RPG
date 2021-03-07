@@ -9,6 +9,8 @@ import RPG.SkillSystem.StrategySkill;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CombatCharacter {
     public CharacterSkillManager characterSkillManager;
@@ -21,23 +23,28 @@ public class CombatCharacter {
     public Character character;
     public Position position;
     public boolean isBlueTeam;
+    private final Logger LOGGER = Logger.getLogger(CombatCharacter.class.getName());
 
     public CombatCharacter(Character c, Position position) {
+        LOGGER.log(Level.FINE,"Creating CombatCharacter");
         //general
         character=c;
         this.name= c.name;
         this.position=position;
         this.isBlueTeam= c.isBlueTeam;
 
+        LOGGER.log(Level.FINE,"Setting Skills");
         //SkillSetup
         characterSkillManager =new CharacterSkillManager();
         characterSkillManager.setSkills(c.perks);
 
+        LOGGER.log(Level.FINE,"Setting Stats");
         //SetStats
         resolvePreCombatPerks();
+        LOGGER.log(Level.INFO,"Created Character " + name + " with Stats HP " + HP + " SPD " + SPD + " AP " + AP );
     }
     private CombatCharacter(CombatCharacter combatCharacter){
-        this.name= character.name;;
+        this.name= combatCharacter.name;;
         this.HP= combatCharacter.HP;
         this.SPD= combatCharacter.SPD;
         this.movement= combatCharacter.movement;
@@ -79,10 +86,12 @@ public class CombatCharacter {
         result.add(best);
         SimulatedCharacter simulatedCharacter= new SimulatedCharacter(this);
         result.get(0).simulate(simulatedCharacter);
+        LOGGER.log(Level.INFO,"SimulatedCharacter has " + simulatedCharacter.AP + " AP left");
         if(simulatedCharacter.AP>0) result.addAll(simulatedCharacter.getActions());
         for(StrategySkill skill : result){
             skill.setCaster(this);
         }
+        LOGGER.log(Level.INFO,name +"returned ActionList with size " + result.size());
         return result;
     }
     private List<StrategySkill> getPossibleActions(){
@@ -109,7 +118,8 @@ public class CombatCharacter {
         public SimulatedCharacter(CombatCharacter combatCharacter){
             super(combatCharacter);
             origin=combatCharacter;
-
+            LOGGER.log(Level.INFO,"created SimulatedCharacter " + name
+            + "with Stats " + " AP " + AP);
         }
         @Override
         public List<StrategySkill> getActions(){
@@ -120,6 +130,7 @@ public class CombatCharacter {
             SimulatedCharacter simulatedCharacter= new SimulatedCharacter(this);
             result.get(0).simulate(simulatedCharacter);
             if(simulatedCharacter.AP>0) result.addAll(simulatedCharacter.getActions());
+            LOGGER.log(Level.INFO,"SimulatedCharacter " + name +"returned ActionList with size " + result.size());
             return result;
         }
     }

@@ -4,7 +4,7 @@
             <Name>Base</Name>
             <Perk>wait</Perk>
             <Perk>move</Perk>
-            <Perk>skip</Perk>
+            <Perk>skipturn</Perk>
             <Perk>baseStats</Perk>
             <Root>baseStats</Root>
             <Connection>
@@ -17,7 +17,7 @@
             </Connection>
             <Connection>
                 <Ancestor>wait</Ancestor>
-                <descendant>skip</descendant>
+                <descendant>skipturn</descendant>
             </Connection>
         </Class>
         <Class>

@@ -1,6 +1,7 @@
 package RPG.SkillSystem;
 
 import RPG.Character.CombatCharacter;
+import RPG.Main.GameState;
 import RPG.Projectiles.ProjectileArrow;
 import RPG.Projectiles.StrategyProjectile;
 
@@ -21,7 +22,7 @@ public class SkillShot extends StrategySkill{
     }
     @Override
     public void simulate(CombatCharacter combatCharacter) {
-
+        combatCharacter.AP-=AP;
     }
     @Override
     public void useSkill() {
@@ -29,13 +30,14 @@ public class SkillShot extends StrategySkill{
     }
     @Override
     public void setValues(CombatCharacter combatCharacter) {
-        this.gameState=gameState;
         caster= combatCharacter;
     }
     @Override
     public void prepareAction() {
+        AP=1;
         List<CombatCharacter> targets=new ArrayList<>();
-        for(CombatCharacter c : gameState.combatCharacterList){
+        if(GameState.getInstance()==null) System.out.println("gamestate==null");
+        for(CombatCharacter c : GameState.getInstance().combatCharacterList){
             if(c.isBlueTeam!=caster.isBlueTeam) targets.add(c);
         }
         Collections.shuffle(targets);

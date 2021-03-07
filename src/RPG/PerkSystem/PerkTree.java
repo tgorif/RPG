@@ -2,8 +2,11 @@ package RPG.PerkSystem;
 
 import java.util.*;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PerkTree {
+    Logger LOGGER =Logger.getLogger(PerkTree.class.getName());
     public String name;
     List<Node> root=new ArrayList<>();
     Map<Perk,Node> nodes = new HashMap<>();
@@ -18,19 +21,20 @@ public class PerkTree {
     }
     private void setNodes(List<String> perks){
         for(String s : perks){
-            Perk perk = Perk.perkMap.get(s);
-            nodes.put(perk,new Node(perk));
+            Perk perk = Perk.getPerk(s);
+            if(perk==null) LOGGER.log(Level.SEVERE,"PerkTree " + name + " did not find Perk " + s);
+            else nodes.put(perk,new Node(perk));
         }
     }
     private void setRoot(List<String> roots){
         for (String s : roots){
-            root.add(nodes.get(Perk.perkMap.get(s)));
+            root.add(nodes.get(Perk.getPerk(s)));
         }
     }
     private void setConnections(List<String> ancestors, List<String> descendants){
         for(int i=0;i<ancestors.size();i++){
-            Node a =nodes.get(Perk.perkMap.get(ancestors.get(i)));
-            Node b =nodes.get(Perk.perkMap.get(descendants.get(i)));
+            Node a =nodes.get(Perk.getPerk(ancestors.get(i)));
+            Node b =nodes.get(Perk.getPerk(descendants.get(i)));
             a.next.add(b);
         }
     }

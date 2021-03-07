@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Character {
+    Logger LOGGER =Logger.getLogger(Character.class.getName());
     Set<Perk> perks=new HashSet<>();
     List<PerkTree> classes = new ArrayList<>();
     String name;
@@ -16,9 +19,11 @@ public class Character {
         this.name=name;
     }
     public void learn(PerkTree p){
+        if(p==null) LOGGER.log(Level.SEVERE,"Character "  + name + " learned PerkTree with value null ");
         classes.add(p);
     }
     public void learn(Perk p){
+        if(p==null) LOGGER.log(Level.SEVERE,"Character "  + name + " learned Perk with value null ");
         perks.add(p);
     }
     public List<Perk> getLearnablePerks(){

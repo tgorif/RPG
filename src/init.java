@@ -19,9 +19,7 @@ public class init {
     static Map<String, PerkTree> perkTreeMap = new HashMap<>();
     static void start(){
         loadPerks();
-        Perk.perkMap=perkMap;
         loadPerkTree();
-
     }
     private static void printPerkMap(){
         System.out.println("PerkMap: " + perkMap.size());

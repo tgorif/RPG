@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class GameState {
+    static Logger LOGGER =Logger.getLogger(GameState.class.getName());
     public List<CombatCharacter> combatCharacterList = new ArrayList<>();
     Level level;
     int round=0;
@@ -23,12 +25,14 @@ public class GameState {
         output=strategyOutput;
         level=new Level();
         this.characterList=characterList;
+        gameState=this;
         createCharacters();
         prepareTurn();
-        gameState=this;
+        LOGGER.log(java.util.logging.Level.FINE,"Created gamestate " + GameState.getInstance().toString());
     }
     public static GameState getInstance(){
         if(gameState!=null) return gameState;
+        LOGGER.log(java.util.logging.Level.SEVERE,"returned null gamestate");
         return null;
     }
     private void createCharacters(){

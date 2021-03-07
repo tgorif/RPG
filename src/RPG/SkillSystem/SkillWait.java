@@ -14,7 +14,7 @@ public class SkillWait extends StrategySkill {
 
     @Override
     public void simulate(CombatCharacter combatCharacter) {
-
+        combatCharacter.AP-=AP;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class SkillWait extends StrategySkill {
 
     @Override
     public void setValues(CombatCharacter combatCharacter) {
-        this.gameState=gameState;
+        AP=1;
         caster= combatCharacter;
     }
 

@@ -4,11 +4,23 @@ import RPG.SkillSystem.StrategySkill;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Perk {
+    Logger LOGGER =Logger.getLogger(Perk.class.getName());
     public String name;
-    public static Map<String,Perk> perkMap=new HashMap<>();
+    private static Map<String,Perk> perkMap=new HashMap<>();
     public Perk(String name){
         this.name=name;
+        perkMap.put(name,this);
+    }
+    public static Map<String,Perk> getPerkMap(){
+        return perkMap;
+    }
+    public static Perk getPerk(String s){
+        if(perkMap.containsKey(s)) return perkMap.get(s);
+        else return null;
     }
     public static class PerkBuilder{
         private int hp=0;
@@ -17,6 +29,8 @@ public class Perk {
         private String name="";
         String skill=null;
         String type;
+        private Logger LOGGER=Logger.getLogger((Perk.PerkBuilder.class.getName()));
+
         public PerkBuilder(){
 
         }
@@ -48,6 +62,8 @@ public class Perk {
             return new StatPerk(hp,SPD,movement,name);
         }
         public CombatPerk buildCombatPerk(){
+            if(name==null) LOGGER.log(Level.SEVERE,"building Perk with name==null");
+            if(name.length()<1) LOGGER.log(Level.SEVERE,"building Perk with name length==0");
             return new CombatPerk(name,skill);
         }
         public Perk build(){
