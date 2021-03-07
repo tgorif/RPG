@@ -7,10 +7,10 @@ public abstract class StrategySkill {
      CombatCharacter caster;
      GameState gameState;
      public int AP;
-     public StrategySkill(String name){
+     public StrategySkill(String name,int cost){
           this.skillName=name;
+          this.AP=cost;
      }
-     public abstract StrategySkill getNewInstance();
      public abstract void simulate(CombatCharacter combatCharacter);
      public abstract void useSkill();
      public abstract void setValues(CombatCharacter combatCharacter);

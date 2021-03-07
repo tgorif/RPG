@@ -26,6 +26,17 @@ public class Console implements StrategyOutput {
         OutputMethod();
         System.out.println(target.name + " took "  + damage);
     }
+    public void endCondition(String winner){
+        OutputMethod();
+        System.out.println(winner + " won");
+    }
+
+    @Override
+    public void characterDied(CombatCharacter combatCharacter) {
+        OutputMethod();
+        System.out.println(combatCharacter.name + " died" + combatCharacter.HP);
+    }
+
     private void OutputMethod(){
         System.out.print("Console: ");
     }

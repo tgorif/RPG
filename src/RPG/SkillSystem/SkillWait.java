@@ -3,13 +3,8 @@ import RPG.Character.CombatCharacter;
 
 public class SkillWait extends StrategySkill {
 
-    public SkillWait(String name) {
-        super(name);
-    }
-
-    @Override
-    public SkillWait getNewInstance() {
-        return new SkillWait(skillName);
+    public SkillWait(String name,int cost) {
+        super(name,cost);
     }
 
     @Override

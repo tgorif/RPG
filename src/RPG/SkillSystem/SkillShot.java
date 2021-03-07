@@ -2,23 +2,28 @@ package RPG.SkillSystem;
 
 import RPG.Character.CombatCharacter;
 import RPG.Main.GameState;
+import RPG.Main.Level;
 import RPG.Projectiles.ProjectileArrow;
 import RPG.Projectiles.StrategyProjectile;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class SkillShot extends StrategySkill{
     CombatCharacter target;
-    StrategyProjectile strategyProjectile;
-    public SkillShot(String name) {
-        super(name);
+    Method projectile;
+    int range;
+    int damage;
+    public SkillShot(String name,int cost) {
+        super(name,cost);
     }
-
-    @Override
-    public StrategySkill getNewInstance() {
-        return new SkillShot(skillName);
+    public SkillShot(String name,int range,int cost,int damage,Method method){
+        super(name,cost);
+        this.range=range;
+        projectile=method;
+        this.damage=damage;
     }
     @Override
     public void simulate(CombatCharacter combatCharacter) {
@@ -26,7 +31,13 @@ public class SkillShot extends StrategySkill{
     }
     @Override
     public void useSkill() {
-        GameState.getInstance().createNewProjectile(caster,target,new ProjectileArrow(10),this);
+        try {
+            GameState.getInstance().createNewProjectile(caster, target,
+                    ((StrategyProjectile) projectile.invoke(this,damage)), this);
+        }
+        catch (Exception e){
+
+        }
     }
     @Override
     public void setValues(CombatCharacter combatCharacter) {
@@ -45,6 +56,8 @@ public class SkillShot extends StrategySkill{
     @Override
     public boolean isValid() {
         return target!=null
-        || caster!=null;
+                && caster!=null
+                &&!caster.statusEffects.containsKey("dead")
+                && Level.getCurrentLevel().getDistance(caster.getPosition(), target.getPosition())<=range;
     }
 }

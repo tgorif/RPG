@@ -4,14 +4,9 @@ import RPG.Character.CombatCharacter;
 
 public class SkillEndTurn extends StrategySkill{
 
-    public SkillEndTurn(String name) {
-        super(name);
+    public SkillEndTurn(String name,int cost) {
+        super(name,cost);
     }
-    @Override
-    public SkillEndTurn getNewInstance() {
-        return new SkillEndTurn(skillName);
-    }
-
     @Override
     public void simulate(CombatCharacter combatCharacter) {
         combatCharacter.AP=0;

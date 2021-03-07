@@ -5,9 +5,10 @@ public class ProjectileArrow implements StrategyProjectile {
     public ProjectileArrow(int damage){
         this.damage=damage;
     }
+
     @Override
     public void setDamage() {
-     damage=10;
+     damage=1;
     }
 
     @Override

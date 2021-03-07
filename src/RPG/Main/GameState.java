@@ -14,11 +14,10 @@ import java.util.logging.Logger;
 public class GameState {
     static Logger LOGGER =Logger.getLogger(GameState.class.getName());
     public List<CombatCharacter> combatCharacterList = new ArrayList<>();
+    private StrategyEndCondition endCondition=new Domination();
     Level level;
-    int round=0;
     final List<Character> characterList;
-    boolean EndCondition=false;
-    StrategyOutput output;
+    public StrategyOutput output;
     private static GameState gameState;
 
     public GameState(List<Character> characterList,StrategyOutput strategyOutput){
@@ -50,14 +49,18 @@ public class GameState {
     private void resolveTurn(Map<CombatCharacter,List<StrategySkill>> actions, int turnTimer) {
         output.resolveingTurn(turnTimer);
         for(CombatCharacter combatCharacter : combatCharacterList){
-            if(combatCharacter.AP>=turnTimer &&
-                    actions.containsKey(combatCharacter)
-                    &&actions.get(combatCharacter).size()>0){
+            if(combatCharacter.AP>=turnTimer
+                    && actions.containsKey(combatCharacter)
+                    &&actions.get(combatCharacter).size()>0
+                    &&actions.get(combatCharacter).get(0).isValid()){
                 actions.get(combatCharacter).get(0).useSkill();
                 actions.get(combatCharacter).remove(0);
             }
         }
-        if(turnTimer>0) resolveTurn(actions,turnTimer-1);
+        if(!endCondition.checkEndCondition()){
+            if(turnTimer>0) resolveTurn(actions,turnTimer-1);
+            else prepareTurn();
+        }
     }
     private void setTurnOrder(){
 

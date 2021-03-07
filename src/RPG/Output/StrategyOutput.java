@@ -10,4 +10,6 @@ public interface StrategyOutput {
      void resolveingTurn(int turnTimer);
      void CharacterRangedAttack(CombatCharacter caster, CombatCharacter target, StrategyProjectile strategyProjectile, StrategySkill skill);
      void CharacterTookDamage(CombatCharacter target, int damage);
+     void endCondition(String winner);
+     void characterDied(CombatCharacter combatCharacter);
 }

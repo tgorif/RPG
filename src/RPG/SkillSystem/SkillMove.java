@@ -11,12 +11,8 @@ public class SkillMove extends StrategySkill {
     Position currentPosition;
     Logger LOGGER =Logger.getLogger(SkillMove.class.getName());
 
-    public SkillMove(String name) {
-        super(name);
-    }
-    @Override
-    public StrategySkill getNewInstance() {
-        return new SkillMove(skillName);
+    public SkillMove(String name,int cost) {
+        super(name,cost);
     }
     @Override
     public void simulate(CombatCharacter combatCharacter) {
@@ -63,6 +59,7 @@ public class SkillMove extends StrategySkill {
         return target != null
                 && caster != null
                 && Level.getCurrentLevel().isValid(target)
-                && Level.getCurrentLevel().getDistance(target, caster.getPosition()) <= caster.movement;
+                && Level.getCurrentLevel().getDistance(target, caster.getPosition()) <= caster.movement
+                &&!caster.statusEffects.containsKey("dead");
     }
 }

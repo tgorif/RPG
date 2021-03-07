@@ -1,19 +1,22 @@
 package RPG.Character;
 
+import RPG.Main.GameState;
 import RPG.Main.Position;
 import RPG.PerkSystem.Perk;
 import RPG.PerkSystem.StatPerk;
 import RPG.Projectiles.StrategyProjectile;
 import RPG.SkillSystem.FactorySkill;
 import RPG.SkillSystem.StrategySkill;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import RPG.StatusEffects.StatusDead;
+import RPG.StatusEffects.StrategyStatus;
+
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CombatCharacter {
     public CharacterSkillManager characterSkillManager;
+    public Map<String,StrategyStatus> statusEffects=new HashMap<>();
     public String name;
     public int HP;
     public int SPD;
@@ -110,8 +113,16 @@ public class CombatCharacter {
     }
     public int resolveHit(StrategyProjectile strategyProjectile){
         int d=strategyProjectile.getDamage();
-        HP-=d;
+        changeHP(-d);
+
         return d;
+    }
+    public void changeHP(int x){
+        this.HP+=x;
+        if (this.HP<=0) {
+            statusEffects.put("dead", new StatusDead());
+            GameState.getInstance().output.characterDied(this);
+        }
     }
     class SimulatedCharacter extends CombatCharacter{
         CombatCharacter origin;
