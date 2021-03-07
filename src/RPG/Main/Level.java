@@ -54,6 +54,14 @@ public class Level {
         }
         return result;
     }
+    public int getDistance(Position a,Position b){
+        int result=0;
+        result+=Math.abs(a.x-b.x);
+        result+=Math.abs(a.y-b.y);
+        result+=Math.abs(a.z-b.z);
+        return result;
+
+    }
     public boolean isEqualPosition(Position a,Position b){
         if(a.x!=b.x || a.y!=b.y || a.z!=b.z) return false;
         return true;

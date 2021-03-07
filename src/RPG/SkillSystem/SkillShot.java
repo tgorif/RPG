@@ -26,17 +26,13 @@ public class SkillShot extends StrategySkill{
     }
     @Override
     public void useSkill() {
-        gameState.createNewProjectile(caster,target,new ProjectileArrow(10),this);
+        GameState.getInstance().createNewProjectile(caster,target,new ProjectileArrow(10),this);
     }
     @Override
     public void setValues(CombatCharacter combatCharacter) {
         caster= combatCharacter;
-    }
-    @Override
-    public void prepareAction() {
-        AP=1;
+        AP=3;
         List<CombatCharacter> targets=new ArrayList<>();
-        if(GameState.getInstance()==null) System.out.println("gamestate==null");
         for(CombatCharacter c : GameState.getInstance().combatCharacterList){
             if(c.isBlueTeam!=caster.isBlueTeam) targets.add(c);
         }
@@ -44,7 +40,11 @@ public class SkillShot extends StrategySkill{
         if(targets.size()>0) target=targets.get(0);
     }
     @Override
+    public void prepareAction() {
+    }
+    @Override
     public boolean isValid() {
-        return false;
+        return target!=null
+        || caster!=null;
     }
 }

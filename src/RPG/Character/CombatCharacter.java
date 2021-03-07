@@ -86,12 +86,12 @@ public class CombatCharacter {
         result.add(best);
         SimulatedCharacter simulatedCharacter= new SimulatedCharacter(this);
         result.get(0).simulate(simulatedCharacter);
-        LOGGER.log(Level.INFO,"SimulatedCharacter has " + simulatedCharacter.AP + " AP left");
+        LOGGER.log(Level.FINE,"SimulatedCharacter has " + simulatedCharacter.AP + " AP left");
         if(simulatedCharacter.AP>0) result.addAll(simulatedCharacter.getActions());
         for(StrategySkill skill : result){
             skill.setCaster(this);
         }
-        LOGGER.log(Level.INFO,name +"returned ActionList with size " + result.size());
+        LOGGER.log(Level.FINE,name +"returned ActionList with size " + result.size());
         return result;
     }
     private List<StrategySkill> getPossibleActions(){
@@ -118,7 +118,7 @@ public class CombatCharacter {
         public SimulatedCharacter(CombatCharacter combatCharacter){
             super(combatCharacter);
             origin=combatCharacter;
-            LOGGER.log(Level.INFO,"created SimulatedCharacter " + name
+            LOGGER.log(Level.FINE,"created SimulatedCharacter " + name
             + "with Stats " + " AP " + AP);
         }
         @Override
@@ -130,8 +130,18 @@ public class CombatCharacter {
             SimulatedCharacter simulatedCharacter= new SimulatedCharacter(this);
             result.get(0).simulate(simulatedCharacter);
             if(simulatedCharacter.AP>0) result.addAll(simulatedCharacter.getActions());
-            LOGGER.log(Level.INFO,"SimulatedCharacter " + name +"returned ActionList with size " + result.size());
+            LOGGER.log(Level.FINE,"SimulatedCharacter " + name +"returned ActionList with size " + result.size());
             return result;
+        }
+        private List<StrategySkill> getPossibleActions(){
+            List<StrategySkill> options = new ArrayList<>();
+            for(String s : characterSkillManager.skillList){
+                StrategySkill skill = FactorySkill.getSkill(s);
+                skill.setValues(this);
+                skill.prepareAction();
+                if(skill.isValid()) options.add(skill);
+            }
+            return options;
         }
     }
 }

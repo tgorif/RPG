@@ -20,6 +20,10 @@ public class SkillMove extends StrategySkill {
     }
     @Override
     public void simulate(CombatCharacter combatCharacter) {
+        if(!combatCharacter.getClass().toString().equals("class RPG.Character.CombatCharacter$SimulatedCharacter")){
+            LOGGER.log(java.util.logging.Level.SEVERE,"simulating on an instance of "
+                    + combatCharacter.getClass().toString());
+        }
         combatCharacter.position=target;
         combatCharacter.AP-=AP;
         LOGGER.log(java.util.logging.Level.FINE,"Simulated Move fpr " +  combatCharacter.getClass().toString()
@@ -45,6 +49,10 @@ public class SkillMove extends StrategySkill {
         else{
             target=currentPosition;
         }
+        LOGGER.log(java.util.logging.Level.FINE,"Setting Values for "
+                + caster.name + " " + caster.getClass().toString()
+                + "current Position" + caster.position.toString()
+                +" moving to " + target.toString());
     }
     @Override
     public void prepareAction() {
@@ -52,6 +60,9 @@ public class SkillMove extends StrategySkill {
     }
     @Override
     public boolean isValid() {
-        return true;
+        return target != null
+                && caster != null
+                && Level.getCurrentLevel().isValid(target)
+                && Level.getCurrentLevel().getDistance(target, caster.getPosition()) <= caster.movement;
     }
 }

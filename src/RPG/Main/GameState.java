@@ -64,6 +64,12 @@ public class GameState {
     }
     public void changeCharacterPosition(CombatCharacter combatCharacter, Position target){
         output.CharacterMoved(combatCharacter, combatCharacter.getPosition(),target);
+        if(Level.currentLevel.isEqualPosition(target,combatCharacter.getPosition())) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Character Position & target are the same");
+        }
+        else if(Level.currentLevel.getDistance(target,combatCharacter.getPosition())>combatCharacter.movement){
+            LOGGER.log(java.util.logging.Level.SEVERE, "Character cant reach target");
+        }
         combatCharacter.setPosition(target);
     }
     public void reduceAP(CombatCharacter combatCharacter, int AP){
