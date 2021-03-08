@@ -11,7 +11,7 @@ public abstract class StrategySkill {
           this.skillName=name;
           this.AP=cost;
      }
-     public abstract void simulate(CombatCharacter combatCharacter);
+     public abstract int simulate(CombatCharacter combatCharacter);
      public abstract void useSkill();
      public abstract void setValues(CombatCharacter combatCharacter);
      public abstract void prepareAction();

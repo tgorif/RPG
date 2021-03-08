@@ -7,9 +7,9 @@ import RPG.PerkSystem.StatPerk;
 import RPG.Projectiles.StrategyProjectile;
 import RPG.SkillSystem.FactorySkill;
 import RPG.SkillSystem.StrategySkill;
+import RPG.StatusEffects.FactoryStatusEffect;
 import RPG.StatusEffects.StatusDead;
 import RPG.StatusEffects.StrategyStatus;
-
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +23,7 @@ public class CombatCharacter {
     public int movement;
     public int AP;
     public int maxAP;
+    public int maxHP;
     public Character character;
     public Position position;
     public boolean isBlueTeam;
@@ -66,6 +67,7 @@ public class CombatCharacter {
         }
         maxAP=movement;
         AP=maxAP;
+        maxHP=HP;
     }
     public void setPosition(Position target){
         this.position=target;
@@ -120,7 +122,8 @@ public class CombatCharacter {
     public void changeHP(int x){
         this.HP+=x;
         if (this.HP<=0) {
-            statusEffects.put("dead", new StatusDead());
+            StrategyStatus s= FactoryStatusEffect.getStatus("Dead",this);
+            statusEffects.put("Dead", s);
             GameState.getInstance().output.characterDied(this);
         }
     }

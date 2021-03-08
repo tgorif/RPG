@@ -1,4 +1,14 @@
 package RPG.StatusEffects;
 
-public class StatusDead implements StrategyStatus{
+import RPG.Character.CombatCharacter;
+
+public class StatusDead extends StrategyStatus {
+    StatusDead(CombatCharacter owner) {
+        super(owner);
+    }
+
+    @Override
+    boolean expired() {
+        return false;
+    }
 }

@@ -15,7 +15,7 @@ public class SkillMove extends StrategySkill {
         super(name,cost);
     }
     @Override
-    public void simulate(CombatCharacter combatCharacter) {
+    public int simulate(CombatCharacter combatCharacter) {
         if(!combatCharacter.getClass().toString().equals("class RPG.Character.CombatCharacter$SimulatedCharacter")){
             LOGGER.log(java.util.logging.Level.SEVERE,"simulating on an instance of "
                     + combatCharacter.getClass().toString());
@@ -24,6 +24,7 @@ public class SkillMove extends StrategySkill {
         combatCharacter.AP-=AP;
         LOGGER.log(java.util.logging.Level.FINE,"Simulated Move fpr " +  combatCharacter.getClass().toString()
                 + " moved to " + combatCharacter.position.toString());
+        return 1;
     }
     @Override
     public void useSkill() {

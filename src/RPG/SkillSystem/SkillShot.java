@@ -3,41 +3,36 @@ package RPG.SkillSystem;
 import RPG.Character.CombatCharacter;
 import RPG.Main.GameState;
 import RPG.Main.Level;
-import RPG.Projectiles.ProjectileArrow;
-import RPG.Projectiles.StrategyProjectile;
-
-import java.lang.reflect.Method;
+import RPG.Projectiles.FactoryProjectile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class SkillShot extends StrategySkill{
     CombatCharacter target;
-    Method projectile;
+    String projectileName;
     int range;
     int damage;
     public SkillShot(String name,int cost) {
         super(name,cost);
     }
-    public SkillShot(String name,int range,int cost,int damage,Method method){
+    public SkillShot(String name, int range, int cost, int damage, String projectileName){
         super(name,cost);
         this.range=range;
-        projectile=method;
+        this.projectileName=projectileName;
         this.damage=damage;
     }
     @Override
-    public void simulate(CombatCharacter combatCharacter) {
+    public int simulate(CombatCharacter combatCharacter) {
         combatCharacter.AP-=AP;
+        if(target.HP-damage<=0) return  Integer.MAX_VALUE;
+        else{
+            return damage;
+        }
     }
     @Override
     public void useSkill() {
-        try {
-            GameState.getInstance().createNewProjectile(caster, target,
-                    ((StrategyProjectile) projectile.invoke(this,damage)), this);
-        }
-        catch (Exception e){
-
-        }
+            GameState.getInstance().createNewProjectile(caster, target, FactoryProjectile.getProjectile(projectileName), this);
     }
     @Override
     public void setValues(CombatCharacter combatCharacter) {

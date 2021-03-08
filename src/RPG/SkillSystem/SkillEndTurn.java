@@ -8,9 +8,9 @@ public class SkillEndTurn extends StrategySkill{
         super(name,cost);
     }
     @Override
-    public void simulate(CombatCharacter combatCharacter) {
+    public int simulate(CombatCharacter combatCharacter) {
         combatCharacter.AP=0;
-
+        return 0;
     }
     @Override
     public void useSkill() {

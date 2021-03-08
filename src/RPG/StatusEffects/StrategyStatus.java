@@ -1,4 +1,14 @@
 package RPG.StatusEffects;
 
-public interface StrategyStatus {
+import RPG.Character.CombatCharacter;
+
+public abstract class StrategyStatus {
+    CombatCharacter owner;
+    StrategyStatus(CombatCharacter owner){
+        this.owner=owner;
+    }
+    StrategyStatus(){
+
+    }
+    abstract boolean expired();
 }
