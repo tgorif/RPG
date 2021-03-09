@@ -3,22 +3,18 @@ package RPG.Main;
 import RPG.Character.Character;
 import RPG.Character.CombatCharacter;
 import RPG.Output.StrategyOutput;
-import RPG.Projectiles.StrategyProjectile;
-import RPG.SkillSystem.StrategySkill;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class GameState {
     static Logger LOGGER =Logger.getLogger(GameState.class.getName());
     public List<CombatCharacter> combatCharacterList = new ArrayList<>();
-    private StrategyEndCondition endCondition=new Domination();
+    private final StrategyEndCondition endCondition=new Domination();
     Level level;
     final List<Character> characterList;
     public StrategyOutput output;
     private static GameState gameState;
+    int turnCounter=0;
 
     public GameState(List<Character> characterList,StrategyOutput strategyOutput){
         output=strategyOutput;
@@ -26,45 +22,57 @@ public class GameState {
         this.characterList=characterList;
         gameState=this;
         createCharacters();
-        prepareTurn();
-        LOGGER.log(java.util.logging.Level.FINE,"Created gamestate " + GameState.getInstance().toString());
+        LOGGER.log(java.util.logging.Level.FINE,"Created gameState " + GameState.getInstance().toString());
+        start();
     }
+
+    /**
+     * calls setTurnOrder and resolveTurn until endCondition is fulfilled
+     */
+    public void start(){
+        while(!endCondition.checkEndCondition()) {
+            setTurnOrder();
+            resolveTurn();
+        }
+    }
+
+    /**
+     *
+     * @return current gameState
+     */
     public static GameState getInstance(){
-        if(gameState!=null) return gameState;
-        LOGGER.log(java.util.logging.Level.SEVERE,"returned null gamestate");
-        return null;
+        if( gameState==null) LOGGER.log(java.util.logging.Level.SEVERE,"returned null gameState");
+        return gameState;
     }
+
+    /**
+     * created combatCharacter from characters in characterList and assigns a Position to them
+     * TODO set actually sensible startingPositions
+     */
     private void createCharacters(){
         for(Character c : characterList){
             combatCharacterList.add(new CombatCharacter(c,new Position(level.x[1]/3,level.y[1]/2,0)));
         }
     }
-    private void prepareTurn(){
-        Map<CombatCharacter,List<StrategySkill>> actions=new HashMap<>();
-        for (CombatCharacter c : combatCharacterList){
-            actions.put(c,c.getActions());
-        }
-        resolveTurn(actions,10);
-    }
-    private void resolveTurn(Map<CombatCharacter,List<StrategySkill>> actions, int turnTimer) {
-        output.resolveingTurn(turnTimer);
-        for(CombatCharacter combatCharacter : combatCharacterList){
-            if(combatCharacter.AP>=turnTimer
-                    && actions.containsKey(combatCharacter)
-                    &&actions.get(combatCharacter).size()>0
-                    &&actions.get(combatCharacter).get(0).isValid()){
-                actions.get(combatCharacter).get(0).useSkill();
-                actions.get(combatCharacter).remove(0);
-            }
-        }
-        if(!endCondition.checkEndCondition()){
-            if(turnTimer>0) resolveTurn(actions,turnTimer-1);
-            else prepareTurn();
-        }
-    }
-    private void setTurnOrder(){
 
+    /**
+     * Calls resolveTurn Method for each character in combatCharacterList
+     * incrementsTurnCounter
+     */
+    private void resolveTurn() {
+        output.resolveingTurn(turnCounter);
+        for (CombatCharacter combatCharacter : combatCharacterList){
+            combatCharacter.takeTurn();
+        }
+        turnCounter++;
     }
+    /**
+     * Orders combatCharacter list according to SPD
+     */
+    private void setTurnOrder(){
+        combatCharacterList.sort((combatCharacter, t1) -> Integer.compare(t1.SPD, combatCharacter.SPD));
+    }
+    /*
     public void changeCharacterPosition(CombatCharacter combatCharacter, Position target){
         output.CharacterMoved(combatCharacter, combatCharacter.getPosition(),target);
         if(Level.currentLevel.isEqualPosition(target,combatCharacter.getPosition())) {
@@ -82,6 +90,6 @@ public class GameState {
         output.CharacterRangedAttack(caster,target,strategyProjectile,skill);
         int d=target.resolveHit(strategyProjectile);
         output.CharacterTookDamage(target,d);
-
     }
+    */
 }

@@ -1,22 +1,17 @@
 package RPG.SkillSystem;
 import RPG.Character.*;
-import RPG.Main.*;
 
 public abstract class StrategySkill {
      public String skillName;
-     CombatCharacter caster;
-     GameState gameState;
-     public int AP;
-     public StrategySkill(String name,int cost){
+     public final CombatCharacter caster;
+     public int cost;
+     public StrategySkill(String name,int cost,CombatCharacter combatCharacter){
           this.skillName=name;
-          this.AP=cost;
+          this.cost=cost;
+          caster=combatCharacter;
      }
-     public abstract int simulate(CombatCharacter combatCharacter);
+     public abstract int simulate();
      public abstract void useSkill();
-     public abstract void setValues(CombatCharacter combatCharacter);
-     public abstract void prepareAction();
      public abstract boolean isValid();
-     public void setCaster(CombatCharacter combatCharacter){
-          this.caster=combatCharacter;
-     }
+
 }

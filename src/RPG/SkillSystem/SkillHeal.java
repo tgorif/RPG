@@ -1,4 +1,34 @@
 package RPG.SkillSystem;
 
-public class SkillHeal {
+import RPG.Character.CombatCharacter;
+
+public class SkillHeal extends StrategySkill{
+    public SkillHeal(String name, int cost) {
+        super(name, cost);
+    }
+
+    @Override
+    public int simulate(CombatCharacter combatCharacter) {
+        return 0;
+    }
+
+    @Override
+    public void useSkill() {
+
+    }
+
+    @Override
+    public void setValues(CombatCharacter combatCharacter) {
+
+    }
+
+    @Override
+    public void prepareAction() {
+
+    }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
 }

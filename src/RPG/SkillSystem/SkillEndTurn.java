@@ -7,6 +7,12 @@ public class SkillEndTurn extends StrategySkill{
     public SkillEndTurn(String name,int cost) {
         super(name,cost);
     }
+
+    @Override
+    public int simulate() {
+        return 0;
+    }
+
     @Override
     public int simulate(CombatCharacter combatCharacter) {
         combatCharacter.AP=0;
