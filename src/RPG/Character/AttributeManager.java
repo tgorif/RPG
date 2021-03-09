@@ -84,6 +84,18 @@ public class AttributeManager {
                     + " maxAP " + maxAP);
         }
     }
+    private AttributeManager(AttributeManager original){
+        this.HP=original.getHP();
+        this.SPD = original.getSPD();
+        this.movement = original.getMovement();
+        this.AP = original.getAP();
+        this.maxAP = original.getMaxAP();
+        this.maxHP = original.getMaxHP();
+        this.owner=original.owner;
+    }
+    public AttributeManager clone(){
+        return new AttributeManager(this);
+    }
     public void turnStart(){
         this.AP=maxAP;
     }

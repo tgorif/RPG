@@ -20,6 +20,17 @@ public class CharacterSkillManager {
     public CharacterSkillManager(){
 
     }
+    private CharacterSkillManager(CharacterSkillManager original){
+        for(StrategySkill s : original.skillList){
+            this.skillList.add(FactorySkill.getSkill(s.skillName));
+        }
+        for(StatPerk s : original.preCombatPerks){
+            this.preCombatPerks.add(s);
+        }
+    }
+    public CharacterSkillManager clone(){
+        return new CharacterSkillManager(this);
+    }
     public void setSkills(Set<Perk> perks){
         LOGGER.log(Level.FINE,"setting Perks with list of size " +perks.size());
         for (Perk perk : perks){

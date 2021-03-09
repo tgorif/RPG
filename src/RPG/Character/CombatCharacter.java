@@ -30,9 +30,18 @@ public class CombatCharacter {
                 + attributes.getAP());
         controller=new AICharacterTurn();
     }
+    private CombatCharacter(CombatCharacter original){
+        this.characterInfo=original.characterInfo.clone();
+        this.characterSkillManager= original.characterSkillManager.clone();
+        this.attributes=original.attributes.clone();
+        this.controller=original.controller;
+    }
     public void takeTurn(){
         LOGGER.log(Level.FINE,characterInfo.getName() + " taking turn");
         attributes.turnStart();
         controller.takeTurn(this);
+    }
+    public CombatCharacter clone(){
+        return new CombatCharacter(this);
     }
 }

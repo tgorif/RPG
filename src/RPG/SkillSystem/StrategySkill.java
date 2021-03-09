@@ -1,5 +1,8 @@
 package RPG.SkillSystem;
 import RPG.Character.*;
+import RPG.Main.GameState;
+
+import java.util.List;
 
 public abstract class StrategySkill {
      public String skillName;
@@ -10,7 +13,7 @@ public abstract class StrategySkill {
           this.cost=cost;
           caster=combatCharacter;
      }
-     public abstract int simulate();
+     public abstract List<GameState> simulate();
      public abstract void useSkill();
      public abstract boolean isValid();
 

@@ -1,5 +1,6 @@
 package RPG.SkillSystem;
 
+import RPG.Character.CombatCharacter;
 import RPG.Projectiles.FactoryProjectile;
 import RPG.Projectiles.ProjectileArrow;
 
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 public class FactorySkill {
     private static final Logger LOGGER = Logger.getLogger(FactorySkill.class.getName());
 
-    public static StrategySkill getSkill(String name){
+    public static StrategySkill getSkill(String name, CombatCharacter character){
         try {
             switch (name.toLowerCase()) {
                 case ("wait"):

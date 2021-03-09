@@ -25,6 +25,15 @@ public class GameState {
         LOGGER.log(java.util.logging.Level.FINE,"Created gameState " + GameState.getInstance().toString());
         start();
     }
+    private GameState(GameState original){
+        this.output=original.output;
+        this.level=new Level();
+        this.characterList=original.characterList;
+        this.turnCounter=original.turnCounter;
+        for(CombatCharacter c : original.combatCharacterList){
+            this.combatCharacterList.add(c.clone());
+        }
+    }
 
     /**
      * calls setTurnOrder and resolveTurn until endCondition is fulfilled
@@ -41,8 +50,12 @@ public class GameState {
      * @return current gameState
      */
     public static GameState getInstance(){
-        if( gameState==null) LOGGER.log(java.util.logging.Level.SEVERE,"returned null gameState");
+        if(gameState==null) LOGGER.log(java.util.logging.Level.SEVERE,"returned null gameState");
         return gameState;
+    }
+    public GameState getCopy(){
+        if(gameState==null) LOGGER.log(java.util.logging.Level.SEVERE,"returned null gameState");
+        return new GameState(GameState.getInstance());
     }
 
     /**
@@ -70,7 +83,8 @@ public class GameState {
      * Orders combatCharacter list according to SPD
      */
     private void setTurnOrder(){
-        combatCharacterList.sort((combatCharacter, t1) -> Integer.compare(t1.SPD, combatCharacter.SPD));
+        combatCharacterList.sort((combatCharacter, t1) -> Integer.compare(t1.attributes.getSPD(),
+                combatCharacter.attributes.getSPD()));
     }
     /*
     public void changeCharacterPosition(CombatCharacter combatCharacter, Position target){

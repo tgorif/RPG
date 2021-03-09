@@ -52,4 +52,17 @@ public class InfoContainer {
         if(position==null) LOGGER.log(Level.SEVERE,"Created Character with null Position");
         if(character==null) LOGGER.log(Level.SEVERE,"Created Character with null Character");
     }
+    private InfoContainer(InfoContainer original){
+        this.name = original.name;
+        this.character = original.character;
+        this.position = original.position;
+        this.isBlueTeam = original.isBlueTeam;
+        final Logger LOGGER = Logger.getLogger(InfoContainer.class.getName());
+        if(name==null || name.length()==0) LOGGER.log(Level.SEVERE,"Created Character without name");
+        if(position==null) LOGGER.log(Level.SEVERE,"Created Character with null Position");
+        if(character==null) LOGGER.log(Level.SEVERE,"Created Character with null Character");
+    }
+    public InfoContainer clone(){
+        return new InfoContainer(this);
+    }
 }
