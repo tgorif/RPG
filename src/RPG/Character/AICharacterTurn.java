@@ -35,6 +35,7 @@ public class AICharacterTurn implements StrategyCharacterTurn{
         StrategySkill result=null;
         for(StrategySkill s: agent.characterSkillManager.skillList){
             List<GameState> list= s.simulate();
+            if(list==null) continue;
             for(GameState g : list){
                 int tmp=evaluate(g);
                 if(tmp>best){

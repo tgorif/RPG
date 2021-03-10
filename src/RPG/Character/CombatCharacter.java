@@ -30,6 +30,16 @@ public class CombatCharacter {
                 + attributes.getAP());
         controller=new AICharacterTurn();
     }
+
+    /**
+     * Test Instance
+     */
+    public CombatCharacter(){
+        characterSkillManager=null;
+        attributes=null;
+        characterInfo=null;
+        controller=null;
+    }
     private CombatCharacter(CombatCharacter original){
         this.characterInfo=original.characterInfo.clone();
         this.characterSkillManager= original.characterSkillManager.clone();

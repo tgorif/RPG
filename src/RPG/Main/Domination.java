@@ -21,6 +21,10 @@ public class Domination implements StrategyEndCondition{
            GameState.getInstance().output.endCondition("Blue");
            return true;
        }
+       else if(GameState.getInstance().turnCounter>9){
+           GameState.getInstance().output.endCondition("Draw");
+           return true;
+       }
        else return false;
     }
 }
