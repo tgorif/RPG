@@ -26,7 +26,7 @@ public class ProjectileArrow extends StrategyProjectile {
 
     @Override
     public void resolveImpact(CombatCharacter combatCharacter) {
-        combatCharacter.changeHP(-damage);
+        combatCharacter.attributes.changeHP(-damage);
         if(status!=null && status instanceof Transferable){
             ((Transferable) status).transfer(combatCharacter);
         }

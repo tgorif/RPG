@@ -1,10 +1,6 @@
 package RPG.SkillSystem;
 
 import RPG.Character.CombatCharacter;
-import RPG.Projectiles.FactoryProjectile;
-import RPG.Projectiles.ProjectileArrow;
-
-import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,24 +11,21 @@ public class FactorySkill {
         try {
             switch (name.toLowerCase()) {
                 case ("wait"):
-                    return new SkillWait("wait",1);
+                    return new SkillWait("wait",1,character);
                 case ("skipturn"):
-                    return new SkillWait("skipturn",10);
+                    return new SkillWait("skipturn",10,character);
                 case ("move"):
-                    return new SkillMove("move",1);
+                    return new SkillMove("move",1,character);
                 case ("shotarrow"):
                     return new SkillShot("shotarrow",
-                            50, 3,1, "Arrow");
+                            3, character,50,1, "Arrow");
                 case ("quickshot"):
                     return new SkillShot("quickshot",
-                            20,2,1, "Arrow");
+                            2,character,20,1, "Arrow");
                 case ("preparation"):
-                    return new SkillShot("preparation",0,2,1,"Arrow");
+                    return new SkillShot("preparation",2,character,0,1,"Arrow");
             }
             throw new Exception();
-        }
-        catch (NoSuchMethodException e){
-            LOGGER.log(Level.WARNING,"Skill: " +  name  + " does not exist" );
         }
         catch (Exception e){
             LOGGER.log(Level.WARNING,"Skill: " +  name  + " does not exist" );

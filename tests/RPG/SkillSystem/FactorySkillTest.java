@@ -7,7 +7,7 @@ public class FactorySkillTest {
 
     @Test
     public void testInvalidInput(){
-        Assert.assertNull(FactorySkill.getSkill("dsada"));
+        Assert.assertNull(FactorySkill.getSkill("dsada",null));
     }
     @Test
     public void diffrentInstances(){

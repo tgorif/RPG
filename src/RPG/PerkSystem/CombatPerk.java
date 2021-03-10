@@ -10,7 +10,4 @@ public class CombatPerk extends Perk {
         super(name);
         this.skill=skill;
     }
-    public StrategySkill getSkill(){
-        return FactorySkill.getSkill(name);
-    }
 }

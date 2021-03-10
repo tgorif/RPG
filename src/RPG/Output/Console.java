@@ -9,7 +9,7 @@ public class Console implements StrategyOutput {
     @Override
     public void CharacterMoved(CombatCharacter combatCharacter, Position from, Position to) {
         OutputMethod();
-        System.out.println(combatCharacter.name + " moved from " + from.toString() + " to " + to.toString());
+        System.out.println(combatCharacter.characterInfo.getName() + " moved from " + from.toString() + " to " + to.toString());
     }
     @Override
     public void resolveingTurn(int turnTimer) {
@@ -19,12 +19,14 @@ public class Console implements StrategyOutput {
     @Override
     public void CharacterRangedAttack(CombatCharacter caster, CombatCharacter target, StrategyProjectile strategyProjectile, StrategySkill skill) {
         OutputMethod();
-        System.out.println(caster.name + " used " + skill.skillName + " against " + target.name);
+        System.out.println(caster.characterInfo.getName() + " used "
+                + skill.skillName + " against "
+                + target.characterInfo.getName());
     }
     @Override
     public void CharacterTookDamage(CombatCharacter target, int damage) {
         OutputMethod();
-        System.out.println(target.name + " took "  + damage);
+        System.out.println(target.characterInfo.getName() + " took "  + damage);
     }
     public void endCondition(String winner){
         OutputMethod();
@@ -34,7 +36,7 @@ public class Console implements StrategyOutput {
     @Override
     public void characterDied(CombatCharacter combatCharacter) {
         OutputMethod();
-        System.out.println(combatCharacter.name + " died" + combatCharacter.HP);
+        System.out.println(combatCharacter.characterInfo.getName() + " died");
     }
 
     private void OutputMethod(){

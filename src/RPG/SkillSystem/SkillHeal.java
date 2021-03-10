@@ -1,15 +1,18 @@
 package RPG.SkillSystem;
 
 import RPG.Character.CombatCharacter;
+import RPG.Main.GameState;
+
+import java.util.List;
 
 public class SkillHeal extends StrategySkill{
-    public SkillHeal(String name, int cost) {
-        super(name, cost);
+    public SkillHeal(String name, int cost,CombatCharacter caster) {
+        super(name, cost,caster);
     }
 
     @Override
-    public int simulate(CombatCharacter combatCharacter) {
-        return 0;
+    public List<GameState> simulate() {
+        return null;
     }
 
     @Override
@@ -18,17 +21,9 @@ public class SkillHeal extends StrategySkill{
     }
 
     @Override
-    public void setValues(CombatCharacter combatCharacter) {
-
-    }
-
-    @Override
-    public void prepareAction() {
-
-    }
-
-    @Override
     public boolean isValid() {
-        return true;
+        return false;
     }
+
+
 }

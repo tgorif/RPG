@@ -17,7 +17,7 @@ public class CombatCharacter {
         characterInfo= new InfoContainer(c.name,c,position,c.isBlueTeam);
         LOGGER.log(Level.FINE,"Setting Skills");
         characterSkillManager =new CharacterSkillManager();
-        characterSkillManager.setSkills(c.perks);
+        characterSkillManager.setSkills(c.perks,this);
         LOGGER.log(Level.FINE,"Setting Stats");
         attributes=new AttributeManager.AttributeBuilder()
                 .addStatsPerk(characterSkillManager.preCombatPerks)

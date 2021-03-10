@@ -10,5 +10,5 @@ public abstract class StrategyProjectile {
     StrategyStatus status;
     abstract void setDamage();
     public abstract int getDamage();
-    abstract void resolveImpact(CombatCharacter combatCharacter);
+    public abstract void resolveImpact(CombatCharacter combatCharacter);
 }

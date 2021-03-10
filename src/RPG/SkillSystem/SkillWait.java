@@ -1,32 +1,24 @@
 package RPG.SkillSystem;
 import RPG.Character.CombatCharacter;
+import RPG.Main.GameState;
+
+import java.util.List;
 
 public class SkillWait extends StrategySkill {
 
-    public SkillWait(String name,int cost) {
-        super(name,cost);
+
+    public SkillWait(String name, int cost, CombatCharacter combatCharacter) {
+        super(name, cost, combatCharacter);
     }
 
     @Override
-    public int simulate(CombatCharacter combatCharacter) {
-        combatCharacter.AP-=AP;
-        return 0;
+    public List<GameState> simulate() {
+        return null;
     }
 
     @Override
     public void useSkill() {
-        gameState.reduceAP(caster,AP);
-    }
 
-    @Override
-    public void setValues(CombatCharacter combatCharacter) {
-        AP=1;
-        caster= combatCharacter;
-    }
-
-    @Override
-    public void prepareAction() {
-        AP=1;
     }
 
     @Override

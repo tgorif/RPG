@@ -10,7 +10,7 @@ public class GameState {
     static Logger LOGGER =Logger.getLogger(GameState.class.getName());
     public List<CombatCharacter> combatCharacterList = new ArrayList<>();
     private final StrategyEndCondition endCondition=new Domination();
-    Level level;
+    public Level level;
     final List<Character> characterList;
     public StrategyOutput output;
     private static GameState gameState;
@@ -53,9 +53,15 @@ public class GameState {
         if(gameState==null) LOGGER.log(java.util.logging.Level.SEVERE,"returned null gameState");
         return gameState;
     }
-    public GameState getCopy(){
+    public GameState clone(){
         if(gameState==null) LOGGER.log(java.util.logging.Level.SEVERE,"returned null gameState");
         return new GameState(GameState.getInstance());
+    }
+    public CombatCharacter getCombatCharacter(String name){
+        for (CombatCharacter c : combatCharacterList){
+            if(name.equals(c.characterInfo.getName())) return c;
+        }
+        return null;
     }
 
     /**
@@ -85,6 +91,22 @@ public class GameState {
     private void setTurnOrder(){
         combatCharacterList.sort((combatCharacter, t1) -> Integer.compare(t1.attributes.getSPD(),
                 combatCharacter.attributes.getSPD()));
+    }
+
+    /**
+     * @param character x
+     * @return List of Characters with different team than x
+     */
+    public List<CombatCharacter> getHostiles(CombatCharacter character){
+        List<CombatCharacter> result = new ArrayList<>();
+        if(character==null || combatCharacterList==null || !combatCharacterList.contains(character)){
+            LOGGER.log(java.util.logging.Level.SEVERE,"character==null || list==null || character not in list");
+            return result;
+        }
+        for(CombatCharacter c : combatCharacterList){
+            if(character.characterInfo.isBlueTeam()!=c.characterInfo.isBlueTeam()) result.add(c);
+        }
+        return result;
     }
     /*
     public void changeCharacterPosition(CombatCharacter combatCharacter, Position target){

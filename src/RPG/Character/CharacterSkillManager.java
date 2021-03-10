@@ -22,16 +22,14 @@ public class CharacterSkillManager {
     }
     private CharacterSkillManager(CharacterSkillManager original){
         for(StrategySkill s : original.skillList){
-            this.skillList.add(FactorySkill.getSkill(s.skillName));
+            this.skillList.add(FactorySkill.getSkill(s.skillName, s.caster));
         }
-        for(StatPerk s : original.preCombatPerks){
-            this.preCombatPerks.add(s);
-        }
+        this.preCombatPerks.addAll(original.preCombatPerks);
     }
     public CharacterSkillManager clone(){
         return new CharacterSkillManager(this);
     }
-    public void setSkills(Set<Perk> perks){
+    public void setSkills(Set<Perk> perks,CombatCharacter c){
         LOGGER.log(Level.FINE,"setting Perks with list of size " +perks.size());
         for (Perk perk : perks){
             if(perk==null) LOGGER.log(Level.SEVERE,"Perk==NUll");
@@ -40,7 +38,7 @@ public class CharacterSkillManager {
                 preCombatPerks.add(((StatPerk) perk));
             }
             else if(perk instanceof CombatPerk){
-                skillList.add(FactorySkill.getSkill(perk.name));
+                skillList.add(FactorySkill.getSkill(perk.name,c));
                 LOGGER.log(Level.FINE,"Added Perk " + perk.name);
             }
         }

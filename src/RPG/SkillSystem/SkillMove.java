@@ -2,65 +2,59 @@ package RPG.SkillSystem;
 
 import RPG.Character.CombatCharacter;
 import RPG.Main.*;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class SkillMove extends StrategySkill {
     Position target;
-    Position currentPosition;
+    List<Position> targets=new ArrayList<>();
     Logger LOGGER =Logger.getLogger(SkillMove.class.getName());
 
-    public SkillMove(String name,int cost) {
-        super(name,cost);
+    public SkillMove(String name,int cost,CombatCharacter caster) {
+        super(name,cost,caster);
     }
+
     @Override
-    public int simulate(CombatCharacter combatCharacter) {
-        if(!combatCharacter.getClass().toString().equals("class RPG.Character.CombatCharacter$SimulatedCharacter")){
-            LOGGER.log(java.util.logging.Level.SEVERE,"simulating on an instance of "
-                    + combatCharacter.getClass().toString());
+    public List<GameState> simulate() {
+        List<GameState> result=new ArrayList<>();
+        setTargets();
+        for (Position p : targets){
+            target=p;
+            GameState g=GameState.getInstance().clone();
+            useSkill(g);
+            result.add(g);
         }
-        combatCharacter.position=target;
-        combatCharacter.AP-=AP;
-        LOGGER.log(java.util.logging.Level.FINE,"Simulated Move fpr " +  combatCharacter.getClass().toString()
-                + " moved to " + combatCharacter.position.toString());
-        return 1;
+        return result;
     }
+    private void useSkill(GameState g){
+        CombatCharacter c= g.getCombatCharacter(caster.characterInfo.getName());
+        c.attributes.changeAP(-cost);
+        c.characterInfo.setPosition(target);
+    }
+
     @Override
     public void useSkill() {
+        setTargets();
+        if(targets.size()==0) return;
+        target=targets.get(0);
+        if(!isValid()) return;
         LOGGER.log(java.util.logging.Level.FINE,"Using Move for " +
-                caster.name + " moving from " +  caster.position.toString() + " to " + target.toString());
-        GameState.getInstance().changeCharacterPosition(caster,target);
-        GameState.getInstance().reduceAP(caster,AP);
-    }
-    @Override
-    public void setValues(CombatCharacter combatCharacter) {
-        caster= combatCharacter;
-        currentPosition= combatCharacter.getPosition();
-        AP=1;
-        List<Position> list = Level.getCurrentLevel().getPositionsInRange(currentPosition,caster.movement);
-        if(list.size()>0) {
-           Collections.shuffle(list);
-           target=list.get(0);
-        }
-        else{
-            target=currentPosition;
-        }
-        LOGGER.log(java.util.logging.Level.FINE,"Setting Values for "
-                + caster.name + " " + caster.getClass().toString()
-                + "current Position" + caster.position.toString()
-                +" moving to " + target.toString());
-    }
-    @Override
-    public void prepareAction() {
-
+                caster.characterInfo.getName() + " moving from "
+                + caster.characterInfo.getPosition().toString() + " to "
+                + target.toString());
+        useSkill(GameState.getInstance());
     }
     @Override
     public boolean isValid() {
         return target != null
                 && caster != null
                 && Level.getCurrentLevel().isValid(target)
-                && Level.getCurrentLevel().getDistance(target, caster.getPosition()) <= caster.movement
+                && Level.getCurrentLevel().getDistance(target, caster.characterInfo.getPosition())
+                <= caster.attributes.getMovement()
                 &&!caster.statusEffects.containsKey("dead");
+    }
+    private void setTargets(){
+        targets=GameState.getInstance().level.getPositionsInRange(caster.characterInfo.getPosition(),caster.attributes.getMovement());
     }
 }

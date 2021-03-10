@@ -71,7 +71,6 @@ public class init {
                 public void endElement(String uri, String localName, String qName) throws SAXException {
                     if (qName.equalsIgnoreCase("perk")) {
                         Perk p=perkBuilder.build();
-                        if(p instanceof CombatPerk && ((CombatPerk) p).getSkill()==null) return;
                         perkMap.put(p.name,p);
                     }
                 }

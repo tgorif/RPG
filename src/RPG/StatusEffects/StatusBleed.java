@@ -13,7 +13,7 @@ public class StatusBleed extends StrategyStatus implements Ticking,Transferable 
 
     @Override
     public void tick() {
-        owner.changeHP(-damagePerTick);
+        owner.attributes.changeHP(-damagePerTick);
         duration-=1;
     }
 

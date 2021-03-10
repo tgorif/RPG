@@ -1,36 +1,24 @@
 package RPG.SkillSystem;
 
 import RPG.Character.CombatCharacter;
+import RPG.Main.GameState;
+
+import java.util.List;
 
 public class SkillEndTurn extends StrategySkill{
 
-    public SkillEndTurn(String name,int cost) {
-        super(name,cost);
+
+    public SkillEndTurn(String name, int cost, CombatCharacter combatCharacter) {
+        super(name, cost, combatCharacter);
     }
 
     @Override
-    public int simulate() {
-        return 0;
+    public List<GameState> simulate() {
+        return null;
     }
 
-    @Override
-    public int simulate(CombatCharacter combatCharacter) {
-        combatCharacter.AP=0;
-        return 0;
-    }
     @Override
     public void useSkill() {
-        gameState.reduceAP(caster,AP);
-    }
-
-    @Override
-    public void setValues(CombatCharacter combatCharacter) {
-        this.gameState=gameState;
-        caster= combatCharacter;
-        AP=10;
-    }
-    @Override
-    public void prepareAction() {
 
     }
 

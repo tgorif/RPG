@@ -107,6 +107,9 @@ public class AttributeManager {
             GameState.getInstance().output.characterDied(owner);
         }
     }
+    public void changeAP(int x){
+        this.AP+=x;
+    }
     public static class AttributeBuilder{
         private int HP=0;
         private int SPD=0;
