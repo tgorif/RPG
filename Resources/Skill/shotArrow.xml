@@ -1,0 +1,8 @@
+<xml>
+    <name>shoot Arrow</name>
+    <template>SkillShot</template>
+    <range>60</range>
+    <cost>3</cost>
+    <damage>2</damage>
+    <cooldown>0</cooldown>
+</xml>

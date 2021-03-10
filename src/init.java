@@ -184,4 +184,7 @@ public class init {
             e.printStackTrace();
         }
     }
+    private static void loadSkillData(){
+        //TODO implement this
+    }
 }

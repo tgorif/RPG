@@ -1,0 +1,8 @@
+<xml>
+    <name>Prepared Shot</name>
+    <template>SkillShot</template>
+    <range>100</range>
+    <cost>4</cost>
+    <damage>3</damage>
+    <cooldown>0</cooldown>
+</xml>
