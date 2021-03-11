@@ -11,8 +11,8 @@ public class SkillMove extends StrategySkill {
     List<Position> targets=new ArrayList<>();
     Logger LOGGER =Logger.getLogger(SkillMove.class.getName());
 
-    public SkillMove(String name,int cost,CombatCharacter caster) {
-        super(name,cost,caster);
+    public SkillMove(SkillData skillData,CombatCharacter combatCharacter) {
+        super(skillData,combatCharacter);
     }
 
     @Override

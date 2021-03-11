@@ -6,8 +6,8 @@ import RPG.Main.GameState;
 import java.util.List;
 
 public class SkillHeal extends StrategySkill{
-    public SkillHeal(String name, int cost,CombatCharacter caster) {
-        super(name, cost,caster);
+    public SkillHeal(SkillData skillData,CombatCharacter combatCharacter) {
+        super(skillData, combatCharacter);
     }
 
     @Override

@@ -8,9 +8,9 @@ public abstract class StrategySkill {
      public String skillName;
      public final CombatCharacter caster;
      public int cost;
-     public StrategySkill(String name,int cost,CombatCharacter combatCharacter){
-          this.skillName=name;
-          this.cost=cost;
+     public StrategySkill(SkillData skillData,CombatCharacter combatCharacter){
+          this.skillName=skillData.name;
+          this.cost=skillData.cost;
           caster=combatCharacter;
      }
      public abstract List<GameState> simulate();

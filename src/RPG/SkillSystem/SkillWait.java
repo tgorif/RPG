@@ -7,8 +7,8 @@ import java.util.List;
 public class SkillWait extends StrategySkill {
 
 
-    public SkillWait(String name, int cost, CombatCharacter combatCharacter) {
-        super(name, cost, combatCharacter);
+    public SkillWait(SkillData skillData,CombatCharacter combatCharacter) {
+        super(skillData,combatCharacter);
     }
 
     @Override

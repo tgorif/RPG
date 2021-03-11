@@ -38,7 +38,7 @@ public class CharacterSkillManager {
                 preCombatPerks.add(((StatPerk) perk));
             }
             else if(perk instanceof CombatPerk){
-                skillList.add(FactorySkill.getSkill(perk.name,c));
+                skillList.add(FactorySkill.getSkill(((CombatPerk) perk).skill,c));
                 LOGGER.log(Level.FINE,"Added Perk " + perk.name);
             }
         }

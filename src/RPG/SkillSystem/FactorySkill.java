@@ -11,23 +11,20 @@ public class FactorySkill {
         try {
             SkillData skillData =SkillData.get(name);
             if(skillData==null) throw new Exception();
-            switch (skillData.name) {
+            switch (skillData.template) {
                 case ("Wait"):
-                    return new SkillWait("wait",skillData);
-                case ("SkipTurn"):
-                    return new SkillWait("skipturn",skillData);
+                    return new SkillWait(skillData,character);
                 case ("Move"):
-                    return new SkillMove("move",skillData);
+                    return new SkillMove(skillData,character);
                 case ("SkillShot"):
-                    return new SkillShot("shotarrow", skillData);
+                    return new SkillShot(skillData,character);
                 case ("SkillRevive"):
-                    return new SkillShot("quickshot", skillData);
-);
+                    return new SkillRevive(skillData,character);
             }
             throw new Exception();
         }
         catch (Exception e){
-            LOGGER.log(Level.WARNING,"Skill: " +  name  + " does not exist" );
+            LOGGER.log(Level.WARNING,"Skill: " +  name +" // " +   + " does not exist" );
         }
         return null;
     }

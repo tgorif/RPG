@@ -4,10 +4,7 @@ import RPG.Character.CombatCharacter;
 import RPG.Main.GameState;
 import RPG.Main.Level;
 import RPG.Projectiles.FactoryProjectile;
-import RPG.Projectiles.StrategyProjectile;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class SkillShot extends StrategySkill{
@@ -15,16 +12,12 @@ public class SkillShot extends StrategySkill{
     int range;
     int damage;
     CombatCharacter target;
-    public SkillShot(String name,int cost,CombatCharacter caster) {
-        super(name,cost,caster);
+    public SkillShot(SkillData skillData,CombatCharacter combatCharacter) {
+        super(skillData,combatCharacter);
+        this.range=skillData.range;
+        this.damage=skillData.damage;
+        //TODO add ProjectileName to Skilldata
     }
-    public SkillShot(String name, int cost,CombatCharacter caster, int range, int damage, String projectileName){
-        super(name,cost,caster);
-        this.range=range;
-        this.projectileName=projectileName;
-        this.damage=damage;
-    }
-
     @Override
     public List<GameState> simulate() {
         List<GameState> result = new ArrayList<>();

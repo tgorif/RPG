@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 /*
 todo write tests
 todo add input validation
+todo add ProjectileName to xmls
 extend fields as needed
  */
 
@@ -16,21 +17,30 @@ public class SkillData {
     private static final Logger LOGGER =Logger.getLogger(SkillData.class.getName());
     final String name;
     final String template;
+    final String projectile;
+    final String statusEffect;
     final int cost;
     final int range;
     final int damage;
     final int coolDown;
+    final int reviveHP;
+    final int duration;
     public static SkillData get(String s){
         if(map.containsKey(s)) return map.get(s);
         return null;
     }
-    private SkillData(String name,String template,int cost,int range,int damage,int coolDown){
+    private SkillData(String name,String template,String statusEffect,String projectile,
+                      int cost,int range,int damage,int coolDown,int reviveHP,int duration){
         this.name=name;
         this.cost=cost;
         this.range=range;
         this.damage=damage;
         this.coolDown=coolDown;
         this.template=template;
+        this.projectile=projectile;
+        this.statusEffect=statusEffect;
+        this.reviveHP=reviveHP;
+        this.duration=duration;
         map.put(this.name,this);
         LOGGER.log(Level.FINE,"added SkillData for "
                 + this.name + " with template "
@@ -40,10 +50,14 @@ public class SkillData {
     public static class SkillBuilder{
         private String name="";
         private String template="";
+        private String projectile="";
+        private String statusEffect;
         private int cost;
         private int range;
         private int damage;
         private int coolDown;
+        private int reviveHP;
+        private int duration;
 
         public SkillBuilder() {
 
@@ -72,6 +86,22 @@ public class SkillData {
             this.coolDown=s;
             return this;
         }
+        public SkillBuilder projectile(String s){
+            this.projectile=s;
+            return this;
+        }
+        public SkillBuilder statusEffect(String s){
+            this.statusEffect=s;
+            return this;
+        }
+        public SkillBuilder reviveHP(int s){
+            this.reviveHP=s;
+            return this;
+        }
+        public SkillBuilder duration(int s){
+            this.duration=s;
+            return this;
+        }
         public void build(){
             if(name.length()==0 || template.length()==0){
                 LOGGER.log(Level.SEVERE,"added SkillData with empty name or empty template Values :"
@@ -80,7 +110,8 @@ public class SkillData {
                         +" damage " + damage
                         +" coolDown " + coolDown);
             }
-            new SkillData(name,template,cost,range,damage,coolDown);
+            new SkillData(name,template,statusEffect,projectile,
+                    cost,range,damage,coolDown,reviveHP,duration);
         }
     }
 }

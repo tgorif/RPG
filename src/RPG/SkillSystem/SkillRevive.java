@@ -6,8 +6,8 @@ import RPG.Main.GameState;
 import java.util.List;
 
 public class SkillRevive extends StrategySkill{
-    public SkillRevive(String name, int cost, CombatCharacter combatCharacter) {
-        super(name, cost, combatCharacter);
+    public SkillRevive(SkillData skillData,CombatCharacter combatCharacter) {
+        super(skillData, combatCharacter);
     }
 
     @Override
