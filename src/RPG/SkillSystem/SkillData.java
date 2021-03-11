@@ -7,18 +7,20 @@ import java.util.logging.Logger;
 
 /*
 todo write tests
+todo add input validation
+extend fields as needed
  */
 
 public class SkillData {
-    private static Map<String,SkillData> map = new HashMap<>();
-    private static Logger LOGGER =Logger.getLogger(SkillData.class.getName());
+    private static final Map<String,SkillData> map = new HashMap<>();
+    private static final Logger LOGGER =Logger.getLogger(SkillData.class.getName());
     final String name;
     final String template;
     final int cost;
     final int range;
     final int damage;
     final int coolDown;
-    public static SkillData getInstance(String s){
+    public static SkillData get(String s){
         if(map.containsKey(s)) return map.get(s);
         return null;
     }

@@ -9,21 +9,20 @@ public class FactorySkill {
 
     public static StrategySkill getSkill(String name, CombatCharacter character){
         try {
-            switch (name.toLowerCase()) {
-                case ("wait"):
-                    return new SkillWait("wait",1,character);
-                case ("skipturn"):
-                    return new SkillWait("skipturn",10,character);
-                case ("move"):
-                    return new SkillMove("move",1,character);
-                case ("shotarrow"):
-                    return new SkillShot("shotarrow",
-                            3, character,50,1, "Arrow");
-                case ("quickshot"):
-                    return new SkillShot("quickshot",
-                            2,character,20,1, "Arrow");
-                case ("preparation"):
-                    return new SkillShot("preparation",2,character,0,1,"Arrow");
+            SkillData skillData =SkillData.get(name);
+            if(skillData==null) throw new Exception();
+            switch (skillData.name) {
+                case ("Wait"):
+                    return new SkillWait("wait",skillData);
+                case ("SkipTurn"):
+                    return new SkillWait("skipturn",skillData);
+                case ("Move"):
+                    return new SkillMove("move",skillData);
+                case ("SkillShot"):
+                    return new SkillShot("shotarrow", skillData);
+                case ("SkillRevive"):
+                    return new SkillShot("quickshot", skillData);
+);
             }
             throw new Exception();
         }
