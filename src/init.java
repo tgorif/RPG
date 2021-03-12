@@ -1,13 +1,13 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import RPG.PerkSystem.Perk;
 import RPG.PerkSystem.PerkTree;
+import RPG.Projectiles.ProjectileData;
 import RPG.SkillSystem.SkillData;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -16,9 +16,10 @@ import org.xml.sax.helpers.DefaultHandler;
 public class init {
     static Map<String, Perk> perkMap = new HashMap<>();
     static Map<String, PerkTree> perkTreeMap = new HashMap<>();
+    final static Logger LOGGER = Logger.getLogger(init.class.getName());
     static void start(){
         loadPerks();
-        loadPerkTree();
+        loadPerkTrees();
         loadSkillData();
     }
     private static void printPerkMap(){
@@ -34,6 +35,15 @@ public class init {
         }
     }
     private static void loadPerks(){
+        final File folder = new File(config.PERK_FOLDER);
+        if(!folder.exists()) LOGGER.log(Level.SEVERE,"PerkFolder does not exist");
+        else {
+            for (File f : Objects.requireNonNull(folder.listFiles())) {
+                loadPerk(f.toString());
+            }
+        }
+    }
+    private static void loadPerk(String fileName){
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
@@ -41,7 +51,7 @@ public class init {
                 Perk.PerkBuilder perkBuilder;
                 boolean Name = false;
                 boolean type = false;
-                boolean Action = false;
+                boolean SkillName = false;
                 boolean HP = false;
                 boolean SPD = false;
                 boolean movement = false;
@@ -55,8 +65,8 @@ public class init {
                     if (qName.equalsIgnoreCase("type")) {
                         type = true;
                     }
-                    if (qName.equalsIgnoreCase("Action")) {
-                        Action = true;
+                    if (qName.equalsIgnoreCase("SkillName")) {
+                        SkillName = true;
                     }
                     if (qName.equalsIgnoreCase("HP")) {
                         HP = true;
@@ -83,9 +93,9 @@ public class init {
                         perkBuilder.setType(new String(ch, start, length));
                         type = false;
                     }
-                    if (Action) {
+                    if (SkillName) {
                         perkBuilder.setSkill(new String(ch, start, length));
-                        Action = false;
+                        SkillName = false;
                     }
                     if (SPD) {
                         perkBuilder.setSPD(Integer.parseInt(new String(ch, start, length)));
@@ -99,17 +109,23 @@ public class init {
                         perkBuilder.setMovement(Integer.parseInt(new String(ch, start, length)));
                         movement = false;
                     }
-
                 }
-
             };
-            saxParser.parse("C:\\workspace\\idea\\RPG\\Resources\\Perks\\Perks.xml", handler);
-
+            saxParser.parse(fileName, handler);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private static void loadPerkTree(){
+    private static void loadPerkTrees(){
+        final File folder = new File(config.CLASS_FOLDER);
+        if(!folder.exists()) LOGGER.log(Level.SEVERE,"ClassFolder does not exist");
+        else{
+            for (File f : Objects.requireNonNull(folder.listFiles())) {
+                loadPerkTree(f.toString());
+            }
+        }
+    }
+    private static void loadPerkTree(String fileName){
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
@@ -178,7 +194,7 @@ public class init {
                     }
                 }
             };
-            saxParser.parse("C:\\workspace\\idea\\RPG\\Resources\\Classes\\Class.xml", handler);
+            saxParser.parse(fileName, handler);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,8 +202,11 @@ public class init {
     }
     private static void loadSkillData(){
         final File folder = new File(config.SKILL_FOLDER);
-        for (File f :folder.listFiles()){
-            loadSkillData(f.toString());
+        if(!folder.exists()) LOGGER.log(Level.SEVERE,"SkillFolder does not exist");
+        else{
+            for (File f : Objects.requireNonNull(folder.listFiles())) {
+                loadSkillData(f.toString());
+            }
         }
     }
     private static void loadSkillData(String fileName){
@@ -202,6 +221,7 @@ public class init {
                 boolean isCost=false;
                 boolean isDamage=false;
                 boolean isCoolDown=false;
+                boolean isProjectile=false;
                 public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
                     if (qName.equalsIgnoreCase("xml")) {
                        builder=new SkillData.SkillBuilder();
@@ -224,8 +244,9 @@ public class init {
                     else if (qName.equalsIgnoreCase("CoolDown")) {
                         isCoolDown=true;
                     }
-
-
+                    else if(qName.equalsIgnoreCase("projectile")){
+                        isProjectile=true;
+                    }
                 }
                 public void endElement(String uri, String localName, String qName) throws SAXException {
                     if (qName.equalsIgnoreCase("xml")) {
@@ -256,6 +277,64 @@ public class init {
                     else if (isCoolDown) {
                         builder.coolDown(Integer.parseInt(new String(ch, start, length)));
                         isCoolDown = false;
+                    }
+                    else if(isProjectile){
+                        builder.projectile(new String(ch, start, length));
+                        isProjectile=false;
+                    }
+                }
+            };
+            saxParser.parse(fileName, handler);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private static void loadProjectiles(){
+        final File folder = new File(config.PROJECTILE_FOLDER);
+        if(!folder.exists()) LOGGER.log(Level.SEVERE,"Projectile Folder does not exist");
+        else{
+            for (File f : Objects.requireNonNull(folder.listFiles())) {
+                loadProjectile(f.toString());
+            }
+        }
+    }
+    private static void loadProjectile(String fileName){
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            DefaultHandler handler = new DefaultHandler() {
+                ProjectileData.ProjectileBuilder builder;
+                boolean isName = false;
+                boolean isTemplate=false;
+                boolean isRange=false;
+                boolean isCost=false;
+                boolean isDamage=false;
+                boolean isCoolDown=false;
+                public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
+                    if (qName.equalsIgnoreCase("xml")) {
+                        builder=new ProjectileData.ProjectileBuilder();
+                    }
+                    else if (qName.equalsIgnoreCase("name")) {
+                        isName=true;
+                    }
+                    else if (qName.equalsIgnoreCase("template")) {
+                        isTemplate=true;
+                    }
+                }
+                public void endElement(String uri, String localName, String qName) throws SAXException {
+                    if (qName.equalsIgnoreCase("xml")) {
+                        builder.build();
+                    }
+                }
+                public void characters(char ch[], int start, int length) throws SAXException {
+                    if (isName) {
+                        builder.name(new String(ch, start, length));
+                        isName = false;
+                    }
+                    else if (isTemplate) {
+                        builder.template(new String(ch, start, length));
+                        isTemplate = false;
                     }
                 }
             };

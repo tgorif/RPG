@@ -1,0 +1,9 @@
+<xml>
+<Perk>
+    <Name>BonusSPD10</Name>
+    <type>RPG.PerkSystem.StatPerk</type>
+    <SPD>10</SPD>
+    <HP>0</HP>
+    <movement>0</movement>
+</Perk>
+</xml>

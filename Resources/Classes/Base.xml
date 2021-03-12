@@ -1,0 +1,22 @@
+<xml>
+    <Class>
+        <Name>Base</Name>
+        <Perk>Wait</Perk>
+        <Perk>Move</Perk>
+        <Perk>Skip Turn</Perk>
+        <Perk>Base Stats</Perk>
+        <Root>Base Stats</Root>
+        <Connection>
+            <Ancestor>Base Stats</Ancestor>
+            <descendant>Move</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Move</Ancestor>
+            <descendant>Wait</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Wait</Ancestor>
+            <descendant>Skip Turn</descendant>
+        </Connection>
+    </Class>
+</xml>

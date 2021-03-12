@@ -32,9 +32,12 @@ public class PerkTree {
         }
     }
     private void setConnections(List<String> ancestors, List<String> descendants){
+        if(ancestors.size()!=descendants.size()) LOGGER.log(Level.SEVERE,"adjacencyLists have different sizes");
         for(int i=0;i<ancestors.size();i++){
             Node a =nodes.get(Perk.getPerk(ancestors.get(i)));
             Node b =nodes.get(Perk.getPerk(descendants.get(i)));
+            if(a==null) LOGGER.log(Level.SEVERE,"could not find Perk " +ancestors.get(i));
+            if(b==null) LOGGER.log(Level.SEVERE,"could not find Perk " +descendants.get(i));
             a.next.add(b);
         }
     }

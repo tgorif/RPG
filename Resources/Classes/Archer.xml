@@ -1,0 +1,22 @@
+<xml>
+    <Class>
+        <Name>Archer</Name>
+        <Perk>Shot Arrow</Perk>
+        <Perk>Quickshot</Perk>
+        <Perk>Prepared Shot</Perk>
+        <Perk>BonusSPD10</Perk>
+        <Root>Shot Arrow</Root>
+        <Connection>
+            <Ancestor>Shot Arrow</Ancestor>
+            <descendant>BonusSPD10</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Shot Arrow</Ancestor>
+            <descendant>Quickshot</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Quickshot</Ancestor>
+            <descendant>Prepared Shot</descendant>
+        </Connection>
+    </Class>
+</xml>

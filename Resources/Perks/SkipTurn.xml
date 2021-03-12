@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Skip Turn</Name>
+        <type>CombatPerk</type>
+        <SkillName>Skip Turn</SkillName>
+    </Perk>
+</xml>

@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Move</Name>
+        <type>CombatPerk</type>
+        <SkillName>Move</SkillName>
+    </Perk>
+</xml>

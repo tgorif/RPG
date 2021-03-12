@@ -10,11 +10,11 @@ public class FactorySkill {
     public static StrategySkill getSkill(String name, CombatCharacter character){
         try {
             SkillData skillData =SkillData.get(name);
-            if(skillData==null) throw new Exception();
+            if(skillData==null) LOGGER.log(Level.SEVERE," could not find Data for " + name);
             switch (skillData.template) {
-                case ("Wait"):
+                case ("SkillWait"):
                     return new SkillWait(skillData,character);
-                case ("Move"):
+                case ("SkillMove"):
                     return new SkillMove(skillData,character);
                 case ("SkillShot"):
                     return new SkillShot(skillData,character);
@@ -24,7 +24,7 @@ public class FactorySkill {
             throw new Exception();
         }
         catch (Exception e){
-            LOGGER.log(Level.WARNING,"Skill: " +  name +" // " +   + " does not exist" );
+            LOGGER.log(Level.WARNING,"Skill: " +  name +" // " + " does not exist" );
         }
         return null;
     }

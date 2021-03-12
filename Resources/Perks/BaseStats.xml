@@ -1,0 +1,9 @@
+<xml>
+    <Perk>
+        <Name>Base Stats</Name>
+        <type>RPG.PerkSystem.StatPerk</type>
+        <SPD>10</SPD>
+        <HP>10</HP>
+        <movement>10</movement>
+    </Perk>
+</xml>

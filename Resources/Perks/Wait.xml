@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Wait</Name>
+        <type>CombatPerk</type>
+        <SkillName>Wait</SkillName>
+    </Perk>
+</xml>

@@ -16,7 +16,7 @@ public class SkillShot extends StrategySkill{
         super(skillData,combatCharacter);
         this.range=skillData.range;
         this.damage=skillData.damage;
-        //TODO add ProjectileName to Skilldata
+        this.projectileName= skillData.projectile;
     }
     @Override
     public List<GameState> simulate() {

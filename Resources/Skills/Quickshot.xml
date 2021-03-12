@@ -5,4 +5,5 @@
     <cost>2</cost>
     <damage>2</damage>
     <cooldown>1</cooldown>
+    <projectile>Arrow</projectile>
 </xml>

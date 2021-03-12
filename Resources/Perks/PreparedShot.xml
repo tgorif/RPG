@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Prepared Shot</Name>
+        <type>CombatPerk</type>
+        <SkillName>Prepared Shot</SkillName>
+    </Perk>
+</xml>
