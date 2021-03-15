@@ -11,14 +11,10 @@ public class SkillWait extends StrategySkill {
         super(skillData,combatCharacter);
     }
 
-    @Override
-    public List<GameState> simulate() {
-        return null;
-    }
 
     @Override
     public void useSkill() {
-
+        caster.attributes.changeAP(-cost);
     }
 
     @Override

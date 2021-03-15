@@ -19,7 +19,7 @@ public class FactoryStatusEffect {
                 case ("Dead"):
                     return new StatusDead(combatCharacter);
                 case ("Bleed"):
-                    return new StatusBleed(null,5,2);
+                    return new StatusBleed(combatCharacter,5,2);
             }
             throw new Exception();
         } catch (Exception e) {

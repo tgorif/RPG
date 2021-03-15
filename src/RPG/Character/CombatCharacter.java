@@ -1,5 +1,7 @@
 package RPG.Character;
 import RPG.Main.Position;
+import RPG.Output.PreView;
+import RPG.Output.StrategyOutput;
 import RPG.StatusEffects.StrategyStatus;
 import java.util.*;
 import java.util.logging.Level;
@@ -11,8 +13,9 @@ public class CombatCharacter {
     public final InfoContainer characterInfo;
     private final Logger LOGGER = Logger.getLogger(CombatCharacter.class.getName());
     private final StrategyCharacterTurn controller;
+    public final StrategyOutput output;
 
-    public CombatCharacter(Character c, Position position) {
+    public CombatCharacter(Character c, Position position,StrategyOutput output) {
         LOGGER.log(Level.FINE,"Creating CombatCharacter");
         characterInfo= new InfoContainer(c.name,c,position,c.isBlueTeam);
         LOGGER.log(Level.FINE,"Setting Skills");
@@ -29,22 +32,26 @@ public class CombatCharacter {
                 + attributes.getMovement() + " AP "
                 + attributes.getAP());
         controller=new AICharacterTurn();
+        this.output=output;
     }
 
     /**
      * Test Instance
      */
-    public CombatCharacter(){
-        characterSkillManager=null;
-        attributes=null;
-        characterInfo=null;
-        controller=null;
+    public CombatCharacter() {
+        characterSkillManager = null;
+        attributes = null;
+        characterInfo = null;
+        controller = null;
+        output=null;
     }
+
     private CombatCharacter(CombatCharacter original){
         this.characterInfo=original.characterInfo.clone();
         this.characterSkillManager= original.characterSkillManager.clone();
         this.attributes=original.attributes.clone();
         this.controller=original.controller;
+        this.output=new PreView();
     }
     public void takeTurn(){
         LOGGER.log(Level.FINE,characterInfo.getName() + " taking turn");

@@ -7,7 +7,7 @@ import RPG.Projectiles.FactoryProjectile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkillShot extends StrategySkill{
+public class SkillShot extends StrategySkill implements targetsCharacter{
     String projectileName;
     int range;
     int damage;
@@ -19,36 +19,35 @@ public class SkillShot extends StrategySkill{
         this.projectileName= skillData.projectile;
     }
     @Override
-    public List<GameState> simulate() {
-        List<GameState> result = new ArrayList<>();
-        for(CombatCharacter hostile : GameState.getInstance().getHostiles(caster)){
-            target=hostile;
-            if(isValid()){
-                GameState clone =GameState.getInstance().clone();
-                useSkill(clone);
-                result.add(clone);
-            }
-        }
-        return result;
-    }
-    private void useSkill(GameState g){
-        FactoryProjectile.getProjectile(projectileName).resolveImpact(
-                g.getCombatCharacter(target.characterInfo.getName()));
-    }
-
-    @Override
     public void useSkill() {
-        useSkill(GameState.getInstance());
-
+        GameState.getInstance().output.SkillUsed(caster,skillName);
+        FactoryProjectile.getProjectile(projectileName).resolveImpact(target);
+        caster.attributes.changeAP(-cost);
     }
 
     @Override
     public boolean isValid() {
         return target!=null
-                && caster!=null
-                &&!caster.statusEffects.containsKey("dead")
-                &&!target.statusEffects.containsKey("dead")
+                &&!caster.statusEffects.containsKey("Dead")
+                &&!target.statusEffects.containsKey("Dead")
                 && Level.getCurrentLevel().getDistance(caster.characterInfo.getPosition(),
                 target.characterInfo.getPosition())<=range;
     }
+
+    @Override
+    public boolean setTarget(CombatCharacter combatCharacter) {
+        target=combatCharacter;
+        return isValid();
+    }
+
+    @Override
+    public List<CombatCharacter> getTargets() {
+        List<CombatCharacter> result=new ArrayList<>();
+        for (CombatCharacter i : GameState.getInstance().getHostiles(caster)){
+            target=i;
+            if(isValid()) result.add(i);
+        }
+        return result;
+    }
+
 }

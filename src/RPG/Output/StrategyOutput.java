@@ -12,4 +12,6 @@ public interface StrategyOutput {
      void CharacterTookDamage(CombatCharacter target, int damage);
      void endCondition(String winner);
      void characterDied(CombatCharacter combatCharacter);
+     void notify(String message);
+     void SkillUsed(CombatCharacter combatCharacter,String skill);
 }

@@ -2,7 +2,10 @@ package RPG.Character;
 
 import RPG.Main.GameState;
 import RPG.SkillSystem.StrategySkill;
+import RPG.SkillSystem.targetsCharacter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,47 +24,32 @@ public class AICharacterTurn implements StrategyCharacterTurn{
     @Override
     public void takeTurn(CombatCharacter agent) {
         this.agent=agent;
-        base=evaluate(GameState.getInstance());
         while(agent.attributes.getAP()>0){
-            getBestMove().useSkill();
+            StrategySkill s =getBestMove();
+            if(s!=null) s.useSkill();
+            else return;
         }
     }
-
     /**
-     * @return StrategySkill - Skill with highest rating
+     * @return StrategySkill -random valid Skill, null if none are valid
      */
     private StrategySkill getBestMove(){
-        int best=Integer.MIN_VALUE;
         StrategySkill result=null;
-        for(StrategySkill s: agent.characterSkillManager.skillList){
-            List<GameState> list= s.simulate();
-            if(list==null) continue;
-            for(GameState g : list){
-                int tmp=evaluate(g);
-                if(tmp>best){
-                    best=tmp;
+        List<StrategySkill> list = new ArrayList<>();
+        list.addAll(agent.characterSkillManager.skillList);
+        Collections.shuffle(list);
+        if(agent.characterSkillManager.skillList.size()==0)
+            LOGGER.log(Level.SEVERE, agent.characterInfo.getName()
+                    + "SkillList is empty");
+        for(StrategySkill s : list){
+            if(s instanceof targetsCharacter){
+                if(((targetsCharacter) s).getTargets().size()>0)
+                ((targetsCharacter) s).setTarget(((targetsCharacter) s).getTargets().get(0));
+                if(s.isValid()){
                     result=s;
+                    break;
                 }
             }
-        }
-        if(agent.characterSkillManager.skillList.size()==0) LOGGER.log(Level.SEVERE,agent.characterInfo.getName()
-        + "SkillList is empty");
-        if(result==null) LOGGER.log(Level.SEVERE,"returned Skill ==null");
-        return result;
-    }
-
-    /**
-     * Evaluate how good a gameStats is for a character
-     * @param gameState - the gameState to be evaluated
-     * @return int - value of goodness
-     */
-    private int evaluate(GameState gameState){
-        int result=0;
-        for(CombatCharacter c : gameState.combatCharacterList){
-            int tmp=0;
-            tmp+=Math.max(0,c.attributes.getHP());
-            if(agent.characterInfo.isBlueTeam()==c.characterInfo.isBlueTeam()) result+=tmp;
-            else result-=tmp;
         }
         return result;
     }

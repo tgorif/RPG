@@ -3,27 +3,40 @@ package RPG.SkillSystem;
 import RPG.Character.CombatCharacter;
 import RPG.Main.GameState;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SkillHeal extends StrategySkill{
+public class SkillHeal extends StrategySkill implements targetsCharacter{
+    CombatCharacter target;
+    int restoration;
     public SkillHeal(SkillData skillData,CombatCharacter combatCharacter) {
         super(skillData, combatCharacter);
-    }
-
-    @Override
-    public List<GameState> simulate() {
-        return null;
+        restoration=skillData.damage;
     }
 
     @Override
     public void useSkill() {
-
+        target.attributes.changeHP(restoration);
+        caster.attributes.changeAP(-cost);
     }
-
     @Override
     public boolean isValid() {
-        return false;
+        return target!=null
+                &&!caster.statusEffects.containsKey("Dead")
+                &&!target.statusEffects.containsKey("Dead");
     }
-
-
+    @Override
+    public boolean setTarget(CombatCharacter combatCharacter) {
+        target=combatCharacter;
+        return isValid();
+    }
+    @Override
+    public List<CombatCharacter> getTargets() {
+        List<CombatCharacter> result=new ArrayList<>();
+        for(CombatCharacter c : GameState.getInstance().getAllies(caster)){
+            target=c;
+            if(isValid()) result.add(c);
+        }
+        return result;
+    }
 }

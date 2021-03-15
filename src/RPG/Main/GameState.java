@@ -70,7 +70,7 @@ public class GameState {
      */
     private void createCharacters(){
         for(Character c : characterList){
-            combatCharacterList.add(new CombatCharacter(c,new Position(level.x[1]/3,level.y[1]/2,0)));
+            combatCharacterList.add(new CombatCharacter(c,new Position(level.x[1]/3,level.y[1]/2,0),output));
         }
     }
 
@@ -105,6 +105,17 @@ public class GameState {
         }
         for(CombatCharacter c : combatCharacterList){
             if(character.characterInfo.isBlueTeam()!=c.characterInfo.isBlueTeam()) result.add(c);
+        }
+        return result;
+    }
+    public List<CombatCharacter> getAllies(CombatCharacter character){
+        List<CombatCharacter> result = new ArrayList<>();
+        if(character==null || combatCharacterList==null || !combatCharacterList.contains(character)){
+            LOGGER.log(java.util.logging.Level.SEVERE,"character==null || list==null || character not in list");
+            return result;
+        }
+        for(CombatCharacter c : combatCharacterList){
+            if(character.characterInfo.isBlueTeam()==c.characterInfo.isBlueTeam()) result.add(c);
         }
         return result;
     }

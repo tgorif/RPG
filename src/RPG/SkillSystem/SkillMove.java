@@ -15,18 +15,6 @@ public class SkillMove extends StrategySkill {
         super(skillData,combatCharacter);
     }
 
-    @Override
-    public List<GameState> simulate() {
-        List<GameState> result=new ArrayList<>();
-        setTargets();
-        for (Position p : targets){
-            target=p;
-            GameState g=GameState.getInstance().clone();
-            useSkill(g);
-            result.add(g);
-        }
-        return result;
-    }
     private void useSkill(GameState g){
         CombatCharacter c= g.getCombatCharacter(caster.characterInfo.getName());
         c.attributes.changeAP(-cost);

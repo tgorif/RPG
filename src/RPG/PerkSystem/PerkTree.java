@@ -10,6 +10,7 @@ public class PerkTree {
     public String name;
     List<Node> root=new ArrayList<>();
     Map<Perk,Node> nodes = new HashMap<>();
+    List<Node> nodeList = new ArrayList<>();
     private static final Map<String,PerkTree> treeMap= new HashMap<>();
 
     public PerkTree(String className, List<String> perks, List<String> ancestors, List<String> descendants,List<String> roots) {
@@ -18,6 +19,34 @@ public class PerkTree {
         setNodes(perks);
         setRoot(roots);
         setConnections(ancestors,descendants);
+        isValid();
+    }
+    private void isValid(){
+        if(name.length()==0){
+            LOGGER.log(Level.SEVERE,"created PerkTree without name");
+        }
+        if(root.size()<1) {
+            LOGGER.log(Level.SEVERE,"created PerkTree without rootNode");
+        }
+        for(Node node : root){
+            getDescendants(node);
+        }
+        if(nodes.size()!=nodeList.size()){
+            LOGGER.log(Level.SEVERE,"created PerkTree with different Perk Node sizes"
+            +nodes.size() + " " + nodeList.size());
+        }
+        for(Node node : nodeList){
+            if(!nodes.containsValue(node)){
+                LOGGER.log(Level.SEVERE,"Node " +  node.perk.name +  " does not have a mapping");
+            }
+        }
+        LOGGER.log(Level.INFO,"PerkTree " + name + " has been created without warnings");
+    }
+    private void getDescendants(Node node){
+        if(!nodeList.contains(node))nodeList.add(node);
+        for(Node n : node.next){
+            getDescendants(n);
+        }
     }
     private void setNodes(List<String> perks){
         for(String s : perks){
@@ -38,7 +67,7 @@ public class PerkTree {
             Node b =nodes.get(Perk.getPerk(descendants.get(i)));
             if(a==null) LOGGER.log(Level.SEVERE,"could not find Perk " +ancestors.get(i));
             if(b==null) LOGGER.log(Level.SEVERE,"could not find Perk " +descendants.get(i));
-            a.next.add(b);
+            if(a!=null && b!=null) a.next.add(b);
         }
     }
     public static PerkTree getPerkTree(String s){

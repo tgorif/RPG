@@ -104,7 +104,8 @@ public class AttributeManager {
         if (this.HP<=0) {
             StrategyStatus s= FactoryStatusEffect.getStatus("Dead",owner);
             owner.statusEffects.put("Dead", s);
-            GameState.getInstance().output.characterDied(owner);
+            owner.output.characterDied(owner);
+            System.out.println(owner.statusEffects.size());
         }
     }
     public void changeAP(int x){

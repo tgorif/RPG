@@ -13,13 +13,8 @@ public class SkillEndTurn extends StrategySkill{
     }
 
     @Override
-    public List<GameState> simulate() {
-        return null;
-    }
-
-    @Override
     public void useSkill() {
-
+        caster.attributes.changeAP(-caster.attributes.getAP());
     }
 
     @Override

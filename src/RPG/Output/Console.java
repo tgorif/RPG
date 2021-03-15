@@ -38,6 +38,17 @@ public class Console implements StrategyOutput {
         OutputMethod();
         System.out.println(combatCharacter.characterInfo.getName() + " died");
     }
+    @Override
+    public void notify(String message) {
+        OutputMethod();
+        System.out.println(message);
+    }
+
+    @Override
+    public void SkillUsed(CombatCharacter combatCharacter, String skill) {
+        OutputMethod();
+        System.out.println(combatCharacter.characterInfo.getName() + " used " + skill);
+    }
 
     private void OutputMethod(){
         System.out.print("Console: ");

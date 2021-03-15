@@ -9,6 +9,7 @@ import RPG.PerkSystem.Perk;
 import RPG.PerkSystem.PerkTree;
 import RPG.Projectiles.ProjectileData;
 import RPG.SkillSystem.SkillData;
+import RPG.StatusEffects.StatusData;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,6 +22,8 @@ public class init {
         loadPerks();
         loadPerkTrees();
         loadSkillData();
+        loadProjectiles();
+        loadStatusEffects();
     }
     private static void printPerkMap(){
         System.out.println("PerkMap: " + perkMap.size());
@@ -335,6 +338,73 @@ public class init {
                     else if (isTemplate) {
                         builder.template(new String(ch, start, length));
                         isTemplate = false;
+                    }
+                }
+            };
+            saxParser.parse(fileName, handler);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private static void loadStatusEffects(){
+        final File folder = new File(config.STATUS_FOLDER);
+        if(!folder.exists()) LOGGER.log(Level.SEVERE,"StatusEffect Folder does not exist");
+        else{
+            for (File f : Objects.requireNonNull(folder.listFiles())) {
+                loadStatusEffect(f.toString());
+            }
+        }
+    }
+    private static void loadStatusEffect(String fileName){
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            DefaultHandler handler = new DefaultHandler() {
+                StatusData.StatusBuilder builder;
+                boolean isName = false;
+                boolean isTemplate=false;
+                boolean isChange=false;
+                boolean isDuration=false;
+
+                public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
+                    if (qName.equalsIgnoreCase("xml")) {
+                        builder=new StatusData.StatusBuilder();
+                    }
+                    else if (qName.equalsIgnoreCase("name")) {
+                        isName=true;
+                    }
+                    else if (qName.equalsIgnoreCase("template")) {
+                        isTemplate=true;
+                    }
+                    else if(qName.equalsIgnoreCase("change")){
+                        isChange=true;
+                    }
+                    else if(qName.equalsIgnoreCase("duration")){
+                        isDuration=true;
+                    }
+                }
+                public void endElement(String uri, String localName, String qName) throws SAXException {
+                    if (qName.equalsIgnoreCase("xml")) {
+                        builder.build();
+                    }
+                }
+                public void characters(char ch[], int start, int length) throws SAXException {
+                    if (isName) {
+                        builder.name(new String(ch, start, length));
+                        isName = false;
+                    }
+                    else if (isTemplate) {
+                        builder.template(new String(ch, start, length));
+                        isTemplate = false;
+                    }
+                    else if (isChange) {
+                        builder.HPChange(Integer.parseInt(new String(ch, start, length)));
+                        isChange = false;
+                    }
+                    else if (isDuration) {
+                        builder.duration(Integer.parseInt(new String(ch, start, length)));
+                        isDuration = false;
                     }
                 }
             };
