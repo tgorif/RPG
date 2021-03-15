@@ -1,0 +1,10 @@
+<xml>
+    <Skill>
+    <name>Shield Bash</name>
+    <template>SkillShot</template>
+    <range>10</range>
+    <cost>1</cost>
+    <damage>2</damage>
+    <cooldown>3</cooldown>
+    </Skill>
+</xml>

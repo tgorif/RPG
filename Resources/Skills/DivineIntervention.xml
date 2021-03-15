@@ -1,0 +1,9 @@
+<xml>
+    <Skill>
+        <name>Divine Intervention</name>
+        <template>SkillRevive</template>
+        <cost>7</cost>
+        <cooldown>7</cooldown>
+        <reviveHP>50</reviveHP>
+    </Skill>
+</xml>

@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Shield Bash</Name>
+        <type>CombatPerk</type>
+        <SkillName>Shield Bash</SkillName>
+    </Perk>
+</xml>

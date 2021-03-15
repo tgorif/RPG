@@ -8,7 +8,7 @@ public class Domination implements StrategyEndCondition{
         int blue=0;
         int red=0;
        for(CombatCharacter combatCharacter : GameState.getInstance().combatCharacterList){
-           if(!combatCharacter.statusEffects.containsKey("dead")) {
+           if(!combatCharacter.statusEffects.containsKey("Dead")) {
                if (combatCharacter.characterInfo.isBlueTeam()) blue++;
                else red++;
            }

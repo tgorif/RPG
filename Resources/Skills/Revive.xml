@@ -1,7 +1,0 @@
-<xml>
-    <name>Revive</name>
-    <template>SkillRevive</template>
-    <range>100</range>
-    <cost>7</cost>
-    <cooldown>10</cooldown>
-</xml>

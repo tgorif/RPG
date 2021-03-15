@@ -1,0 +1,10 @@
+<xml>
+    <Skill>
+    <name>Sword Attack</name>
+    <template>SkillShot</template>
+    <range>1</range>
+    <cost>3</cost>
+    <damage>2</damage>
+    <cooldown>0</cooldown>
+    </Skill>
+</xml>

@@ -4,6 +4,7 @@
         <Perk>Wait</Perk>
         <Perk>Move</Perk>
         <Perk>Skip Turn</Perk>
+        <Perk>Basic Attack</Perk>
         <Perk>Base Stats</Perk>
         <Root>Base Stats</Root>
         <Connection>
@@ -17,6 +18,10 @@
         <Connection>
             <Ancestor>Wait</Ancestor>
             <descendant>Skip Turn</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Move</Ancestor>
+            <descendant>Basic Attack</descendant>
         </Connection>
     </Class>
 </xml>

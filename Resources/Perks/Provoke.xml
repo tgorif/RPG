@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Provoke</Name>
+        <type>CombatPerk</type>
+        <SkillName>Provoke</SkillName>
+    </Perk>
+</xml>

@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Divine Healing</Name>
+        <type>CombatPerk</type>
+        <SkillName>Divine Healing</SkillName>
+    </Perk>
+</xml>

@@ -1,0 +1,10 @@
+<xml>
+    <Skill>
+    <name>Provoke</name>
+    <template>SkillBuff</template>
+    <range>20</range>
+    <cost>3</cost>
+    <cooldown>4</cooldown>
+    <Status>Provoke</Status>
+    </Skill>
+</xml>

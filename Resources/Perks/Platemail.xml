@@ -1,0 +1,8 @@
+<xml>
+    <Perk>
+        <Name>Platemail</Name>
+        <type>RPG.PerkSystem.StatPerk</type>
+        <SkillName>Platemail</SkillName>
+        <Armor>1</Armor>
+    </Perk>
+</xml>

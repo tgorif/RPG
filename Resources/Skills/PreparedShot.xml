@@ -1,4 +1,5 @@
 <xml>
+    <Skill>
     <name>Prepared Shot</name>
     <template>SkillShot</template>
     <range>100</range>
@@ -6,4 +7,5 @@
     <damage>3</damage>
     <cooldown>0</cooldown>
     <projectile>Arrow</projectile>
+    </Skill>
 </xml>

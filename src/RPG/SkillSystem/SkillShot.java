@@ -21,7 +21,9 @@ public class SkillShot extends StrategySkill implements targetsCharacter{
     @Override
     public void useSkill() {
         GameState.getInstance().output.SkillUsed(caster,skillName);
-        FactoryProjectile.getProjectile(projectileName).resolveImpact(target);
+        if(projectileName.length()!=0){
+            FactoryProjectile.getProjectile(projectileName).resolveImpact(target);
+        }
         caster.attributes.changeAP(-cost);
     }
 

@@ -1,0 +1,10 @@
+<xml>
+    <Skill>
+        <name>Sealed Fate</name>
+        <template>SkillBuff</template>
+        <range>50</range>
+        <cost>4</cost>
+        <cooldown>2</cooldown>
+        <Status>DoT</Status>
+    </Skill>
+</xml>

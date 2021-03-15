@@ -1,0 +1,27 @@
+<xml>
+    <Class>
+        <Name>Priest</Name>
+        <Perk>Divine Intervention</Perk>
+        <Perk>Divine Healing</Perk>
+        <Perk>Holy Fire</Perk>
+        <Perk>Revitalising Spirits</Perk>
+        <Perk>Sealed Fate</Perk>
+        <root>Divine Healing</root>
+        <Connection>
+            <Ancestor>Divine Healing</Ancestor>
+            <descendant>Revitalising Spirits</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Revitalising Spirits</Ancestor>
+            <descendant>Divine Intervention</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Divine Healing</Ancestor>
+            <descendant>Sealed Fate</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Sealed Fate</Ancestor>
+            <descendant>Holy Fire</descendant>
+        </Connection>
+    </Class>
+</xml>

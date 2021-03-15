@@ -1,0 +1,27 @@
+<xml>
+    <Class>
+        <Name>Fighter</Name>
+        <Perk>Sword Attack</Perk>
+        <Perk>Platemail</Perk>
+        <Perk>Tower Shield</Perk>
+        <Perk>Provoke</Perk>
+        <Perk>Shield Bash</Perk>
+        <Root>Sword Attack</Root>
+        <Connection>
+            <Ancestor>Sword Attack</Ancestor>
+            <descendant>Platemail</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Platemail</Ancestor>
+            <descendant>Tower Shield</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Sword Attack</Ancestor>
+            <descendant>Shield Bash</descendant>
+        </Connection>
+        <Connection>
+            <Ancestor>Shield Bash</Ancestor>
+            <descendant>Provoke</descendant>
+        </Connection>
+    </Class>
+</xml>

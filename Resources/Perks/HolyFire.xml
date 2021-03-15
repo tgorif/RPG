@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Holy Fire</Name>
+        <type>CombatPerk</type>
+        <SkillName>Holy Fire</SkillName>
+    </Perk>
+</xml>

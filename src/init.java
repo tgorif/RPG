@@ -225,6 +225,7 @@ public class init {
                 boolean isDamage=false;
                 boolean isCoolDown=false;
                 boolean isProjectile=false;
+                boolean isReviveHP=false;
                 public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
                     if (qName.equalsIgnoreCase("xml")) {
                        builder=new SkillData.SkillBuilder();
@@ -249,6 +250,9 @@ public class init {
                     }
                     else if(qName.equalsIgnoreCase("projectile")){
                         isProjectile=true;
+                    }
+                    else if(qName.equalsIgnoreCase("reviveHP")){
+                        isReviveHP=true;
                     }
                 }
                 public void endElement(String uri, String localName, String qName) throws SAXException {
@@ -284,6 +288,10 @@ public class init {
                     else if(isProjectile){
                         builder.projectile(new String(ch, start, length));
                         isProjectile=false;
+                    }
+                    else if(isReviveHP){
+                        builder.reviveHP(Integer.parseInt(new String(ch, start, length)));
+                        isReviveHP=false;
                     }
                 }
             };

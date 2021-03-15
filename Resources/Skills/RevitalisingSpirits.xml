@@ -1,0 +1,10 @@
+<xml>
+    <Skill>
+        <name>Revitalising Spirits</name>
+        <template>SkillBuff</template>
+        <range>50</range>
+        <cost>3</cost>
+        <cooldown>3</cooldown>
+        <status>HealOverTime</status>
+    </Skill>
+</xml>

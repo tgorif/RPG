@@ -1,0 +1,8 @@
+<xml>
+    <Perk>
+        <Name>Tower Shield</Name>
+        <type>RPG.PerkSystem.StatPerk</type>
+        <SkillName>Tower Shield</SkillName>
+        <Armor>1</Armor>
+    </Perk>
+</xml>

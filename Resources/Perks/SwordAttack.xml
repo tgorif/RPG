@@ -1,0 +1,7 @@
+<xml>
+    <Perk>
+        <Name>Sword Attack</Name>
+        <type>CombatPerk</type>
+        <SkillName>Sword Attack</SkillName>
+    </Perk>
+</xml>

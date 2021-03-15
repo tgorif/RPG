@@ -1,0 +1,10 @@
+<xml>
+    <Skill>
+        <name>Holy Fire</name>
+        <template>SkillBuff</template>
+        <cost>4</cost>
+        <damage>3</damage>
+        <cooldown>3</cooldown>
+        <status>modifyDamage</status>
+    </Skill>
+</xml>
