@@ -23,7 +23,8 @@ public class SkillHeal extends StrategySkill implements targetsCharacter{
     public boolean isValid() {
         return target!=null
                 &&!caster.statusEffects.containsKey("Dead")
-                &&!target.statusEffects.containsKey("Dead");
+                &&!target.statusEffects.containsKey("Dead")
+                &&GameState.getInstance().turnCounter-lastUsed<cooldown;
     }
     @Override
     public boolean setTarget(CombatCharacter combatCharacter) {

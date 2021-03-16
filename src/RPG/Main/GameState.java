@@ -14,7 +14,7 @@ public class GameState {
     final List<Character> characterList;
     public StrategyOutput output;
     private static GameState gameState;
-    int turnCounter=0;
+    public int turnCounter=0;
 
     public GameState(List<Character> characterList,StrategyOutput strategyOutput){
         output=strategyOutput;
