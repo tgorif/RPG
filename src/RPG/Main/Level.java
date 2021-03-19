@@ -9,7 +9,7 @@ public class Level {
     int[] x=new int[2];
     int[] y=new int[2];
     int[] z=new int[2];
-    public Map<List<Integer>,Tile> tiles=new HashMap<>();
+    public Map<List<Integer>,Tile> tiles;
     private final Logger LOGGER = Logger.getLogger(Level.class.getName());
     static Level currentLevel;
     public Level(){
@@ -23,19 +23,19 @@ public class Level {
     }
     public Level(int diameter,int height){
         if(diameter%2==0)LOGGER.log(java.util.logging.Level.SEVERE,"created map with even diameter");
-        for(int h=0;h<height;h++) {
-            for (int i = diameter / (-2); i < diameter / 2; i++) {
-                for (int j = diameter / (-2); j < diameter / 2; j++) {
-                    for (int k = diameter / (-2); k < diameter / 2; k++) {
-                        if (i + j + k == h){
-                            Tile t = new Tile(i,j,k,h);
-                            tiles.put(t.toList(),t);
-                        }
-                    }
+        tiles=new HashMap<>();
+        currentLevel=this;
+        int floor=-(diameter-1)/2;
+        int ceiling=(diameter-1)/2;
+        for(int i=floor;i<=ceiling;i++){
+            for(int j=floor-Math.min(i,0);j<=ceiling-Math.max(0,i);j++){
+                if(i+j<floor || i+j>ceiling) continue;
+                for(int h=0;h<height;h++){
+                    Tile t = new Tile(i,j,-(i+j),h);
+                    tiles.put(t.toList(),t);
                 }
             }
         }
-        currentLevel=this;
     }
     public static Level getCurrentLevel(){
         return currentLevel;
@@ -86,9 +86,9 @@ public class Level {
     }
     public List<Tile> getTilesInRange(Tile t,int distance){
         List<Tile> result =new ArrayList<>();
-        for(int i=t.x-(distance/2);i<t.x+(distance/2);i++){
-            for(int j=t.y-(distance/2);j<t.y+(distance/2);j++){
-                for(int k=t.z-(distance/2);k<t.z+(distance/2);k++){
+        for(int i=t.x-distance;i<=t.x+distance;i++){
+            for(int j=t.y-distance;j<=t.y+distance;j++){
+                for(int k=t.z-distance;k<=t.z+distance;k++){
                     if(i+j+k==t.level){
                         List<Integer> tmp = List.of(i,j,k,t.level);
                         if(tiles.containsKey(tmp)){
@@ -133,7 +133,7 @@ public class Level {
             this.z=z;
             this.level=level;
             if(x+y+z!=level){
-                LOGGER.log(java.util.logging.Level.SEVERE,"created unreachable Tile " + x + " " + y + " " + level  +" " + z);
+                LOGGER.log(java.util.logging.Level.SEVERE,"created unreachable Tile " + x + " " + y + " " + z  +" " + level);
             }
         }
     }
