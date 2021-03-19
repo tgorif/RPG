@@ -62,7 +62,17 @@ public class LevelTest{
         Level.Tile base = level.tiles.get(List.of(0,0,0,0));
         Level.Tile other = level.tiles.get(List.of(1,-1,0,0));
         Level.Tile other2 = level.tiles.get(List.of(-1,1,0,0));
-        Assert.assertEquals(1,base.getDistance(other));
-        Assert.assertEquals(2,other.getDistance(other2));
+        Assert.assertEquals(1,level.getDistance(base,other));
+        Assert.assertEquals(2,level.getDistance(other,other2));
+    }
+    @Test
+    public void testPath(){
+        Level level = new Level(3, 1);
+        Level.Tile base = level.tiles.get(List.of(0,0,0,0));
+        Level.Tile other = level.tiles.get(List.of(1,-1,0,0));
+        Level.Tile other2 = level.tiles.get(List.of(-1,1,0,0));
+        Assert.assertEquals(2,level.getPath(base,other).size());
+        Assert.assertEquals(2,level.getPath(base,other2).size());
+        Assert.assertEquals(3,level.getPath(other,other2).size());
     }
 }

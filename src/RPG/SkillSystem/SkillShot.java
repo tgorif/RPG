@@ -32,8 +32,8 @@ public class SkillShot extends StrategySkill implements targetsCharacter{
         return target!=null
                 &&!caster.statusEffects.containsKey("Dead")
                 &&!target.statusEffects.containsKey("Dead")
-                && Level.getCurrentLevel().getDistance(caster.characterInfo.getPosition(),
-                target.characterInfo.getPosition())<=range
+                && Level.getCurrentLevel().getDistance(caster.characterInfo.getTile(),
+                target.characterInfo.getTile())<=range
                 && GameState.getInstance().turnCounter-lastUsed<cooldown;
     }
 

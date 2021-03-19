@@ -18,16 +18,19 @@ public class GameState {
 
     public GameState(List<Character> characterList,StrategyOutput strategyOutput){
         output=strategyOutput;
-        level=new Level();
+        level=new Level(101,1);
         this.characterList=characterList;
         gameState=this;
         createCharacters();
         LOGGER.log(java.util.logging.Level.FINE,"Created gameState " + GameState.getInstance().toString());
         start();
     }
+    /*
+    deprecated
+     */
     private GameState(GameState original){
         this.output=original.output;
-        this.level=new Level();
+        this.level=new Level(101,1);
         this.characterList=original.characterList;
         this.turnCounter=original.turnCounter;
         for(CombatCharacter c : original.combatCharacterList){
@@ -70,7 +73,8 @@ public class GameState {
      */
     private void createCharacters(){
         for(Character c : characterList){
-            combatCharacterList.add(new CombatCharacter(c,new Position(level.x[1]/3,level.y[1]/2,0),output));
+            combatCharacterList.add(new CombatCharacter(c,Level.getCurrentLevel()
+                    .tiles.get(List.of(0,0,0,0)),output));
         }
     }
 

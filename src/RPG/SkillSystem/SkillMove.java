@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class SkillMove extends StrategySkill {
-    Position target;
-    List<Position> targets=new ArrayList<>();
+    Level.Tile target;
+    List<Level.Tile> targets=new ArrayList<>();
     Logger LOGGER =Logger.getLogger(SkillMove.class.getName());
 
     public SkillMove(SkillData skillData,CombatCharacter combatCharacter) {
@@ -18,7 +18,7 @@ public class SkillMove extends StrategySkill {
     private void useSkill(GameState g){
         CombatCharacter c= g.getCombatCharacter(caster.characterInfo.getName());
         c.attributes.changeAP(-cost);
-        c.characterInfo.setPosition(target);
+        c.characterInfo.setTile(target);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SkillMove extends StrategySkill {
         if(!isValid()) return;
         LOGGER.log(java.util.logging.Level.FINE,"Using Move for " +
                 caster.characterInfo.getName() + " moving from "
-                + caster.characterInfo.getPosition().toString() + " to "
+                + caster.characterInfo.getTile().toString() + " to "
                 + target.toString());
         useSkill(GameState.getInstance());
     }
@@ -37,12 +37,11 @@ public class SkillMove extends StrategySkill {
     public boolean isValid() {
         return target != null
                 && caster != null
-                && Level.getCurrentLevel().isValid(target)
-                && Level.getCurrentLevel().getDistance(target, caster.characterInfo.getPosition())
+                && Level.getCurrentLevel().getDistance(target, caster.characterInfo.getTile())
                 <= caster.attributes.getMovement()
                 &&!caster.statusEffects.containsKey("dead");
     }
     private void setTargets(){
-        targets=GameState.getInstance().level.getPositionsInRange(caster.characterInfo.getPosition(),caster.attributes.getMovement());
+        targets=GameState.getInstance().level.getTilesInRange(caster.characterInfo.getTile(),caster.attributes.getMovement());
     }
 }

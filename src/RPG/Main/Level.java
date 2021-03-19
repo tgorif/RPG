@@ -1,25 +1,16 @@
 package RPG.Main;
 
-import org.junit.Test;
-
 import java.util.*;
 import java.util.logging.Logger;
 
 public class Level {
-    int[] x=new int[2];
-    int[] y=new int[2];
-    int[] z=new int[2];
+    private static final Logger LOGGER = Logger.getLogger(Level.class.getName());
+    private static Level currentLevel;
     public Map<List<Integer>,Tile> tiles;
-    private final Logger LOGGER = Logger.getLogger(Level.class.getName());
-    static Level currentLevel;
-    public Level(){
-        x[0]=0;
-        x[1]=1000;
-        y[0]=0;
-        y[1]=1000;
-        z[0]=0;
-        z[1]=1000;
-        currentLevel=this;
+    private final int[][] dir =new int[][]{{-1,0,1},{-1,1,0},{0,-1,1},{0,1,-1},{1,-1,0},{1,0,-1}};
+
+    public static Level getCurrentLevel(){
+        return currentLevel;
     }
     public Level(int diameter,int height){
         if(diameter%2==0)LOGGER.log(java.util.logging.Level.SEVERE,"created map with even diameter");
@@ -37,53 +28,6 @@ public class Level {
             }
         }
     }
-    public static Level getCurrentLevel(){
-        return currentLevel;
-    }
-    public boolean isValid(int x,int y,int z) {
-        return this.x[0] <= x && this.x[1] >= x && this.y[0] <= y && this.y[1] >= y && this.z[0] <= z && this.z[1] >= z;
-    }
-    public boolean isValid(Position position, int x, int y, int z){
-        return isValid(position.x+x, position.y+y, position.z+z);
-    }
-    public boolean isValid(Position position){
-        return isValid(position.x, position.y, position.z);
-    }
-    public List<Position> getPositionsInRange(Position position,int distance){
-        if(distance==0) System.out.println("distance ==0");
-        List<Position> result = new ArrayList<>();
-        if(isValid(position,distance,0,0)){
-            result.add(new Position(position.x+distance,position.y, position.z));
-        }
-        if(isValid(position,-distance,0,0)){
-            result.add(new Position(position.x-distance,position.y, position.z));
-        }
-        if(isValid(position,0,distance,0)){
-            result.add(new Position(position.x,position.y+distance, position.z));
-        }
-        if(isValid(position,0,-distance,0)){
-            result.add(new Position(position.x,position.y-distance, position.z));
-        }
-        if(isValid(position,0,0,distance)){
-            result.add(new Position(position.x,position.y, position.z+distance));
-        }
-        if(isValid(position,0,0,-distance)){
-            result.add(new Position(position.x,position.y, position.z-distance));
-        }
-        return result;
-    }
-    public int getDistance(Position a,Position b){
-        int result=0;
-        result+=Math.abs(a.x-b.x);
-        result+=Math.abs(a.y-b.y);
-        result+=Math.abs(a.z-b.z);
-        return result;
-
-    }
-    public boolean isEqualPosition(Position a,Position b){
-        if(a.x!=b.x || a.y!=b.y || a.z!=b.z) return false;
-        return true;
-    }
     public List<Tile> getTilesInRange(Tile t,int distance){
         List<Tile> result =new ArrayList<>();
         for(int i=t.x-distance;i<=t.x+distance;i++){
@@ -100,33 +44,38 @@ public class Level {
         }
         return result;
     }
-    class Tile{
+    public int getDistance(Tile a, Tile other){
+        return  (Math.abs(a.x-other.x)
+                +Math.abs(a.y-other.y)
+                +Math.abs(a.z-other.z))
+                /2+(a.level-other.level);
+    }
+    public boolean canEnter(Tile tile){
+        return tile.contains==null;
+    }
+    public List<Tile> getPath(Tile start,Tile target){
+        Queue<Path> queue= new PriorityQueue<>((path, t1) -> Integer.compare(path.length,t1.length));
+        queue.add(new Path(0,start));
+        while (!queue.isEmpty()){
+            Path current=queue.poll();
+            if(current.current==target) return current.toList();
+            for(int[] d : dir){
+                Tile tmp = tiles.get(List.of(current.current.x+d[0],current.current.y+d[1],current.current.z+d[2],
+                        current.current.level));
+                if(tmp!=null && canEnter(tmp)){
+                    queue.add(new Path(tmp,current));
+                }
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    public class Tile{
         final int x;
         final int y;
         final int z;
         final int level;
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Tile tile = (Tile) o;
-            return x == tile.x && y == tile.y && z == tile.z && level == tile.level;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(x*7, y*31, z*71, level*47);
-        }
-        public List<Integer> toList(){
-            return List.of(x,y,z,level);
-        }
-        public int getDistance(Tile other){
-            return  (Math.abs(this.x-other.x)
-                    +Math.abs(this.y-other.y)
-                    +Math.abs(this.z-other.z))
-                    /2+(this.level-other.level);
-        }
-
+        Object contains;
         private Tile(int x,int y,int z,int level){
             this.x=x;
             this.y=y;
@@ -135,6 +84,45 @@ public class Level {
             if(x+y+z!=level){
                 LOGGER.log(java.util.logging.Level.SEVERE,"created unreachable Tile " + x + " " + y + " " + z  +" " + level);
             }
+        }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Tile tile = (Tile) o;
+            return x == tile.x && y == tile.y && z == tile.z && level == tile.level;
+        }
+        public List<Integer> toList(){
+            return List.of(x,y,z,level);
+        }
+    }
+    private class Path{
+        int length;
+        Tile current;
+        Path previous;
+        private Path(int length,Tile current){
+            this.current=current;
+            this.length=length;
+        }
+        private Path(Tile current,Path last){
+            this.current=current;
+            this.length=last.length+1;
+            this.previous=last;
+        }
+
+        private List<Tile> toList() {
+            List<Tile> result = new ArrayList<>();
+            if(previous!=null){
+                previous.toList(result);
+            }
+            result.add(this.current);
+            return result;
+        }
+        private void toList(List<Tile> result) {
+            if(previous!=null){
+                previous.toList(result);
+            }
+            result.add(this.current);
         }
     }
 }

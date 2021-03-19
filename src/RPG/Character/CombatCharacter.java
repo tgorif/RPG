@@ -1,5 +1,4 @@
 package RPG.Character;
-import RPG.Main.Position;
 import RPG.Output.PreView;
 import RPG.Output.StrategyOutput;
 import RPG.StatusEffects.StrategyStatus;
@@ -15,9 +14,9 @@ public class CombatCharacter {
     private final StrategyCharacterTurn controller;
     public final StrategyOutput output;
 
-    public CombatCharacter(Character c, Position position,StrategyOutput output) {
+    public CombatCharacter(Character c, RPG.Main.Level.Tile tile, StrategyOutput output) {
         LOGGER.log(Level.FINE,"Creating CombatCharacter");
-        characterInfo= new InfoContainer(c.name,c,position,c.isBlueTeam);
+        characterInfo= new InfoContainer(c.name,c,tile,c.isBlueTeam);
         LOGGER.log(Level.FINE,"Setting Skills");
         characterSkillManager =new CharacterSkillManager();
         characterSkillManager.setSkills(c.perks,this);
