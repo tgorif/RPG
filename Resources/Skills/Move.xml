@@ -1,4 +1,5 @@
 <xml>
     <name>Move</name>
+    <cost>1</cost>
     <template>SkillMove</template>
 </xml>

@@ -6,42 +6,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class SkillMove extends StrategySkill {
+public class SkillMove extends StrategySkill implements targetsTile {
     Level.Tile target;
-    List<Level.Tile> targets=new ArrayList<>();
     Logger LOGGER =Logger.getLogger(SkillMove.class.getName());
 
     public SkillMove(SkillData skillData,CombatCharacter combatCharacter) {
         super(skillData,combatCharacter);
     }
 
-    private void useSkill(GameState g){
-        CombatCharacter c= g.getCombatCharacter(caster.characterInfo.getName());
-        c.attributes.changeAP(-cost);
-        c.characterInfo.setTile(target);
-    }
-
     @Override
     public void useSkill() {
-        setTargets();
-        if(targets.size()==0) return;
-        target=targets.get(0);
         if(!isValid()) return;
         LOGGER.log(java.util.logging.Level.FINE,"Using Move for " +
                 caster.characterInfo.getName() + " moving from "
                 + caster.characterInfo.getTile().toString() + " to "
                 + target.toString());
-        useSkill(GameState.getInstance());
+        caster.attributes.changeAP(-cost);
+        caster.characterInfo.setTile(target);
     }
     @Override
     public boolean isValid() {
         return target != null
                 && caster != null
+                && caster.attributes.getAP()>0
+                && Level.getCurrentLevel().canEnter(target)
                 && Level.getCurrentLevel().getDistance(target, caster.characterInfo.getTile())
                 <= caster.attributes.getMovement()
                 &&!caster.statusEffects.containsKey("dead");
     }
-    private void setTargets(){
-        targets=GameState.getInstance().level.getTilesInRange(caster.characterInfo.getTile(),caster.attributes.getMovement());
+
+    @Override
+    public boolean setTarget(Level.Tile tile) {
+        target=tile;
+        return isValid();
+    }
+
+    @Override
+    public List<Level.Tile> getTargets() {
+        return Level.getCurrentLevel().getTilesInRange(caster.characterInfo.getTile(),caster.attributes.getMovement());
     }
 }
