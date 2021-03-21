@@ -1,4 +1,5 @@
 import RPG.Character.Character;
+import RPG.Main.init;
 import RPG.Output.Console;
 import RPG.Main.GameState;
 import RPG.PerkSystem.PerkTree;

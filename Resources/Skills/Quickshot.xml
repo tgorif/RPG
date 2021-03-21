@@ -1,7 +1,7 @@
 <xml>
     <name>Quickshot</name>
     <template>SkillShot</template>
-    <range>30</range>
+    <range>4</range>
     <cost>2</cost>
     <damage>2</damage>
     <cooldown>1</cooldown>

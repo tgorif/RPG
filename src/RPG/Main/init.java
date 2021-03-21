@@ -1,3 +1,5 @@
+package RPG.Main;
+
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
@@ -18,7 +20,7 @@ public class init {
     static Map<String, Perk> perkMap = new HashMap<>();
     static Map<String, PerkTree> perkTreeMap = new HashMap<>();
     final static Logger LOGGER = Logger.getLogger(init.class.getName());
-    static void start(){
+    public static void start(){
         loadPerks();
         loadPerkTrees();
         loadSkillData();

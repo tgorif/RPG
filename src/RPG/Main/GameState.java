@@ -23,7 +23,6 @@ public class GameState {
         gameState=this;
         createCharacters();
         LOGGER.log(java.util.logging.Level.FINE,"Created gameState " + GameState.getInstance().toString());
-        start();
     }
     /*
     deprecated

@@ -24,6 +24,7 @@ public class Character {
     }
     public void learn(Perk p){
         if(p==null) LOGGER.log(Level.SEVERE,"Character "  + name + " learned Perk with value null ");
+        if(!getLearnablePerks().contains(p)) LOGGER.log(Level.SEVERE,"Character " + name + " learned unlearnable Perk");
         perks.add(p);
     }
     public List<Perk> getLearnablePerks(){
