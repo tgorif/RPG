@@ -10,6 +10,7 @@ public class FactorySkillTest {
     @BeforeClass
     public static void setup(){
         dummy=new CombatCharacter();
+        RPG.Main.init.start();
     }
 
     @Test

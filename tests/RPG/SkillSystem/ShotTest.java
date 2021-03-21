@@ -43,11 +43,46 @@ public class ShotTest {
         enemy=gameState.getCombatCharacter("dummy2");
     }
     @Test
-    public void hasHeal(){
+    public void hasSkill(){
         boolean contains=false;
         for(StrategySkill s : testObject.characterSkillManager.skillList){
             if(s instanceof SkillShot) contains=true;
         }
         Assert.assertTrue(contains);
+    }
+    @Test
+    public void canTargetEnemy(){
+        //TODO implement this
+    }
+    @Test
+    public void canKillEnemy(){
+        //TODO implement this
+
+    }
+    @Test
+    public void cannotTargetEnemyOutOfRange(){
+        //TODO implement this
+
+    }
+    @Test
+    public void cannotTargetDeadEnemy(){
+        //TODO implement this
+
+    }
+    @Test
+    public void cannotUseWhenOnCoolDown(){
+        //TODO implement this
+
+    }
+    @Test
+    public void cannotUseWithoutAP(){
+        //TODO implement this
+
+    }
+    public void reset(CombatCharacter c){
+        c.attributes.turnStart();
+        c.attributes.setHP(testObject.attributes.getMaxHP());
+        c.statusEffects.remove("Dead");
+        skill.lastUsed=Integer.MIN_VALUE;
     }
 }
