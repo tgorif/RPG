@@ -3,10 +3,10 @@ package RPG.PerkSystem;
 import RPG.PerkSystem.Perk;
 
 public class StatPerk extends Perk {
-    private int HP;
-    private int SPD;
-    private int Movement;
-    private int armor;
+    private final int HP;
+    private final int SPD;
+    private final int Movement;
+    private final int armor;
     public StatPerk(int h,int s,int m,int armor,String name){
         super(name);
         HP=h;

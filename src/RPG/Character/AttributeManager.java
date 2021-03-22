@@ -17,7 +17,7 @@ public class AttributeManager {
     private int maxAP;
     private int maxHP;
     private int armor;
-    private CombatCharacter owner;
+    private final CombatCharacter owner;
 
     public int getHP() {
         return HP;
@@ -66,6 +66,8 @@ public class AttributeManager {
     public void setMaxHP(int maxHP) {
         this.maxHP = maxHP;
     }
+
+    public int getArmor(){ return this.armor;}
 
     private AttributeManager(int hp, int SPD, int movement, int AP, int maxAP, int maxHP,int armor,CombatCharacter combatCharacter){
         this.HP=hp;

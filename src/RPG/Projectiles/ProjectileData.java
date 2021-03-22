@@ -25,7 +25,7 @@ public class ProjectileData {
     public static class ProjectileBuilder{
         private String name="";
         private int damage;
-        private List<String> statusList=new ArrayList<>();
+        private final List<String> statusList=new ArrayList<>();
         private String template="";
 
         public ProjectileBuilder(){

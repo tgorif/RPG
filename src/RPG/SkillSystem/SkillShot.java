@@ -3,7 +3,6 @@ package RPG.SkillSystem;
 import RPG.Character.CombatCharacter;
 import RPG.Main.GameState;
 import RPG.Main.Level;
-import RPG.Projectiles.FactoryProjectile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class SkillShot extends StrategySkill implements targetsCharacter{
     @Override
     public void useSkill() {
         if(isValid()) {
-            target.attributes.changeHP(-damage);
+            target.actionManager.resolveHit(damage);
             usedSkill();
         }
     }

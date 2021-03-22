@@ -21,7 +21,7 @@ public class SkillMove extends StrategySkill implements targetsTile {
                 caster.characterInfo.getName() + " moving from "
                 + caster.characterInfo.getTile().toString() + " to "
                 + target.toString());
-        caster.attributes.changeAP(-cost);
+        usedSkill();
         caster.characterInfo.setTile(target);
     }
     @Override

@@ -13,6 +13,7 @@ public class CombatCharacter {
     private final Logger LOGGER = Logger.getLogger(CombatCharacter.class.getName());
     private final StrategyCharacterTurn controller;
     public final StrategyOutput output;
+    public final CharacterActionManager actionManager;
 
     public CombatCharacter(Character c, RPG.Main.Level.Tile tile, StrategyOutput output) {
         LOGGER.log(Level.FINE,"Creating CombatCharacter");
@@ -32,6 +33,7 @@ public class CombatCharacter {
                 + attributes.getAP());
         controller=new AICharacterTurn();
         this.output=output;
+        this.actionManager=new CharacterActionManager(this);
     }
 
     /**
@@ -43,6 +45,7 @@ public class CombatCharacter {
         characterInfo = null;
         controller = null;
         output=null;
+        actionManager=null;
     }
 
     private CombatCharacter(CombatCharacter original){
@@ -51,6 +54,7 @@ public class CombatCharacter {
         this.attributes=original.attributes.clone();
         this.controller=original.controller;
         this.output=new PreView();
+        this.actionManager=null;
     }
     public void takeTurn(){
         LOGGER.log(Level.FINE,characterInfo.getName() + " taking turn");

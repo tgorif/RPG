@@ -3,8 +3,8 @@ package RPG.Character;
 import java.util.*;
 
 public class CharacterPool {
-    private static Map<String,CharacterData> characterDataMap=new HashMap<>();
-    private static List<CharacterData> list = new ArrayList<>();
+    private static final Map<String,CharacterData> characterDataMap=new HashMap<>();
+    private static final List<CharacterData> list = new ArrayList<>();
     private static int count=0;
     public static CharacterData getCharacterData(String s){
         return characterDataMap.get(s);

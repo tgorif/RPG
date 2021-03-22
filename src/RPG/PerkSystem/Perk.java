@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class Perk {
     Logger LOGGER =Logger.getLogger(Perk.class.getName());
     public String name;
-    private static Map<String,Perk> perkMap=new HashMap<>();
+    private static final Map<String,Perk> perkMap=new HashMap<>();
     public Perk(String name){
         this.name=name;
         perkMap.put(name,this);
@@ -30,7 +30,7 @@ public class Perk {
         private String name="";
         String skill=null;
         String type;
-        private Logger LOGGER=Logger.getLogger((Perk.PerkBuilder.class.getName()));
+        private final Logger LOGGER=Logger.getLogger((Perk.PerkBuilder.class.getName()));
 
         public PerkBuilder(){
 

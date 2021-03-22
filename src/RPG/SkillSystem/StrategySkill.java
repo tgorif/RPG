@@ -27,6 +27,7 @@ public abstract class StrategySkill {
      void usedSkill(){
           lastUsed=GameState.getInstance().turnCounter;
           caster.attributes.changeAP(-cost);
+          GameState.getInstance().output.SkillUsed(caster,skillName);
      }
 
 

@@ -95,7 +95,7 @@ public class init {
                         perkMap.put(p.name,p);
                     }
                 }
-                public void characters(char ch[], int start, int length) throws SAXException {
+                public void characters(char[] ch, int start, int length) throws SAXException {
                     if (Name) {
                         perkBuilder.setName(new String(ch, start, length));
                         Name = false;
@@ -186,7 +186,7 @@ public class init {
                         perkTreeMap.put(p.name,p);
                     }
                 }
-                public void characters(char ch[], int start, int length) throws SAXException {
+                public void characters(char[] ch, int start, int length) throws SAXException {
                     if (Name) {
                         className=(new String(ch, start, length));
                         Name = false;
@@ -272,7 +272,7 @@ public class init {
                         builder.build();
                     }
                 }
-                public void characters(char ch[], int start, int length) throws SAXException {
+                public void characters(char[] ch, int start, int length) throws SAXException {
                     if (isName) {
                         builder.name(new String(ch, start, length));
                         isName = false;
@@ -330,10 +330,10 @@ public class init {
                 ProjectileData.ProjectileBuilder builder;
                 boolean isName = false;
                 boolean isTemplate=false;
-                boolean isRange=false;
-                boolean isCost=false;
-                boolean isDamage=false;
-                boolean isCoolDown=false;
+                final boolean isRange=false;
+                final boolean isCost=false;
+                final boolean isDamage=false;
+                final boolean isCoolDown=false;
                 public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
                     if (qName.equalsIgnoreCase("xml")) {
                         builder=new ProjectileData.ProjectileBuilder();
@@ -350,7 +350,7 @@ public class init {
                         builder.build();
                     }
                 }
-                public void characters(char ch[], int start, int length) throws SAXException {
+                public void characters(char[] ch, int start, int length) throws SAXException {
                     if (isName) {
                         builder.name(new String(ch, start, length));
                         isName = false;
@@ -409,7 +409,7 @@ public class init {
                         builder.build();
                     }
                 }
-                public void characters(char ch[], int start, int length) throws SAXException {
+                public void characters(char[] ch, int start, int length) throws SAXException {
                     if (isName) {
                         builder.name(new String(ch, start, length));
                         isName = false;
@@ -468,7 +468,7 @@ public class init {
                 public void endElement(String uri, String localName, String qName) throws SAXException {
 
                 }
-                public void characters(char ch[], int start, int length) throws SAXException {
+                public void characters(char[] ch, int start, int length) throws SAXException {
                     if (isName) {
                         characterData =new CharacterPool.CharacterData(new String(ch, start, length));
                         isName = false;
