@@ -1,0 +1,15 @@
+<xml>
+    <name>PriestName</name>
+    <class>Priest</class>
+    <class>Base</class>
+    <Perk>Divine Intervention</Perk>
+    <Perk>Divine Healing</Perk>
+    <Perk>Holy Fire</Perk>
+    <Perk>Revitalising Spirits</Perk>
+    <Perk>Sealed Fate</Perk>
+    <Perk>Wait</Perk>
+    <Perk>Move</Perk>
+    <Perk>Skip Turn</Perk>
+    <Perk>Basic Attack</Perk>
+    <Perk>Base Stats</Perk>
+</xml>

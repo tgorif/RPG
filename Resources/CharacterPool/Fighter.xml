@@ -1,0 +1,15 @@
+<xml>
+    <name>FighterName</name>
+    <class>Fighter</class>
+    <class>Base</class>
+    <Perk>Sword Attack</Perk>
+    <Perk>Platemail</Perk>
+    <Perk>Tower Shield</Perk>
+    <Perk>Provoke</Perk>
+    <Perk>Shield Bash</Perk>
+    <Perk>Wait</Perk>
+    <Perk>Move</Perk>
+    <Perk>Skip Turn</Perk>
+    <Perk>Basic Attack</Perk>
+    <Perk>Base Stats</Perk>
+</xml>

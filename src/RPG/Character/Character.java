@@ -11,12 +11,21 @@ import java.util.logging.Logger;
 
 public class Character {
     Logger LOGGER =Logger.getLogger(Character.class.getName());
-    Set<Perk> perks=new HashSet<>();
-    List<PerkTree> classes = new ArrayList<>();
+    public Set<Perk> perks=new HashSet<>();
+    public List<PerkTree> classes = new ArrayList<>();
     String name;
     public boolean isBlueTeam;
     public Character(String name){
         this.name=name;
+    }
+    public Character(CharacterPool.CharacterData characterData){
+        this.name=characterData.getName();
+        for (String s : characterData.getPerkTrees()){
+            classes.add(PerkTree.getPerkTree(s));
+        }
+        for (String s : characterData.getPerks()){
+            perks.add(Perk.getPerk(s));
+        }
     }
     public void learn(PerkTree p){
         if(p==null) LOGGER.log(Level.SEVERE,"Character "  + name + " learned PerkTree with value null ");

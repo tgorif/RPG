@@ -6,4 +6,5 @@ public class config {
     public final static String CLASS_FOLDER="C:\\workspace\\idea\\RPG\\Resources\\Classes";
     public final static String PROJECTILE_FOLDER="C:\\workspace\\idea\\RPG\\Resources\\PROJECTILES";
     public final static String STATUS_FOLDER="C:\\workspace\\idea\\RPG\\Resources\\STATUS";
+    public final static String CHARACTER_POOL_FOLDER="C:\\workspace\\idea\\RPG\\Resources\\CharacterPool";
 }

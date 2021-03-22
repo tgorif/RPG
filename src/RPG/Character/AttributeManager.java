@@ -16,6 +16,7 @@ public class AttributeManager {
     private int AP;
     private int maxAP;
     private int maxHP;
+    private int armor;
     private CombatCharacter owner;
 
     public int getHP() {
@@ -66,13 +67,14 @@ public class AttributeManager {
         this.maxHP = maxHP;
     }
 
-    private AttributeManager(int hp, int SPD, int movement, int AP, int maxAP, int maxHP,CombatCharacter combatCharacter){
+    private AttributeManager(int hp, int SPD, int movement, int AP, int maxAP, int maxHP,int armor,CombatCharacter combatCharacter){
         this.HP=hp;
         this.SPD = SPD;
         this.movement = movement;
         this.AP = AP;
         this.maxAP = maxAP;
         this.maxHP = maxHP;
+        this.armor=armor;
         this.owner=combatCharacter;
         final Logger LOGGER = Logger.getLogger(AttributeManager.class.getName());
         if(HP==0 || maxAP==0 || movement==0 || SPD==0){
@@ -118,12 +120,14 @@ public class AttributeManager {
         private int AP=0;
         private int maxAP=0;
         private int maxHP=0;
+        private int armor=0;
         private CombatCharacter combatCharacter;
         public AttributeBuilder(){}
         public AttributeBuilder addStatsPerk(StatPerk perk){
             HP+=perk.getHPBonus();
             SPD+=perk.getSPDBonus();
             movement+=perk.getMovementBonus();
+            armor+=perk.getArmor();
             return this;
         }
         public AttributeBuilder addStatsPerk(List<StatPerk> perks){
@@ -138,7 +142,7 @@ public class AttributeManager {
             maxAP=SPD;
             AP=0;
             maxHP=HP;
-            return new AttributeManager(HP,SPD,movement,AP,maxAP,maxHP,combatCharacter);
+            return new AttributeManager(HP,SPD,movement,AP,maxAP,maxHP,armor,combatCharacter);
         }
     }
 }

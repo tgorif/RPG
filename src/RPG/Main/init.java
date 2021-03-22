@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import RPG.Character.CharacterPool;
 import RPG.PerkSystem.Perk;
 import RPG.PerkSystem.PerkTree;
 import RPG.Projectiles.ProjectileData;
@@ -26,6 +27,7 @@ public class init {
         loadSkillData();
         loadProjectiles();
         loadStatusEffects();
+        loadCharacterPool();
     }
     private static void printPerkMap(){
         System.out.println("PerkMap: " + perkMap.size());
@@ -60,6 +62,7 @@ public class init {
                 boolean HP = false;
                 boolean SPD = false;
                 boolean movement = false;
+                boolean armor= false;
                 public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
                     if (qName.equalsIgnoreCase("perk")) {
                            perkBuilder=new Perk.PerkBuilder();
@@ -81,6 +84,9 @@ public class init {
                     }
                     if (qName.equalsIgnoreCase("movement")) {
                         movement = true;
+                    }
+                    if (qName.equalsIgnoreCase("armor")) {
+                        armor = true;
                     }
                 }
                 public void endElement(String uri, String localName, String qName) throws SAXException {
@@ -113,6 +119,10 @@ public class init {
                     if (movement) {
                         perkBuilder.setMovement(Integer.parseInt(new String(ch, start, length)));
                         movement = false;
+                    }
+                    if (armor) {
+                        perkBuilder.setArmor(Integer.parseInt(new String(ch, start, length)));
+                        armor = false;
                     }
                 }
             };
@@ -415,6 +425,61 @@ public class init {
                     else if (isDuration) {
                         builder.duration(Integer.parseInt(new String(ch, start, length)));
                         isDuration = false;
+                    }
+                }
+            };
+            saxParser.parse(fileName, handler);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private static void loadCharacterPool(){
+        final File folder = new File(config.CHARACTER_POOL_FOLDER);
+        if(!folder.exists()) LOGGER.log(Level.SEVERE,"CharacterPool Folder does not exist");
+        else{
+            for (File f : Objects.requireNonNull(folder.listFiles())) {
+                loadCharacter(f.toString());
+            }
+        }
+    }
+    private static void loadCharacter(String fileName){
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            DefaultHandler handler = new DefaultHandler() {
+                CharacterPool.CharacterData characterData=null;
+                boolean isName = false;
+                boolean isPerkTree=false;
+                boolean isPerk=false;
+
+                public void startElement(String uri, String localName,String qName, Attributes attributes) throws SAXException {
+
+                    if (qName.equalsIgnoreCase("name")) {
+                        isName=true;
+                    }
+                    else if (qName.equalsIgnoreCase("Class")) {
+                        isPerkTree=true;
+                    }
+                    else if(qName.equalsIgnoreCase("Perk")){
+                        isPerk=true;
+                    }
+                }
+                public void endElement(String uri, String localName, String qName) throws SAXException {
+
+                }
+                public void characters(char ch[], int start, int length) throws SAXException {
+                    if (isName) {
+                        characterData =new CharacterPool.CharacterData(new String(ch, start, length));
+                        isName = false;
+                    }
+                    else if (isPerkTree) {
+                        characterData.addPerkTree(new String(ch, start, length));
+                        isPerkTree = false;
+                    }
+                    else if (isPerk) {
+                        characterData.addPerk(new String(ch, start, length));
+                        isPerk = false;
                     }
                 }
             };

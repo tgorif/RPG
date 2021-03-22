@@ -1,0 +1,14 @@
+<xml>
+    <name>ArcherName</name>
+    <class>Archer</class>
+    <class>Base</class>
+    <Perk>Shot Arrow</Perk>
+    <Perk>Quickshot</Perk>
+    <Perk>Prepared Shot</Perk>
+    <Perk>BonusSPD10</Perk>
+    <Perk>Wait</Perk>
+    <Perk>Move</Perk>
+    <Perk>Skip Turn</Perk>
+    <Perk>Basic Attack</Perk>
+    <Perk>Base Stats</Perk>
+</xml>

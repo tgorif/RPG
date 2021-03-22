@@ -40,7 +40,7 @@ public class PerkTree {
                 LOGGER.log(Level.SEVERE,"Node " +  node.perk.name +  " does not have a mapping");
             }
         }
-        LOGGER.log(Level.INFO,"PerkTree " + name + " has been created without warnings");
+        LOGGER.log(Level.FINE,"PerkTree " + name + " has been created without warnings");
     }
     private void getDescendants(Node node){
         if(!nodeList.contains(node))nodeList.add(node);

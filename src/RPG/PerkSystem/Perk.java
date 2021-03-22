@@ -26,6 +26,7 @@ public class Perk {
         private int hp=0;
         private int SPD=0;
         private int movement=0;
+        private int armor=0;
         private String name="";
         String skill=null;
         String type;
@@ -50,6 +51,10 @@ public class Perk {
             this.movement=movement;
             return this;
         }
+        public Perk.PerkBuilder setArmor(int movement){
+            this.armor=armor;
+            return this;
+        }
         public Perk.PerkBuilder setSkill(String skill){
             this.skill=skill;
             return this;
@@ -59,7 +64,7 @@ public class Perk {
             return this;
         }
         public StatPerk buildStatPerk(){
-            return new StatPerk(hp,SPD,movement,name);
+            return new StatPerk(hp,SPD,movement,armor,name);
         }
         public CombatPerk buildCombatPerk(){
             if(name==null) LOGGER.log(Level.SEVERE,"building Perk with name==null");
