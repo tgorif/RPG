@@ -4,7 +4,7 @@
         <template>SkillHeal</template>
         <range>100</range>
         <cost>3</cost>
-        <damage>-3</damage>
+        <damage>3</damage>
         <cooldown>3</cooldown>
     </Skill>
 </xml>

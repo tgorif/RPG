@@ -19,31 +19,27 @@ public class FactorySkillTest {
     }
     @Test
     public void diffrentInstances(){
-        Assert.assertTrue(!FactorySkill.getSkill("wait",dummy).equals(FactorySkill.getSkill("wait",dummy)));
+        Assert.assertTrue(!FactorySkill.getSkill("Wait",dummy).equals(FactorySkill.getSkill("Wait",dummy)));
     }
     @Test
     public void testWait(){
-        Assert.assertTrue(FactorySkill.getSkill("wait",dummy) instanceof SkillWait);
-    }
-    @Test
-    public void testSkipTurn(){
-        Assert.assertTrue(FactorySkill.getSkill("skipturn",dummy) instanceof SkillWait);
+        Assert.assertTrue(FactorySkill.getSkill("Wait",dummy) instanceof SkillWait);
     }
     @Test
     public void testmove(){
-        Assert.assertTrue(FactorySkill.getSkill("move",dummy) instanceof SkillMove);
+        Assert.assertTrue(FactorySkill.getSkill("Move",dummy) instanceof SkillMove);
     }
     @Test
     public void testshotarrow(){
-        Assert.assertTrue(FactorySkill.getSkill("shotarrow",dummy) instanceof SkillShot);
+        Assert.assertTrue(FactorySkill.getSkill("Shot Arrow",dummy) instanceof SkillShot);
     }
     @Test
     public void testpreparation(){
-        Assert.assertTrue(FactorySkill.getSkill("preparation",dummy) instanceof SkillShot);
+        Assert.assertTrue(FactorySkill.getSkill("Prepared Shot",dummy) instanceof SkillShot);
     }
     @Test
     public void testquickshot(){
-        Assert.assertTrue(FactorySkill.getSkill("quickshot",dummy) instanceof SkillShot);
+        Assert.assertTrue(FactorySkill.getSkill("Quickshot",dummy) instanceof SkillShot);
     }
 
 

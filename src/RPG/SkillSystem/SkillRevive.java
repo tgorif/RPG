@@ -18,15 +18,14 @@ public class SkillRevive extends StrategySkill implements targetsCharacter{
     public void useSkill() {
         target.statusEffects.remove("Dead");
         target.attributes.setHP(target.attributes.getMaxHP()*reviveHP/100);
-        caster.attributes.changeAP(-cost);
+        usedSkill();
     }
 
     @Override
     public boolean isValid() {
-        return target!=null
-                &&!caster.statusEffects.containsKey("Dead")
-                &&target.statusEffects.containsKey("Dead")
-                &&GameState.getInstance().turnCounter-lastUsed<cooldown;
+        return canUse()
+                &&target!=null
+                &&target.statusEffects.containsKey("Dead");
     }
 
     @Override

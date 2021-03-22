@@ -24,14 +24,14 @@ public class SkillShot extends StrategySkill implements targetsCharacter{
         if(projectileName.length()!=0){
             FactoryProjectile.getProjectile(projectileName).resolveImpact(target);
         }
-        caster.attributes.changeAP(-cost);
+        usedSkill();
     }
 
     @Override
     public boolean isValid() {
-        return target!=null
-                &&!caster.statusEffects.containsKey("Dead")
-                &&!target.statusEffects.containsKey("Dead")
+        return canUse()
+                &&target!=null
+                && !target.statusEffects.containsKey("Dead")
                 && Level.getCurrentLevel().getDistance(caster.characterInfo.getTile(),
                 target.characterInfo.getTile())<=range
                 && GameState.getInstance().turnCounter-lastUsed<cooldown;

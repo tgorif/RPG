@@ -17,14 +17,13 @@ public class SkillHeal extends StrategySkill implements targetsCharacter{
     @Override
     public void useSkill() {
         target.attributes.changeHP(restoration);
-        caster.attributes.changeAP(-cost);
+        usedSkill();
     }
     @Override
     public boolean isValid() {
-        return target!=null
-                &&!caster.statusEffects.containsKey("Dead")
-                &&!target.statusEffects.containsKey("Dead")
-                &&GameState.getInstance().turnCounter-lastUsed<cooldown;
+        return canUse()
+                &&target!=null
+                && !target.statusEffects.containsKey("Dead");
     }
     @Override
     public boolean setTarget(CombatCharacter combatCharacter) {

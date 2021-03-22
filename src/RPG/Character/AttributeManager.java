@@ -100,7 +100,7 @@ public class AttributeManager {
         this.AP=maxAP;
     }
     public void changeHP(int x){
-        this.HP+=x;
+        this.HP=Math.min(this.HP+x,maxHP);
         if (this.HP<=0) {
             StrategyStatus s= FactoryStatusEffect.getStatus("Dead",owner);
             owner.statusEffects.put("Dead", s);

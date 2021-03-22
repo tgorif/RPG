@@ -19,6 +19,15 @@ public abstract class StrategySkill {
      }
      public abstract void useSkill();
      public abstract boolean isValid();
+     boolean canUse(){
+          return caster.attributes.getAP()>=cost
+                  &&lastUsed+cooldown<=GameState.getInstance().turnCounter
+                  && !caster.statusEffects.containsKey("Dead");
+     }
+     void usedSkill(){
+          lastUsed=GameState.getInstance().turnCounter;
+          caster.attributes.changeAP(-cost);
+     }
 
 
 }

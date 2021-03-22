@@ -3,8 +3,10 @@ package RPG.SkillSystem;
 import RPG.Character.Character;
 import RPG.Character.CombatCharacter;
 import RPG.Main.GameState;
+import RPG.Main.Level;
 import RPG.Output.PreView;
 import RPG.PerkSystem.Perk;
+import RPG.StatusEffects.FactoryStatusEffect;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +36,7 @@ public class ShotTest {
         list.add(dummy);
         list.add(dummy2);
         list.add(dummy3);
-        list.get(0).learn(Perk.getPerk("Divine Healing"));
+        list.get(0).learn(Perk.getPerk("Shot Arrow"));
         GameState gameState=new GameState(list,new PreView());
         testObject=gameState.combatCharacterList.get(0);
         skill=testObject.characterSkillManager.skillList.get(0);
@@ -52,22 +54,32 @@ public class ShotTest {
     }
     @Test
     public void canTargetEnemy(){
-        //TODO implement this
+        reset(enemy);
+        reset(testObject);
+        Assert.assertTrue(targetSkill.setTarget(enemy));
     }
     @Test
     public void canKillEnemy(){
-        //TODO implement this
-
+        reset(enemy);
+        reset(testObject);
+        enemy.attributes.setHP(1);
+        targetSkill.setTarget(enemy);
+        skill.useSkill();
+        Assert.assertTrue(enemy.statusEffects.containsKey("Dead"));
     }
     @Test
     public void cannotTargetEnemyOutOfRange(){
-        //TODO implement this
-
+        reset(enemy);
+        reset(testObject);
+        enemy.characterInfo.setTile(Level.getCurrentLevel().tiles.get(List.of(33,-33,0,0)));
+        Assert.assertFalse(targetSkill.setTarget(enemy));
     }
     @Test
     public void cannotTargetDeadEnemy(){
-        //TODO implement this
-
+        reset(enemy);
+        reset(testObject);
+        enemy.statusEffects.put("Dead", FactoryStatusEffect.getStatus("Dead",enemy));
+        Assert.assertFalse(targetSkill.setTarget(enemy));
     }
     @Test
     public void cannotUseWhenOnCoolDown(){
@@ -76,8 +88,10 @@ public class ShotTest {
     }
     @Test
     public void cannotUseWithoutAP(){
-        //TODO implement this
-
+        reset(enemy);
+        reset(testObject);
+        testObject.attributes.setAP(0);
+        Assert.assertFalse(targetSkill.setTarget(enemy));
     }
     public void reset(CombatCharacter c){
         c.attributes.turnStart();
