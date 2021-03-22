@@ -6,15 +6,16 @@ import RPG.Main.GameState;
 import RPG.Main.Level;
 import RPG.Output.PreView;
 import RPG.PerkSystem.Perk;
-import RPG.StatusEffects.FactoryStatusEffect;
+import RPG.StatusEffects.StrategyStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class ShotTest {
+public class BuffTest {
     CombatCharacter testObject;
     StrategySkill skill;
     targetsCharacter targetSkill;
@@ -36,7 +37,7 @@ public class ShotTest {
         list.add(dummy);
         list.add(dummy2);
         list.add(dummy3);
-        list.get(0).learn(Perk.getPerk("Shield Bash"));
+        list.get(0).learn(Perk.getPerk("Sealed Fate"));
         GameState gameState=new GameState(list,new PreView());
         testObject=gameState.combatCharacterList.get(0);
         skill=testObject.characterSkillManager.skillList.get(0);
@@ -48,57 +49,65 @@ public class ShotTest {
     public void hasSkill(){
         boolean contains=false;
         for(StrategySkill s : testObject.characterSkillManager.skillList){
-            if(s instanceof SkillShot) contains=true;
+            if(s instanceof SkillBuff) contains=true;
         }
         Assert.assertTrue(contains);
     }
     @Test
-    public void canTargetEnemy(){
-        reset(enemy);
+    public void cannotUseOnCooldown(){
         reset(testObject);
-        Assert.assertTrue(targetSkill.setTarget(enemy));
-    }
-    @Test
-    public void canKillEnemy(){
         reset(enemy);
-        reset(testObject);
-        enemy.attributes.setHP(1);
         targetSkill.setTarget(enemy);
-        System.out.println(enemy.attributes.getHP());
         skill.useSkill();
-        System.out.println(enemy.attributes.getHP());
-        Assert.assertTrue(enemy.statusEffects.containsKey("Dead"));
+        Assert.assertFalse(targetSkill.setTarget(testObject));
     }
     @Test
-    public void cannotTargetEnemyOutOfRange(){
-        reset(enemy);
+    public void cannottUseWhenOutofRange(){
         reset(testObject);
-        enemy.characterInfo.setTile(Level.getCurrentLevel().tiles.get(List.of(33,-33,0,0)));
-        Assert.assertFalse(targetSkill.setTarget(enemy));
-    }
-    @Test
-    public void cannotTargetDeadEnemy(){
-        reset(enemy);
-        reset(testObject);
-        enemy.statusEffects.put("Dead", FactoryStatusEffect.getStatus("Dead",enemy));
-        Assert.assertFalse(targetSkill.setTarget(enemy));
-    }
-    @Test
-    public void cannotUseWhenOnCoolDown(){
-        //TODO implement this
-
+        reset(ally);
+        ally.characterInfo.setTile(Level.getCurrentLevel().tiles.get(List.of(33,-33,0,0)));
+        Assert.assertFalse(targetSkill.setTarget(ally));
     }
     @Test
     public void cannotUseWithoutAP(){
-        reset(enemy);
         reset(testObject);
         testObject.attributes.setAP(0);
-        Assert.assertFalse(targetSkill.setTarget(enemy));
+        Assert.assertFalse(targetSkill.setTarget(testObject));
+    }
+    @Test
+    public void canTargetSelf(){
+        reset(testObject);
+        Assert.assertTrue(targetSkill.setTarget(testObject));
+    }
+    @Test
+    public void canTargetEnemy(){
+        reset(testObject);
+        reset(enemy);
+        Assert.assertTrue(targetSkill.setTarget(enemy));
+    }
+    @Test
+    public void canTargetAlly(){
+        reset(testObject);
+        reset(ally);
+        Assert.assertTrue(targetSkill.setTarget(ally));
+    }
+    @Test
+    public void useSkill(){
+        reset(testObject);
+        reset(ally);
+        targetSkill.setTarget(testObject);
+        skill.useSkill();
+        Assert.assertTrue(testObject.statusEffects.size()==1);
     }
     public void reset(CombatCharacter c){
         c.attributes.turnStart();
         c.attributes.setHP(testObject.attributes.getMaxHP());
-        c.statusEffects.remove("Dead");
+        List<String> r=new ArrayList<>();
+        for(Map.Entry<String, StrategyStatus> e : c.statusEffects.entrySet()){
+            r.add(e.getKey());
+        }
+        for (String s : r) c.statusEffects.remove(s);
         skill.lastUsed=Integer.MIN_VALUE;
+        c.characterInfo.setTile(Level.getCurrentLevel().tiles.get(List.of(0,0,0,0)));
     }
 }

@@ -20,8 +20,8 @@ public class FactorySkill {
                     return new SkillShot(skillData,character);
                 case ("SkillRevive"):
                     return new SkillRevive(skillData,character);
-                case ("SkillHealOverTime"):
-                    return new SkillHealOverTime(skillData,character);
+                case ("SkillBuff"):
+                    return new SkillBuff(skillData,character);
                 case ("SkillHeal"):
                     return new SkillHeal(skillData,character);
             }

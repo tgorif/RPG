@@ -2,31 +2,38 @@ package RPG.SkillSystem;
 
 import RPG.Character.CombatCharacter;
 import RPG.Main.GameState;
+import RPG.Main.Level;
 import RPG.StatusEffects.FactoryStatusEffect;
 import RPG.StatusEffects.StatusBleed;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkillHealOverTime extends StrategySkill implements targetsCharacter {
+public class SkillBuff extends StrategySkill implements targetsCharacter {
     CombatCharacter target;
     String status;
-    public SkillHealOverTime(SkillData skillData,CombatCharacter combatCharacter) {
+    int range;
+    public SkillBuff(SkillData skillData, CombatCharacter combatCharacter) {
         super(skillData,combatCharacter);
         status=skillData.statusEffect;
+        range=skillData.range;
     }
 
     @Override
     public void useSkill() {
-        target.statusEffects.put(status, FactoryStatusEffect.getStatus(status,target));
+        if(isValid()){
+            target.statusEffects.put(status, FactoryStatusEffect.getStatus(status,target));
+            usedSkill();
+        }
     }
 
     @Override
     public boolean isValid() {
-        return target!=null
-                &&!caster.statusEffects.containsKey("Dead")
-                &&!target.statusEffects.containsKey("Dead")
-                &&GameState.getInstance().turnCounter-lastUsed<cooldown;
+        return canUse()
+                &&target!=null
+                && !target.statusEffects.containsKey("Dead")
+                && Level.getCurrentLevel().getDistance(caster.characterInfo.getTile(),
+                target.characterInfo.getTile())<=range;
     }
 
     @Override

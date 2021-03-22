@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkillShot extends StrategySkill implements targetsCharacter{
-    String projectileName;
     int range;
     int damage;
     CombatCharacter target;
@@ -16,15 +15,13 @@ public class SkillShot extends StrategySkill implements targetsCharacter{
         super(skillData,combatCharacter);
         this.range=skillData.range;
         this.damage=skillData.damage;
-        this.projectileName= skillData.projectile;
     }
     @Override
     public void useSkill() {
-        GameState.getInstance().output.SkillUsed(caster,skillName);
-        if(projectileName.length()!=0){
-            FactoryProjectile.getProjectile(projectileName).resolveImpact(target);
+        if(isValid()) {
+            target.attributes.changeHP(-damage);
+            usedSkill();
         }
-        usedSkill();
     }
 
     @Override
@@ -33,8 +30,7 @@ public class SkillShot extends StrategySkill implements targetsCharacter{
                 &&target!=null
                 && !target.statusEffects.containsKey("Dead")
                 && Level.getCurrentLevel().getDistance(caster.characterInfo.getTile(),
-                target.characterInfo.getTile())<=range
-                && GameState.getInstance().turnCounter-lastUsed<cooldown;
+                target.characterInfo.getTile())<=range;
     }
 
     @Override
